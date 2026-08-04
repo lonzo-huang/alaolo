@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { locales } from '@/lib/i18n/config'
 import { Providers } from '../providers'
 import { Header } from '@/components/site/Header'
+import { Footer } from '@/components/site/Footer'
 import { Toaster } from '@/components/ui/sonner'
 import '../globals.css'
 
@@ -28,11 +29,12 @@ export default async function LocaleLayout({ children, params }) {
 
   return (
     <html lang={locale} className="dark" suppressHydrationWarning>
-      <body className="min-h-screen bg-[#0B0E14] text-slate-100 antialiased">
+      <body className="min-h-screen bg-[#0A0D14] text-slate-100 antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <Header locale={locale} />
             <main className="pt-16">{children}</main>
+            <Footer locale={locale} />
             <Toaster theme="dark" position="top-center" />
           </Providers>
         </NextIntlClientProvider>

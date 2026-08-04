@@ -1,0 +1,31 @@
+{
+  "nav": { "discover": "Entdecken", "ai": "KI", "downloads": "Software & Downloads", "learning": "Lernen & Tipps", "submit": "Ressource einreichen", "searchBtn": "Suchen", "searchPlaceholder": "Suchen..." },
+  "home": {
+    "heroBadge": "Automatisch erfasst · KI-verarbeitet · Manuell geprüft",
+    "heroKw1": "Tools finden", "heroKw2": "Ressourcen finden", "heroKw3": "KI finden",
+    "heroTail": " — alles an einem Ort.", "heroSep": ", ",
+    "heroDesc": "Jeder Eintrag ist strukturiert—Preise, Vor- und Nachteile, Vergleiche und echte Screenshots—damit du in 30 Sekunden entscheiden kannst.",
+    "heroSearchPh": "Tools, Ressourcen, Tutorials, KI suchen...",
+    "quickBrowse": "Tools durchsuchen", "quickTutorials": "Tutorials", "quickAI": "KI entdecken", "quickAPI": "Content API",
+    "labelUpdated": "UPDATED", "labelTrending": "TRENDING", "labelFeatured": "FEATURED", "labelHotAI": "HOT AI", "labelResources": "RESSOURCEN",
+    "secUpdated": "Kürzlich aktualisiert", "secTrending": "Diese Woche im Trend", "secFeatured": "Empfohlene Tools", "secHotAI": "Beliebte KI-Tools", "secResources": "Alle Ressourcen",
+    "viewAll": "Alle anzeigen →", "details": "Details", "visit": "Öffnen", "empty": "Noch nichts hier"
+  },
+  "detail": {
+    "breadcrumbHome": "Start", "breadcrumbList": "Ressourcen", "labelResources": "RESSOURCEN",
+    "openResource": "Ressource öffnen", "learningPath": "Lernpfad",
+    "useCases": "Anwendungsfälle", "screenshots": "Medien & Beispiele", "screenshotPlaceholder": "Vorschau",
+    "highlights": "Highlights", "prosCons": "Pro & Contra", "pros": "Vorteile", "cons": "Nachteile",
+    "pricing": "Preise", "alternatives": "Alternativen", "related": "Ähnlich", "prev": "Zurück", "next": "Weiter",
+    "share": "Teilen", "copyLink": "Link kopieren", "copied": "Kopiert", "scanQR": "QR scannen"
+  },
+  "newsletter": {
+    "title": "Neue Ressourcen abonnieren",
+    "subtitle": "Eine kuratierte E-Mail pro Woche. Dev / KI / Produktivität. Kein Spam.",
+    "placeholder": "you@example.com", "subscribe": "Abonnieren",
+    "success": "Abonniert!", "invalidEmail": "Ungültige E-Mail", "alreadySubscribed": "Bereits abonniert"
+  },
+  "admin": { "title": "Admin", "login": "Anmelden", "email": "E-Mail", "password": "Passwort", "submit": "Absenden", "signOut": "Abmelden", "resources": "Ressourcen", "subscribers": "Abonnenten", "add": "Hinzufügen", "edit": "Bearbeiten", "delete": "Löschen", "notAuthorized": "Nicht autorisiert", "loginError": "Anmeldung fehlgeschlagen" },
+  "footer": { "tagline": "Ein Ort, um die besten Dev- / KI- / Produktivitätsressourcen zu entdecken", "copyright": "© 2025 alaolo.com" },
+  "common": { "loading": "Laden", "empty": "Nichts hier" }
+}

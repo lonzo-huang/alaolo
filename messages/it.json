@@ -1,0 +1,31 @@
+{
+  "nav": { "discover": "Scopri", "ai": "IA", "downloads": "Software e Download", "learning": "Impara", "submit": "Invia risorsa", "searchBtn": "Cerca", "searchPlaceholder": "Cerca..." },
+  "home": {
+    "heroBadge": "Raccolto automaticamente · Elaborato con IA · Revisionato manualmente",
+    "heroKw1": "Trova strumenti", "heroKw2": "trova risorse", "heroKw3": "trova IA",
+    "heroTail": " — tutto in un unico posto.", "heroSep": ", ",
+    "heroDesc": "Ogni voce è strutturata—prezzi, pro e contro, confronti e screenshot reali—per decidere in 30 secondi.",
+    "heroSearchPh": "Cerca strumenti, risorse, tutorial, IA...",
+    "quickBrowse": "Sfoglia", "quickTutorials": "Tutorial", "quickAI": "Scopri IA", "quickAPI": "API Contenuti",
+    "labelUpdated": "UPDATED", "labelTrending": "TRENDING", "labelFeatured": "FEATURED", "labelHotAI": "HOT AI", "labelResources": "RISORSE",
+    "secUpdated": "Aggiornati di recente", "secTrending": "Di tendenza", "secFeatured": "In evidenza", "secHotAI": "Strumenti IA popolari", "secResources": "Tutte le risorse",
+    "viewAll": "Vedi tutti →", "details": "Dettagli", "visit": "Visita", "empty": "Ancora niente"
+  },
+  "detail": {
+    "breadcrumbHome": "Home", "breadcrumbList": "Risorse", "labelResources": "RISORSE",
+    "openResource": "Apri risorsa", "learningPath": "Percorso di apprendimento",
+    "useCases": "Casi d'uso", "screenshots": "Media ed esempi", "screenshotPlaceholder": "Anteprima",
+    "highlights": "In evidenza", "prosCons": "Pro e Contro", "pros": "Pro", "cons": "Contro",
+    "pricing": "Prezzi", "alternatives": "Alternative", "related": "Correlati", "prev": "Precedente", "next": "Successivo",
+    "share": "Condividi", "copyLink": "Copia link", "copied": "Copiato", "scanQR": "Scansiona per condividere"
+  },
+  "newsletter": {
+    "title": "Abbonati alle nuove risorse",
+    "subtitle": "Un'email curata a settimana. Dev / IA / produttività. Niente spam.",
+    "placeholder": "tu@example.com", "subscribe": "Iscriviti",
+    "success": "Iscritto!", "invalidEmail": "Email non valida", "alreadySubscribed": "Già iscritto"
+  },
+  "admin": { "title": "Admin", "login": "Accedi", "email": "Email", "password": "Password", "submit": "Invia", "signOut": "Esci", "resources": "Risorse", "subscribers": "Iscritti", "add": "Aggiungi", "edit": "Modifica", "delete": "Elimina", "notAuthorized": "Non autorizzato", "loginError": "Accesso fallito" },
+  "footer": { "tagline": "Un posto per scoprire le migliori risorse Dev / IA / produttività", "copyright": "© 2025 alaolo.com" },
+  "common": { "loading": "Caricamento", "empty": "Niente qui" }
+}

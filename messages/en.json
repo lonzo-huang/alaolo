@@ -1,68 +1,38 @@
 {
   "nav": {
-    "discover": "Discover",
-    "ai": "AI",
-    "downloads": "Software & Downloads",
-    "learning": "Learn & Picks",
-    "submit": "Submit resource",
-    "searchBtn": "Search",
-    "searchPlaceholder": "Search..."
+    "discover": "Discover", "ai": "AI", "downloads": "Software & Downloads", "learning": "Learn & Picks",
+    "submit": "Submit resource", "searchBtn": "Search", "searchPlaceholder": "Search..."
   },
   "home": {
     "heroBadge": "Auto-crawled · AI-processed · Human-reviewed",
-    "heroKw1": "Find tools",
-    "heroKw2": "find resources",
-    "heroKw3": "find AI",
-    "heroTail": " — all in one place.",
-    "heroSep": ", ",
-    "heroDesc": "Every entry is structured: pricing, pros & cons, comparisons and real screenshots — so you decide in 30 seconds. That's how alaolo differs from any ordinary directory.",
+    "heroKw1": "Find tools", "heroKw2": "find resources", "heroKw3": "find AI",
+    "heroTail": " — all in one place.", "heroSep": ", ",
+    "heroDesc": "Every entry is structured—pricing, pros & cons, comparisons and real screenshots—so you decide in 30 seconds.",
     "heroSearchPh": "Search tools, resources, tutorials, AI...",
-    "quickBrowse": "Browse tools",
-    "quickTutorials": "Tutorials",
-    "quickAI": "Discover AI",
-    "quickAPI": "Content API",
-    "labelUpdated": "UPDATED",
-    "labelTrending": "TRENDING",
-    "labelFeatured": "FEATURED",
-    "labelHotAI": "HOT AI",
-    "labelResources": "RESOURCES",
-    "secUpdated": "Recently updated",
-    "secTrending": "Trending this week",
-    "secFeatured": "Featured tools",
-    "secHotAI": "Hot AI tools",
-    "secResources": "All resources",
-    "viewAll": "View all →",
-    "details": "Details",
-    "visit": "Visit",
-    "empty": "Nothing here yet"
+    "quickBrowse": "Browse tools", "quickTutorials": "Tutorials", "quickAI": "Discover AI", "quickAPI": "Content API",
+    "labelUpdated": "UPDATED", "labelTrending": "TRENDING", "labelFeatured": "FEATURED", "labelHotAI": "HOT AI", "labelResources": "RESOURCES",
+    "secUpdated": "Recently updated", "secTrending": "Trending this week", "secFeatured": "Featured tools", "secHotAI": "Hot AI tools", "secResources": "All resources",
+    "viewAll": "View all →", "details": "Details", "visit": "Visit", "empty": "Nothing here yet"
   },
   "detail": {
-    "breadcrumbHome": "Home",
-    "breadcrumbList": "Resources",
-    "labelResources": "RESOURCES",
-    "openResource": "Open resource",
-    "learningPath": "Learning path",
-    "metaType": "Type",
-    "metaCategory": "Category",
-    "metaLanguage": "Language",
-    "metaPricing": "Pricing",
-    "metaPlatform": "Platform",
-    "metaModel": "Model",
-    "useCases": "Use cases",
-    "screenshots": "Media & examples",
-    "screenshotPlaceholder": "Preview",
-    "highlights": "Highlights",
-    "prosCons": "Pros & Cons",
-    "pros": "Pros",
-    "cons": "Cons",
-    "pricing": "Pricing",
-    "alternatives": "Alternatives",
-    "related": "Related",
-    "prev": "Previous",
-    "next": "Next"
+    "breadcrumbHome": "Home", "breadcrumbList": "Resources", "labelResources": "RESOURCES",
+    "openResource": "Open resource", "learningPath": "Learning path",
+    "useCases": "Use cases", "screenshots": "Media & examples", "screenshotPlaceholder": "Preview",
+    "highlights": "Highlights", "prosCons": "Pros & Cons", "pros": "Pros", "cons": "Cons",
+    "pricing": "Pricing", "alternatives": "Alternatives", "related": "Related", "prev": "Previous", "next": "Next",
+    "share": "Share", "copyLink": "Copy link", "copied": "Copied", "scanQR": "Scan to share"
   },
-  "common": {
-    "loading": "Loading",
-    "empty": "Nothing here"
-  }
+  "newsletter": {
+    "title": "Subscribe to new resources",
+    "subtitle": "One curated email per week. Dev / AI / productivity picks. No spam.",
+    "placeholder": "you@example.com", "subscribe": "Subscribe",
+    "success": "Subscribed!", "invalidEmail": "Invalid email", "alreadySubscribed": "Already subscribed"
+  },
+  "admin": {
+    "title": "Admin", "login": "Sign in", "email": "Email", "password": "Password", "submit": "Submit",
+    "signOut": "Sign out", "resources": "Resources", "subscribers": "Subscribers",
+    "add": "Add", "edit": "Edit", "delete": "Delete", "notAuthorized": "Not authorized", "loginError": "Login failed"
+  },
+  "footer": { "tagline": "One place to discover the best dev / AI / productivity resources", "copyright": "© 2025 alaolo.com" },
+  "common": { "loading": "Loading", "empty": "Nothing here" }
 }

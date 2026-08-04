@@ -5,6 +5,7 @@ import { t as tt } from '@/lib/i18n/config'
 import { getTranslations } from 'next-intl/server'
 import { ScreenshotCarousel } from '@/components/site/ScreenshotCarousel'
 import { ResourceCard } from '@/components/site/ResourceCard'
+import { ShareModal } from '@/components/site/ShareModal'
 import * as Icons from 'lucide-react'
 import { ArrowUpRight, Check, X as XIcon, ChevronRight, ChevronLeft } from 'lucide-react'
 
@@ -92,6 +93,7 @@ export default async function ResourceDetailPage({ params }) {
             <Link href={`/${locale}?cat=learning`} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/10 text-slate-200 hover:bg-white/[0.08] text-sm">
               {t('learningPath')}
             </Link>
+            <ShareModal url={`${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/resource/${resource.slug}`} title={`${tt(resource.name, locale)} · ${tt(resource.slogan, locale)}`} />
           </div>
         </section>
 

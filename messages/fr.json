@@ -1,0 +1,31 @@
+{
+  "nav": { "discover": "Découvrir", "ai": "IA", "downloads": "Logiciels & Téléchargements", "learning": "Apprentissage", "submit": "Soumettre une ressource", "searchBtn": "Rechercher", "searchPlaceholder": "Rechercher..." },
+  "home": {
+    "heroBadge": "Collecté automatiquement · Traité par IA · Vérifié manuellement",
+    "heroKw1": "Trouver des outils", "heroKw2": "trouver des ressources", "heroKw3": "trouver l'IA",
+    "heroTail": " — tout au même endroit.", "heroSep": ", ",
+    "heroDesc": "Chaque entrée est structurée—prix, avantages et inconvénients, comparaisons et vraies captures d'écran—pour décider en 30 secondes.",
+    "heroSearchPh": "Rechercher outils, ressources, tutos, IA...",
+    "quickBrowse": "Parcourir", "quickTutorials": "Tutoriels", "quickAI": "Découvrir l'IA", "quickAPI": "API Contenu",
+    "labelUpdated": "UPDATED", "labelTrending": "TRENDING", "labelFeatured": "FEATURED", "labelHotAI": "HOT AI", "labelResources": "RESSOURCES",
+    "secUpdated": "Récemment mis à jour", "secTrending": "Tendances de la semaine", "secFeatured": "Outils en vedette", "secHotAI": "Outils IA populaires", "secResources": "Toutes les ressources",
+    "viewAll": "Tout voir →", "details": "Détails", "visit": "Visiter", "empty": "Rien pour l'instant"
+  },
+  "detail": {
+    "breadcrumbHome": "Accueil", "breadcrumbList": "Ressources", "labelResources": "RESSOURCES",
+    "openResource": "Ouvrir la ressource", "learningPath": "Parcours d'apprentissage",
+    "useCases": "Cas d'usage", "screenshots": "Médias & exemples", "screenshotPlaceholder": "Aperçu",
+    "highlights": "Points forts", "prosCons": "Avantages & Inconvénients", "pros": "Avantages", "cons": "Inconvénients",
+    "pricing": "Tarifs", "alternatives": "Alternatives", "related": "Similaires", "prev": "Précédent", "next": "Suivant",
+    "share": "Partager", "copyLink": "Copier le lien", "copied": "Copié", "scanQR": "Scanner pour partager"
+  },
+  "newsletter": {
+    "title": "S'abonner aux nouvelles ressources",
+    "subtitle": "Un e-mail curé par semaine. Dev / IA / productivité. Pas de spam.",
+    "placeholder": "vous@example.com", "subscribe": "S'abonner",
+    "success": "Abonné !", "invalidEmail": "E-mail invalide", "alreadySubscribed": "Déjà abonné"
+  },
+  "admin": { "title": "Admin", "login": "Se connecter", "email": "E-mail", "password": "Mot de passe", "submit": "Envoyer", "signOut": "Se déconnecter", "resources": "Ressources", "subscribers": "Abonnés", "add": "Ajouter", "edit": "Modifier", "delete": "Supprimer", "notAuthorized": "Non autorisé", "loginError": "Échec de connexion" },
+  "footer": { "tagline": "Un lieu pour découvrir les meilleures ressources Dev / IA / productivité", "copyright": "© 2025 alaolo.com" },
+  "common": { "loading": "Chargement", "empty": "Rien ici" }
+}

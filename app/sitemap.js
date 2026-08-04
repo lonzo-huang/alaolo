@@ -9,6 +9,8 @@ export default async function sitemap() {
   const { data: resources } = await sb.from('resources').select('slug, updated_at')
 
   const urls = []
+  const langsMap = Object.fromEntries(locales.map(l => [l, '']))
+
   for (const locale of locales) {
     urls.push({
       url: `${base}/${locale}`,
