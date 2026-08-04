@@ -1,135 +1,161 @@
 'use client'
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { Search, Sparkles, BookOpen, Zap, FileCode } from 'lucide-react'
 import { ResourceCard } from './ResourceCard'
-import { Flame, Sparkles, Star as StarIcon, Clock } from 'lucide-react'
+import { t as tt } from '@/lib/i18n/config'
 
-const CATS = [
-  { slug: 'all', key: 'filterAll' },
-  { slug: 'dev', key: 'filterDev' },
-  { slug: 'network', key: 'filterNetwork' },
-  { slug: 'ai', key: 'filterAI' },
-  { slug: 'learning', key: 'filterLearning' },
-  { slug: 'productivity', key: 'filterProductivity' },
-]
-const SORTS = [
-  { key: 'recommended', label: 'sortRecommended' },
-  { key: 'latest', label: 'sortLatest' },
-  { key: 'popular', label: 'sortPopular' },
-]
-
-export function HomeClient({ locale, resources, trending, latest, picks }) {
+export function HomeClient({ locale, resources, trending, latest, picks, hotAI }) {
   const t = useTranslations('home')
+  const tNav = useTranslations('nav')
   const searchParams = useSearchParams()
   const router = useRouter()
-  const initialCat = searchParams.get('cat') || 'all'
-  const [cat, setCat] = useState(initialCat)
-  const [sort, setSort] = useState('recommended')
-
-  useEffect(() => {
-    const c = searchParams.get('cat') || 'all'
-    setCat(c)
-  }, [searchParams])
+  const [q, setQ] = useState(searchParams.get('q') || '')
+  const cat = searchParams.get('cat') || 'all'
+  const query = (searchParams.get('q') || '').toLowerCase()
 
   const filtered = useMemo(() => {
     let arr = resources
     if (cat !== 'all') arr = arr.filter(r => r.categories?.slug === cat)
-    if (sort === 'latest') arr = [...arr].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-    else if (sort === 'popular') arr = [...arr].sort((a, b) => (b.view_count || 0) - (a.view_count || 0))
-    else arr = [...arr].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || (b.rating || 0) - (a.rating || 0))
+    if (query) arr = arr.filter(r => {
+      const name = tt(r.name, locale).toLowerCase()
+      const slogan = tt(r.slogan, locale).toLowerCase()
+      const desc = tt(r.description, locale).toLowerCase()
+      return name.includes(query) || slogan.includes(query) || desc.includes(query)
+    })
     return arr
-  }, [resources, cat, sort])
+  }, [resources, cat, query, locale])
 
-  const setCatUrl = (c) => {
-    setCat(c)
+  const doSearch = (e) => {
+    e.preventDefault()
     const url = new URL(window.location.href)
-    if (c === 'all') url.searchParams.delete('cat'); else url.searchParams.set('cat', c)
-    router.replace(url.pathname + url.search, { scroll: false })
+    if (q.trim()) url.searchParams.set('q', q.trim()); else url.searchParams.delete('q')
+    router.push(url.pathname + url.search)
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 pb-24">
-      {/* Hero (compact) */}
-      <section className="relative pt-10 pb-8 md:pt-14 md:pb-10">
-        <div className="absolute inset-0 -z-10 opacity-40">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#F5C518]/10 blur-[120px] rounded-full" />
-        </div>
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F5C518] animate-pulse" />
-            {t('heroSubtitle')}
+    <div className="pb-24">
+      {/* Hero */}
+      <section className="relative overflow-hidden border-b border-white/[0.06]">
+        {/* Grid pattern background */}
+        <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+          maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 90%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 90%)',
+        }} />
+        <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-[#F5C518]/10 blur-[140px] rounded-full -z-0 pointer-events-none" />
+
+        <div className="container mx-auto max-w-7xl px-4 pt-14 md:pt-20 pb-12 md:pb-16 relative">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[12px] text-slate-300 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5C518] animate-pulse" />
+              {t('heroBadge')}
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight leading-[1.15]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-teal-300">{t('heroKw1')}</span>
+              <span className="text-white">{t('heroSep')}</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-fuchsia-400">{t('heroKw2')}</span>
+              <span className="text-white">{t('heroSep')}</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5C518] to-amber-400">{t('heroKw3')}</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 to-lime-300">{t('heroTail')}</span>
+            </h1>
+
+            <p className="mt-5 text-slate-400 text-[15px] leading-[1.7] max-w-2xl">{t('heroDesc')}</p>
+
+            <form onSubmit={doSearch} className="mt-8 flex items-center gap-2 max-w-2xl">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
+                <input value={q} onChange={e => setQ(e.target.value)} placeholder={t('heroSearchPh')} className="w-full pl-11 pr-4 py-3 rounded-lg bg-[#10141C] border border-white/10 text-white placeholder-slate-500 focus:border-[#F5C518]/40 focus:outline-none focus:ring-1 focus:ring-[#F5C518]/30 text-[14px]" />
+              </div>
+              <button type="submit" className="px-5 py-3 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black font-medium text-sm shadow-[0_0_20px_rgba(245,197,24,0.25)]">{tNav('searchBtn')}</button>
+            </form>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {[
+                { icon: <Sparkles className="w-3.5 h-3.5" />, label: t('quickBrowse'), href: `/${locale}?cat=dev` },
+                { icon: <BookOpen className="w-3.5 h-3.5" />, label: t('quickTutorials'), href: `/${locale}?cat=learning` },
+                { icon: <Zap className="w-3.5 h-3.5" />, label: t('quickAI'), href: `/${locale}?cat=ai` },
+                { icon: <FileCode className="w-3.5 h-3.5" />, label: t('quickAPI'), href: `/${locale}?cat=network` },
+              ].map(p => (
+                <Link key={p.label} href={p.href} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 hover:text-white hover:bg-white/[0.08] text-[12.5px] transition-colors">
+                  {p.icon}{p.label}
+                </Link>
+              ))}
+            </div>
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-white leading-tight">
-            {t('heroTitle')}
-          </h1>
         </div>
       </section>
 
-      {/* Filter + Sort */}
-      <section className="sticky top-16 z-30 -mx-4 px-4 py-3 mb-6 bg-[#0B0E14]/85 backdrop-blur-md border-b border-white/[0.06]">
-        <div className="flex flex-wrap items-center gap-3 justify-between">
-          <div className="flex flex-wrap gap-1.5">
-            {CATS.map(c => (
-              <button key={c.slug} onClick={() => setCatUrl(c.slug)} className={`px-3 py-1.5 text-sm rounded-full border transition-all ${cat === c.slug ? 'bg-[#F5C518] text-black border-[#F5C518] font-medium' : 'text-slate-300 border-white/10 hover:border-white/20 hover:text-white'}`}>{t(c.key)}</button>
-            ))}
-          </div>
-          <div className="flex gap-1 rounded-lg bg-white/5 p-1 border border-white/10">
-            {SORTS.map(s => (
-              <button key={s.key} onClick={() => setSort(s.key)} className={`px-3 py-1 text-xs rounded-md ${sort === s.key ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white'}`}>{t(s.label)}</button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trending / Editor picks / Latest sections (only when 'all') */}
-      {cat === 'all' && (
-        <>
-          {trending.length > 0 && (
-            <Section title={t('trending')} icon={<Flame className="w-4 h-4 text-orange-400" />} accent="from-orange-500/20">
-              <Grid resources={trending} locale={locale} />
-            </Section>
-          )}
-          {picks.length > 0 && (
-            <Section title={t('editorsPick')} icon={<Sparkles className="w-4 h-4 text-[#F5C518]" />} accent="from-yellow-500/20">
-              <Grid resources={picks} locale={locale} />
-            </Section>
-          )}
-          {latest.length > 0 && (
-            <Section title={t('latest')} icon={<Clock className="w-4 h-4 text-blue-400" />} accent="from-blue-500/20">
-              <Grid resources={latest} locale={locale} />
-            </Section>
-          )}
-        </>
-      )}
-
-      {/* Main grid */}
-      <section className="mt-8">
-        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2"><StarIcon className="w-4 h-4 text-[#F5C518]" />{cat === 'all' ? t('sortRecommended') : t(CATS.find(c => c.slug === cat)?.key || 'filterAll')}</h2>
-        {filtered.length === 0 ? (
-          <div className="text-center py-16 text-slate-500 border border-dashed border-white/10 rounded-xl">{t('empty')}</div>
+      {/* Body */}
+      <div className="container mx-auto max-w-7xl px-4 pt-10">
+        {(cat === 'all' && !query) ? (
+          <>
+            {/* Row 1: Updated + Trending */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <TwoColSection label={t('labelUpdated')} title={t('secUpdated')} locale={locale} resources={latest} />
+              <TwoColSection label={t('labelTrending')} title={t('secTrending')} locale={locale} resources={trending} />
+            </div>
+            {/* Row 2: Featured + Hot AI */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
+              <TwoColSection label={t('labelFeatured')} title={t('secFeatured')} locale={locale} resources={picks} />
+              <TwoColSection label={t('labelHotAI')} title={t('secHotAI')} locale={locale} resources={hotAI} />
+            </div>
+            {/* Row 3: All resources */}
+            <FullSection label={t('labelResources')} title={t('secResources')} locale={locale} resources={resources} />
+          </>
         ) : (
-          <Grid resources={filtered} locale={locale} />
+          <section>
+            <SectionHeader label={t('labelResources')} title={query ? `“${query}” ${filtered.length}` : t('secResources')} />
+            {filtered.length === 0 ? (
+              <div className="text-center py-20 text-slate-500 border border-dashed border-white/10 rounded-xl">{t('empty')}</div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filtered.map(r => <ResourceCard key={r.id} resource={r} locale={locale} />)}
+              </div>
+            )}
+          </section>
         )}
-      </section>
+      </div>
     </div>
   )
 }
 
-function Section({ title, icon, accent, children }) {
+function SectionHeader({ label, title, showViewAll = false, viewAllHref = '#', viewAllLabel = '' }) {
   return (
-    <section className="mt-6 relative">
-      <div className={`absolute -top-4 left-0 right-0 h-32 bg-gradient-to-b ${accent} to-transparent blur-2xl -z-10 opacity-30`} />
-      <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">{icon}{title}</h2>
-      {children}
+    <div className="flex items-end justify-between mb-5">
+      <div>
+        <div className="text-[11px] font-semibold tracking-[0.15em] text-[#F5C518] mb-1">{label}</div>
+        <h2 className="text-xl md:text-[22px] font-bold text-white tracking-tight">{title}</h2>
+      </div>
+      {showViewAll && <Link href={viewAllHref} className="text-[12.5px] text-slate-400 hover:text-white">{viewAllLabel}</Link>}
+    </div>
+  )
+}
+
+function TwoColSection({ label, title, locale, resources }) {
+  const t = useTranslations('home')
+  return (
+    <section>
+      <SectionHeader label={label} title={title} showViewAll viewAllLabel={t('viewAll')} viewAllHref={`/${locale}`} />
+      <div className="flex flex-col gap-3">
+        {(resources || []).slice(0, 3).map(r => <ResourceCard key={r.id} resource={r} locale={locale} />)}
+      </div>
     </section>
   )
 }
 
-function Grid({ resources, locale }) {
+function FullSection({ label, title, locale, resources }) {
+  const t = useTranslations('home')
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {resources.map(r => <ResourceCard key={r.id} resource={r} locale={locale} />)}
-    </div>
+    <section className="mt-12">
+      <SectionHeader label={label} title={title} showViewAll viewAllLabel={t('viewAll')} viewAllHref={`/${locale}`} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {resources.map(r => <ResourceCard key={r.id} resource={r} locale={locale} />)}
+      </div>
+    </section>
   )
 }

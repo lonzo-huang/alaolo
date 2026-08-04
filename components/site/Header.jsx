@@ -1,128 +1,93 @@
 'use client'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Globe, Menu, X, Star } from 'lucide-react'
+import { Search, Star, Menu, X } from 'lucide-react'
 import { locales, localeNames } from '@/lib/i18n/config'
-import { createSupabaseBrowser } from '@/lib/supabase/client'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
 
 export function Header({ locale }) {
   const t = useTranslations('nav')
   const pathname = usePathname()
   const router = useRouter()
-  const [user, setUser] = useState(null)
+  const [q, setQ] = useState('')
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const sb = createSupabaseBrowser()
-    sb.auth.getUser().then(({ data }) => setUser(data.user))
-    const { data: sub } = sb.auth.onAuthStateChange((_e, session) => setUser(session?.user || null))
-    return () => sub.subscription.unsubscribe()
-  }, [])
 
   const switchLocale = (nextLocale) => {
     const segments = pathname.split('/')
     segments[1] = nextLocale
-    router.push(segments.join('/'))
+    router.push(segments.join('/') + (typeof window !== 'undefined' ? window.location.search : ''))
   }
 
-  const signOut = async () => {
-    const sb = createSupabaseBrowser()
-    await sb.auth.signOut()
-    router.refresh()
+  const submitSearch = (e) => {
+    e.preventDefault()
+    if (q.trim()) router.push(`/${locale}?q=${encodeURIComponent(q.trim())}`)
   }
 
   const nav = [
-    { label: t('resources'), href: `/${locale}?cat=all` },
+    { label: t('discover'), href: `/${locale}` },
     { label: t('ai'), href: `/${locale}?cat=ai` },
-    { label: t('tutorials'), href: `/${locale}?cat=learning` },
-    { label: t('articles'), href: `/${locale}?cat=productivity` },
-    { label: t('picks'), href: `/${locale}?cat=dev` },
+    { label: t('downloads'), href: `/${locale}?cat=productivity` },
+    { label: t('learning'), href: `/${locale}?cat=learning` },
   ]
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 border-b border-white/[0.06] bg-[#0B0E14]/85 backdrop-blur-xl">
-      <div className="container mx-auto max-w-7xl h-16 flex items-center gap-6 px-4">
+    <header className="fixed top-0 inset-x-0 z-40 border-b border-white/[0.06] bg-[#0A0D14]/90 backdrop-blur-xl">
+      <div className="container mx-auto max-w-7xl h-16 flex items-center gap-4 px-4">
         <Link href={`/${locale}`} className="flex items-center gap-2 group shrink-0">
-          <div className="relative">
-            <div className="w-8 h-8 rounded-md bg-[#F5C518] flex items-center justify-center font-black text-black text-lg shadow-[0_0_20px_rgba(245,197,24,0.35)] group-hover:shadow-[0_0_28px_rgba(245,197,24,0.55)] transition-all group-hover:-translate-y-[1px]">a</div>
-          </div>
-          <span className="font-semibold text-white tracking-tight text-lg hidden sm:inline">alaolo</span>
+          <div className="w-7 h-7 rounded-md bg-[#F5C518] flex items-center justify-center font-black text-black text-base shadow-[0_0_18px_rgba(245,197,24,0.4)] group-hover:shadow-[0_0_24px_rgba(245,197,24,0.6)] transition-all">a</div>
+          <span className="font-semibold text-white text-[15px] tracking-tight hidden sm:inline">alaolo.com</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1 ml-2">
+        <nav className="hidden lg:flex items-center gap-1">
           {nav.map(n => (
-            <Link key={n.label} href={n.href} className="px-3 py-1.5 text-sm text-slate-300 hover:text-white rounded-md hover:bg-white/5 transition-colors">{n.label}</Link>
+            <Link key={n.label} href={n.href} className="px-3 py-1.5 text-[13.5px] text-slate-300 hover:text-white rounded-md transition-colors">{n.label}</Link>
           ))}
         </nav>
 
         <div className="flex-1" />
 
-        <div className="hidden md:flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-slate-300 hover:text-white hover:bg-white/5">
-                <Globe className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-[#151A26] border-white/10">
-              {locales.map(l => (
-                <DropdownMenuItem key={l} onClick={() => switchLocale(l)} className={`text-slate-200 focus:bg-white/5 ${l === locale ? 'text-[#F5C518]' : ''}`}>{localeNames[l]}</DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <form onSubmit={submitSearch} className="hidden md:flex items-center gap-2">
+          <div className="relative">
+            <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder={t('searchPlaceholder')} className="w-56 lg:w-64 pl-8 pr-3 py-1.5 text-sm rounded-md bg-white/[0.04] border border-white/10 text-white placeholder-slate-500 focus:border-[#F5C518]/40 focus:outline-none focus:ring-1 focus:ring-[#F5C518]/30" />
+          </div>
+          <button type="submit" className="px-3 py-1.5 rounded-md bg-[#F5C518] hover:bg-[#e6b800] text-black text-sm font-medium">{t('searchBtn')}</button>
+        </form>
 
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-slate-200 hover:bg-white/5">
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#F5C518] to-orange-500 flex items-center justify-center text-black text-xs font-bold">{(user.email || 'U')[0].toUpperCase()}</div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-[#151A26] border-white/10">
-                <DropdownMenuItem asChild>
-                  <Link href={`/${locale}/favorites`} className="text-slate-200 focus:bg-white/5"><Star className="w-4 h-4 mr-2" />{t('favorites')}</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-white/10" />
-                <DropdownMenuItem onClick={signOut} className="text-slate-200 focus:bg-white/5">{t('logout')}</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button asChild size="sm" className="bg-[#F5C518] hover:bg-[#e6b800] text-black font-medium">
-              <Link href={`/${locale}/login`}>{t('login')}</Link>
-            </Button>
-          )}
+        <Link href={`/${locale}/favorites`} className="hidden md:inline-flex text-slate-400 hover:text-[#F5C518] p-1.5" aria-label="favorites"><Star className="w-4 h-4" /></Link>
+
+        <Link href={`/${locale}/submit`} className="hidden lg:inline-flex text-[13.5px] text-slate-300 hover:text-white px-2 py-1">{t('submit')}</Link>
+
+        <div className="hidden md:flex items-center text-[13px] text-slate-400">
+          {locales.map((l, i) => (
+            <span key={l} className="flex items-center">
+              {i > 0 && <span className="mx-1 text-slate-600">/</span>}
+              <button onClick={() => switchLocale(l)} className={`hover:text-white transition-colors ${l === locale ? 'text-[#F5C518]' : ''}`}>{localeNames[l]}</button>
+            </span>
+          ))}
         </div>
 
-        <Button variant="ghost" size="icon" className="md:hidden text-slate-200" onClick={() => setOpen(v => !v)}>
+        <button onClick={() => setOpen(v => !v)} className="md:hidden text-slate-300 p-1">
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </Button>
+        </button>
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-white/10 bg-[#0B0E14]">
-          <div className="container mx-auto max-w-7xl px-4 py-3 flex flex-col gap-1">
+        <div className="md:hidden border-t border-white/[0.06] bg-[#0A0D14] px-4 py-4 space-y-3">
+          <form onSubmit={(e) => { submitSearch(e); setOpen(false) }} className="flex gap-2">
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder={t('searchPlaceholder')} className="flex-1 px-3 py-2 text-sm rounded-md bg-white/[0.04] border border-white/10 text-white placeholder-slate-500" />
+            <button className="px-3 py-2 rounded-md bg-[#F5C518] text-black text-sm font-medium">{t('searchBtn')}</button>
+          </form>
+          <div className="flex flex-col gap-1">
             {nav.map(n => (
-              <Link key={n.label} href={n.href} onClick={() => setOpen(false)} className="px-3 py-2 text-sm text-slate-300 hover:text-white rounded-md hover:bg-white/5">{n.label}</Link>
+              <Link key={n.label} href={n.href} onClick={() => setOpen(false)} className="px-2 py-2 text-sm text-slate-300 hover:text-white">{n.label}</Link>
             ))}
-            <div className="flex items-center justify-between pt-3 border-t border-white/10 mt-2">
-              <div className="flex gap-1">
-                {locales.map(l => (
-                  <button key={l} onClick={() => { switchLocale(l); setOpen(false) }} className={`px-2 py-1 text-xs rounded ${l === locale ? 'bg-[#F5C518] text-black' : 'text-slate-300 hover:bg-white/5'}`}>{localeNames[l]}</button>
-                ))}
-              </div>
-              {user ? (
-                <div className="flex gap-2">
-                  <Button asChild size="sm" variant="ghost" className="text-slate-200"><Link href={`/${locale}/favorites`} onClick={() => setOpen(false)}><Star className="w-4 h-4" /></Link></Button>
-                  <Button size="sm" variant="ghost" onClick={signOut} className="text-slate-200">{t('logout')}</Button>
-                </div>
-              ) : (
-                <Button asChild size="sm" className="bg-[#F5C518] hover:bg-[#e6b800] text-black"><Link href={`/${locale}/login`} onClick={() => setOpen(false)}>{t('login')}</Link></Button>
-              )}
-            </div>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-slate-400 pt-2 border-t border-white/10">
+            {locales.map(l => (
+              <button key={l} onClick={() => { switchLocale(l); setOpen(false) }} className={`px-2 py-1 rounded ${l === locale ? 'bg-[#F5C518] text-black font-medium' : 'text-slate-300'}`}>{localeNames[l]}</button>
+            ))}
           </div>
         </div>
       )}

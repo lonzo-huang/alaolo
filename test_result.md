@@ -279,29 +279,13 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: |
-      Phase 1-3 complete: Supabase schema + RLS + seed done. Full i18n Next.js 15 App Router with Header, Home, Detail (10 modules), Login, Favorites, sitemap, robots. 
-      6 demo resources seeded with full 4-language JSONB content: claude, chatgpt, mdn, public-apis, awesome-selfhosted, papers-with-code.
-      
-      Backend testing focus:
-      1. Verify server-side Supabase queries return data:
-         - GET /zh -> homepage, should render 6 resource cards + sections
-         - GET /en -> English version
-         - GET /zh/resource/claude -> full detail page with all 10 modules populated
-         - GET /zh/resource/nonexistent -> should return 404
-         - GET /sitemap.xml -> valid XML with URL entries
-         - GET /robots.txt -> valid robots
-      2. Verify auth callback route responds (even without doing a full OAuth flow)
-      3. Verify RLS: without auth, favorites table should not return other users' rows
-      
-      Environment:
-      - Base URL: https://478e7093-a2e9-4fdd-be42-65710e66001b.preview.emergentagent.com
-      - Supabase URL: https://nqqfhwxdfdfuyncrfmjb.supabase.co
-      - All env vars in /app/.env
-      
-      Known limitations:
-      - GitHub/Google OAuth not configured in Supabase Auth (deferred to user)
-      - Login flow needs user's real email to test magic link
-      - Cmd+K global search NOT implemented in this round (user opted out)
+      DESIGN REWRITE ROUND 2: User requested to fully match https://content-universe.lovable.app/ design.
+      Rewrote Header (search bar visible + inline language switcher + no login button), HomeClient (grid pattern hero + rainbow gradient title + quick action pills + two-column UPDATED/TRENDING/FEATURED/HOT AI sections + full RESOURCES section), ResourceCard (compact card with logo + name + slogan + description + colored category chip + gray highlight chips + Details/Visit buttons + rating), and detail page (breadcrumb + RESOURCES label + big title + Open Resource/Learning Path buttons + horizontal meta bar + use cases with dash bullets + screenshots).
+      All 4 languages (zh/en/ja/ko) updated with new copy matching Lovable's tone.
+      Fixed missing `home.searchBtn` message key (now uses `nav.searchBtn`).
+      Auth code (login page, favorites, callback) kept intact but login button hidden from Header per Lovable design.
+      Please regress-test all backend/frontend routes: /zh, /en, /ja, /ko homepages, /{locale}/resource/{claude,chatgpt,mdn,public-apis,awesome-selfhosted,papers-with-code}, /{locale}/resource/nonexistent (404), /sitemap.xml, /robots.txt.
+      Data unchanged (still 6 seeded resources from previous round).
   - agent: "testing"
     message: |
       Backend testing complete - ALL TESTS PASSED (27/27, 100% pass rate).
@@ -356,3 +340,76 @@ agent_communication:
       ✅ .gitignore verification → .env correctly excluded (lines 84-86 in /app/.gitignore)
       
       No regression detected. All functionality working as expected. The .gitignore correctly excludes .env and .next for security - this behavior is intentional and should remain.
+  - agent: "testing"
+    message: |
+      REGRESSION TEST ROUND 2 - Design Rewrite Verification - ALL TESTS PASSED (34/34, 100% pass rate)
+      
+      Tested new Lovable-inspired design implementation across all backend endpoints.
+      
+      ✅ Test Results Summary:
+      
+      1. Homepage across locales (10/10 passed):
+         - Root / redirects to /zh correctly
+         - /zh: NEW hero copy verified - "找工具", "找资源", "找 AI", "一个站点就够" ✓
+         - /zh: Badge text "自动采集 · AI 处理 · 人工审核" present ✓
+         - /zh: Section labels (UPDATED/TRENDING/FEATURED/HOT AI/RESOURCES) and Chinese titles (最近更新/本周热门/精选工具/热门 AI 工具/资源导航) all present ✓
+         - /zh: All 6 resources present (Claude, ChatGPT, MDN Web Docs, Public APIs, Awesome Self-Hosted, Papers with Code) ✓
+         - /en: NEW English hero copy "Find tools", "find resources", "find AI" present ✓
+         - /en: Section labels UPDATED/TRENDING present ✓
+         - /ja: Japanese hero copy "ツールを探す", "リソースを探す" present ✓
+         - /ko: Korean hero copy "도구 찾기", "리소스 찾기" present ✓
+         - hreflang alternates for all 4 languages present ✓
+      
+      2. Header structure (4/4 passed):
+         - Login button correctly hidden (not present in HTML) ✓
+         - Submit resource link "提交资源" present ✓
+         - Inline language switcher with all 4 languages (中文 / English / 日本語 / 한국어) present ✓
+         - Visible search input with "搜索" button present ✓
+      
+      3. Detail pages with NEW design (10/10 passed):
+         - /zh/resource/mdn: Breadcrumb "首页 / 资源导航 / MDN Web Docs" present ✓
+         - /zh/resource/mdn: RESOURCES label present ✓
+         - /zh/resource/mdn: "打开资源" button present ✓
+         - /zh/resource/mdn: "学习路径" button present ✓
+         - /zh/resource/mdn: "使用场景" heading present ✓
+         - /zh/resource/mdn: "媒体与示例" heading present ✓
+         - /zh/resource/claude: "Claude", "打开资源", "价格" all present ✓
+         - /zh/resource/claude: All 4 pricing tiers (Pro, Free, Team, API) present ✓
+         - /en/resource/chatgpt: English content "Open resource", "Home", "Resources", "ChatGPT" all present ✓
+         - /zh/resource/nonexistent-slug: Correctly returns 404 ✓
+      
+      4. Card content on homepage (3/3 passed):
+         - All 6 resource names present on cards ✓
+         - "查看详情" / "Details" button present on cards ✓
+         - "访问" / "Visit" button present on cards ✓
+      
+      5. Search functionality (2/2 passed):
+         - /zh?q=Claude: Page renders with Claude in content ✓
+         - /zh?cat=ai: Page renders with AI resources (Claude/ChatGPT) ✓
+      
+      6. SEO endpoints (4/4 passed):
+         - /sitemap.xml: Valid XML structure ✓
+         - /sitemap.xml: Contains 28 URLs (4 locale homepages + 24 resource detail pages for 6 resources x 4 locales) ✓
+         - /sitemap.xml: URLs for all 4 locales present ✓
+         - /robots.txt: Valid robots.txt structure ✓
+         
+         NOTE: Review request mentioned 120 URLs in sitemap, but actual implementation correctly has 28 URLs:
+         - 4 homepage URLs (one per locale: zh, en, ja, ko)
+         - 24 resource detail URLs (6 resources x 4 locales)
+         This is the correct count for the current implementation.
+      
+      7. Supabase RLS enforcement (1/1 passed):
+         - Unauthenticated INSERT into favorites correctly blocked (HTTP 401) ✓
+      
+      🎉 ALL BACKEND TESTS PASSED - Design rewrite successfully verified!
+      
+      All new design elements from Lovable reference are present and working:
+      - New rainbow gradient hero title with specific copy
+      - Badge with "自动采集 · AI 处理 · 人工审核"
+      - Section labels (UPDATED/TRENDING/FEATURED/HOT AI/RESOURCES)
+      - Header without login button, with submit resource link and inline language switcher
+      - Detail pages with breadcrumb, RESOURCES label, and new button labels
+      - Card buttons (查看详情/Details and 访问/Visit)
+      
+      No critical issues found. All backend endpoints returning correct HTTP status codes and expected content.
+
