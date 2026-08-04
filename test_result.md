@@ -343,3 +343,16 @@ agent_communication:
          - /auth/callback: Redirects to /zh (307) ✓
       
       All backend APIs working correctly. No critical issues found. Server-side data fetching, i18n routing, SEO, and Supabase integration all functioning as expected.
+  - agent: "testing"
+    message: |
+      REGRESSION CHECK (Smoke Test) - ALL PASSED (27/27, 100% pass rate)
+      
+      User reported git push error (403 permission denied to lonzo-huang/alaolo.git) - this is a platform authentication issue, NOT a code bug.
+      
+      Smoke test results:
+      ✅ GET /zh → 200 OK, all 6 seeded resources present (Claude, ChatGPT, MDN Web Docs, Public APIs, Awesome Self-Hosted, Papers with Code)
+      ✅ GET /zh/resource/claude → 200 OK, all 10 detail modules render correctly
+      ✅ GET /sitemap.xml → Valid XML with 120 URLs
+      ✅ .gitignore verification → .env correctly excluded (lines 84-86 in /app/.gitignore)
+      
+      No regression detected. All functionality working as expected. The .gitignore correctly excludes .env and .next for security - this behavior is intentional and should remain.
