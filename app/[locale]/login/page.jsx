@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import { toast } from 'sonner'
@@ -8,11 +8,14 @@ import { Github, Mail, ArrowRight } from 'lucide-react'
 
 export default function LoginPage({ params }) {
   const t = useTranslations('auth')
+  const locale = useLocale()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [mode, setMode] = useState('signin')  // signin | signup | magic
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  const callbackUrl = () => `${window.location.origin}/auth/callback?next=/${locale}`
 
   const submit = async (e) => {
     e.preventDefault()
@@ -20,18 +23,19 @@ export default function LoginPage({ params }) {
     const sb = createSupabaseBrowser()
     try {
       if (mode === 'magic') {
-        const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } })
+        const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: callbackUrl() } })
         if (error) throw error
         toast.success(t('magicSent'))
       } else if (mode === 'signup') {
-        const { error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } })
+        const { error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: callbackUrl() } })
         if (error) throw error
         toast.success(t('magicSent'))
       } else {
         const { error } = await sb.auth.signInWithPassword({ email, password })
         if (error) throw error
         toast.success(t('welcome'))
-        router.back()
+        router.push(`/${locale}`)
+        router.refresh()
       }
     } catch (e) {
       toast.error(e.message || t('error'))
@@ -41,9 +45,13 @@ export default function LoginPage({ params }) {
   }
 
   const oauth = async (provider) => {
+    setLoading(true)
     const sb = createSupabaseBrowser()
-    const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: `${window.location.origin}/auth/callback` } })
-    if (error) toast.error(error.message)
+    const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: callbackUrl() } })
+    if (error) {
+      toast.error(`${provider} \u767b\u5f55\u672a\u542f\u7528\uff0c\u8bf7\u5148\u5728 Supabase Dashboard \u542f\u7528 ${provider} provider`)
+      setLoading(false)
+    }
   }
 
   return (
