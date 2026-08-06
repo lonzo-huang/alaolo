@@ -28,8 +28,8 @@ export default async function LocaleLayout({ children, params }) {
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className="dark" suppressHydrationWarning>
-      <body className="min-h-screen bg-[#0A0D14] text-slate-100 antialiased">
+    <html lang={locale} suppressHydrationWarning>
+      <body className="min-h-screen bg-app text-primary antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <Header locale={locale} />

@@ -49,24 +49,32 @@ export function HomeClient({ locale, byCategory, all }) {
         <div className="absolute top-20 right-1/4 w-[500px] h-[300px] bg-purple-500/8 blur-[130px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto max-w-5xl px-4 pt-20 pb-14 relative text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] text-slate-400 mb-8 font-mono uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-app text-[11.5px] text-secondary mb-8 font-mono uppercase tracking-wider">
             <span className="w-1 h-1 rounded-full bg-[#F5C518] animate-pulse" />
             AI-crawled · Structured · Multi-lingual
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-[62px] font-bold tracking-tight leading-[1.1] max-w-4xl mx-auto">
-            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-slate-500">{t('heroHead')}</span>
+          <h1 className="text-4xl md:text-5xl lg:text-[58px] font-bold tracking-tight leading-[1.1] max-w-4xl mx-auto text-primary">
+            ✨ {t('heroHead')}
           </h1>
-          <p className="mt-6 text-slate-400 text-[15px] md:text-base leading-relaxed max-w-2xl mx-auto">{t('heroSub')}</p>
+          <p className="mt-6 text-secondary text-[15px] md:text-base leading-relaxed max-w-2xl mx-auto">{t('heroSub')}</p>
 
-          <form onSubmit={submitSearch} className="mt-9 relative max-w-xl mx-auto">
-            <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
-            <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search anything..." className="w-full pl-11 pr-24 py-3 rounded-xl bg-[#121215] border border-white/[0.08] text-white placeholder-slate-500 focus:border-white/20 focus:outline-none focus:ring-1 focus:ring-white/10 text-[14px]" />
-            <button type="submit" className="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-white text-[12.5px] font-medium">Search</button>
+          <form onSubmit={submitSearch} className="mt-9 relative max-w-2xl mx-auto">
+            <Search className="w-4 h-4 text-tertiary absolute left-4 top-1/2 -translate-y-1/2" />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder="搜索工具、量子教程、开源资源与产品推荐..." className="w-full pl-11 pr-32 py-3.5 rounded-xl bg-surface border border-app-strong text-primary placeholder-tertiary focus:border-[#F5C518]/40 focus:outline-none focus:ring-2 focus:ring-[#F5C518]/20 text-[14px]" />
+            <kbd className="absolute right-24 top-1/2 -translate-y-1/2 font-mono text-[10.5px] text-tertiary bg-surface-hover border border-app rounded px-1.5 py-0.5">⌘K</kbd>
+            <button type="submit" className="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black text-[12.5px] font-semibold">Search</button>
           </form>
+
+          <div className="mt-5 flex flex-wrap justify-center items-center gap-2 text-[12px] text-tertiary">
+            <span className="text-tertiary font-medium">🔥</span>
+            {['DeepSeek', 'Qiskit', 'Cursor', 'Self-Hosted', 'AWS Braket'].map(kw => (
+              <Link key={kw} href={`/${locale}?q=${encodeURIComponent(kw)}`} className="px-2.5 py-1 rounded-full bg-surface border border-app text-secondary hover:text-primary hover:border-app-strong transition-all">{kw}</Link>
+            ))}
+          </div>
 
           <div className="mt-5 flex flex-wrap justify-center gap-1.5">
             {chips.map(c => (
-              <Link key={c.key} href={c.key === 'all' ? `/${locale}` : `/${locale}?cat=${c.key}`} className={`px-3 py-1 rounded-full text-[12.5px] border transition-all ${chip === c.key ? 'bg-white text-black border-white font-medium' : 'bg-white/[0.03] text-slate-400 border-white/[0.08] hover:text-white hover:border-white/20'}`}>{c.label}</Link>
+              <Link key={c.key} href={c.key === 'all' ? `/${locale}` : `/${locale}?cat=${c.key}`} className={`px-3 py-1 rounded-full text-[12.5px] border transition-all ${chip === c.key ? 'bg-[#F5C518] text-black border-[#F5C518] font-medium' : 'bg-surface text-secondary border-app hover:text-primary hover:border-app-strong'}`}>{c.label}</Link>
             ))}
           </div>
         </div>
@@ -108,9 +116,9 @@ function SectionHeader({ icon, label, title, href }) {
     <div className="flex items-end justify-between pt-16 pb-6">
       <div>
         <div className="inline-flex items-center gap-1.5 text-[10.5px] font-mono uppercase tracking-[0.2em] text-[#F5C518]">{icon}{label}</div>
-        <h2 className="mt-2 text-2xl md:text-3xl font-bold text-white tracking-tight">{title}</h2>
+        <h2 className="mt-2 text-2xl md:text-3xl font-bold text-primary tracking-tight">{title}</h2>
       </div>
-      {href && <Link href={href} className="text-[12.5px] text-slate-400 hover:text-white flex items-center gap-1">{t('viewAll')}</Link>}
+      {href && <Link href={href} className="text-[12.5px] text-secondary hover:text-primary flex items-center gap-1">{t('viewAll')}</Link>}
     </div>
   )
 }
@@ -142,7 +150,7 @@ function BentoCard({ r, locale, className = '', featured, small }) {
   const t = useTranslations('home')
   const accent = SUB_ACCENT[r.subcategory] || 'from-slate-500'
   return (
-    <Link href={`/${locale}/resource/${r.slug}`} className={`group relative rounded-xl border border-white/[0.06] bg-[#121215] hover:border-white/[0.14] hover:bg-[#14141A] transition-all overflow-hidden flex flex-col p-5 card-glow ${className} ${small ? 'min-h-[160px]' : ''}`}>
+    <Link href={`/${locale}/resource/${r.slug}`} className={`group relative rounded-xl border border-white/[0.06] bg-surface hover:border-white/[0.14] hover:bg-[#14141A] transition-all overflow-hidden flex flex-col p-5 card-glow ${className} ${small ? 'min-h-[160px]' : ''}`}>
       <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-3xl opacity-[0.18] bg-gradient-radial ${accent} to-transparent pointer-events-none`} style={{ background: `radial-gradient(circle, ${r.brand_color || '#F5C518'}55, transparent 70%)` }} />
 
       <div className="flex items-start justify-between gap-2 relative">
@@ -151,22 +159,22 @@ function BentoCard({ r, locale, className = '', featured, small }) {
             {r.logo_url && <img src={r.logo_url} alt="" className="w-5 h-5 object-contain" />}
           </div>
           <div className="min-w-0">
-            <div className="font-semibold text-white text-[14px] tracking-tight truncate">{tt(r.name, locale)}</div>
-            <div className="text-[10.5px] font-mono text-slate-500 uppercase tracking-wider">{r.subcategory}</div>
+            <div className="font-semibold text-primary text-[14px] tracking-tight truncate">{tt(r.name, locale)}</div>
+            <div className="text-[10.5px] font-mono text-tertiary uppercase tracking-wider">{r.subcategory}</div>
           </div>
         </div>
-        <ArrowUpRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-white transition-colors shrink-0" />
+        <ArrowUpRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-primary transition-colors shrink-0" />
       </div>
 
-      <div className={`mt-3 text-[13px] text-slate-400 leading-relaxed ${featured ? 'line-clamp-3' : 'line-clamp-2'}`}>{tt(r.slogan, locale)}</div>
+      <div className={`mt-3 text-[13px] text-secondary leading-relaxed ${featured ? 'line-clamp-3' : 'line-clamp-2'}`}>{tt(r.slogan, locale)}</div>
 
-      {featured && <div className="mt-2 text-[12px] text-slate-500 leading-relaxed line-clamp-3">{tt(r.description, locale)}</div>}
+      {featured && <div className="mt-2 text-[12px] text-tertiary leading-relaxed line-clamp-3">{tt(r.description, locale)}</div>}
 
       <div className="mt-auto pt-3 flex items-center gap-2 flex-wrap">
         {r.price_type && <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${r.price_type === 'Free' ? 'text-emerald-300 border-emerald-500/30 bg-emerald-500/10' : r.price_type === 'Paid' ? 'text-orange-300 border-orange-500/30 bg-orange-500/10' : 'text-blue-300 border-blue-500/30 bg-blue-500/10'}`}>{r.price_type}</span>}
-        {r.platforms?.list?.slice(0, 3).map(p => <span key={p} className="text-[10px] text-slate-500 font-mono">{p}</span>)}
+        {r.platforms?.list?.slice(0, 3).map(p => <span key={p} className="text-[10px] text-tertiary font-mono">{p}</span>)}
         <div className="flex-1" />
-        {r.rating > 0 && <span className="text-[10.5px] text-slate-400 flex items-center gap-0.5"><Star className="w-2.5 h-2.5 fill-[#F5C518] text-[#F5C518]" />{r.rating}</span>}
+        {r.rating > 0 && <span className="text-[10.5px] text-secondary flex items-center gap-0.5"><Star className="w-2.5 h-2.5 fill-[#F5C518] text-[#F5C518]" />{r.rating}</span>}
       </div>
     </Link>
   )
@@ -180,7 +188,7 @@ function KnowledgeMagazine({ locale, items }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
       {feat && (
-        <Link href={`/${locale}/resource/${feat.slug}`} className="lg:col-span-3 group relative rounded-2xl border border-white/[0.06] bg-[#121215] overflow-hidden hover:border-white/15 transition-all card-glow">
+        <Link href={`/${locale}/resource/${feat.slug}`} className="lg:col-span-3 group relative rounded-2xl border border-white/[0.06] bg-surface overflow-hidden hover:border-white/15 transition-all card-glow">
           <div className="aspect-[16/10] relative overflow-hidden">
             {feat.cover_image ? (
               <img src={feat.cover_image} alt="" className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity" />
@@ -192,23 +200,23 @@ function KnowledgeMagazine({ locale, items }) {
             {feat.difficulty && <div className="absolute top-4 right-4 px-2 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10 text-[10.5px] font-mono text-slate-300">{feat.difficulty}</div>}
           </div>
           <div className="p-6">
-            <div className="text-[10.5px] font-mono uppercase tracking-widest text-slate-500 mb-2">{feat.subcategory}{feat.read_time && ` · ${feat.read_time}`}</div>
-            <h3 className="text-2xl font-bold text-white tracking-tight leading-snug">{tt(feat.name, locale)}</h3>
-            <p className="mt-2 text-[14px] text-slate-400 leading-relaxed line-clamp-2">{tt(feat.slogan, locale)}</p>
+            <div className="text-[10.5px] font-mono uppercase tracking-widest text-tertiary mb-2">{feat.subcategory}{feat.read_time && ` · ${feat.read_time}`}</div>
+            <h3 className="text-2xl font-bold text-primary tracking-tight leading-snug">{tt(feat.name, locale)}</h3>
+            <p className="mt-2 text-[14px] text-secondary leading-relaxed line-clamp-2">{tt(feat.slogan, locale)}</p>
             <div className="mt-4 inline-flex items-center gap-1 text-[13px] text-[#F5C518]">{t('readMore')}<ArrowRight className="w-3.5 h-3.5" /></div>
           </div>
         </Link>
       )}
       <div className="lg:col-span-2 flex flex-col gap-3">
         {rest.slice(0, 4).map(r => (
-          <Link key={r.id} href={`/${locale}/resource/${r.slug}`} className="group relative flex gap-4 rounded-xl border border-white/[0.06] bg-[#121215] hover:border-white/15 hover:bg-[#141419] p-4 transition-all">
+          <Link key={r.id} href={`/${locale}/resource/${r.slug}`} className="group relative flex gap-4 rounded-xl border border-white/[0.06] bg-surface hover:border-white/15 hover:bg-[#141419] p-4 transition-all">
             <div className="w-16 h-16 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
               {r.logo_url && <img src={r.logo_url} alt="" className="w-9 h-9 object-contain" />}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mb-1">{r.subcategory}{r.read_time && ` · ${r.read_time}`}{r.difficulty && ` · ${r.difficulty}`}</div>
-              <div className="text-[14.5px] font-semibold text-white tracking-tight leading-tight group-hover:text-white">{tt(r.name, locale)}</div>
-              <div className="text-[12.5px] text-slate-400 line-clamp-2 mt-1">{tt(r.slogan, locale)}</div>
+              <div className="text-[10px] font-mono uppercase tracking-widest text-tertiary mb-1">{r.subcategory}{r.read_time && ` · ${r.read_time}`}{r.difficulty && ` · ${r.difficulty}`}</div>
+              <div className="text-[14.5px] font-semibold text-primary tracking-tight leading-tight group-hover:text-primary">{tt(r.name, locale)}</div>
+              <div className="text-[12.5px] text-secondary line-clamp-2 mt-1">{tt(r.slogan, locale)}</div>
             </div>
           </Link>
         ))}
@@ -223,18 +231,18 @@ function ResourcesCompact({ locale, items }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {items.map(r => (
-        <Link key={r.id} href={`/${locale}/resource/${r.slug}`} className="group flex items-center gap-3 rounded-xl border border-white/[0.06] bg-[#121215] hover:border-white/15 hover:bg-[#141419] p-4 transition-all">
+        <Link key={r.id} href={`/${locale}/resource/${r.slug}`} className="group flex items-center gap-3 rounded-xl border border-white/[0.06] bg-surface hover:border-white/15 hover:bg-[#141419] p-4 transition-all">
           <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
             {r.logo_url && <img src={r.logo_url} alt="" className="w-6 h-6" />}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <div className="text-[14px] font-semibold text-white tracking-tight truncate">{tt(r.name, locale)}</div>
-              <ArrowUpRight className="w-3 h-3 text-slate-600 group-hover:text-white shrink-0" />
+              <div className="text-[14px] font-semibold text-primary tracking-tight truncate">{tt(r.name, locale)}</div>
+              <ArrowUpRight className="w-3 h-3 text-slate-600 group-hover:text-primary shrink-0" />
             </div>
-            <div className="text-[12px] text-slate-500 truncate">{tt(r.slogan, locale)}</div>
+            <div className="text-[12px] text-tertiary truncate">{tt(r.slogan, locale)}</div>
           </div>
-          <div className="flex flex-col items-end gap-1 shrink-0 text-[10px] font-mono text-slate-500">
+          <div className="flex flex-col items-end gap-1 shrink-0 text-[10px] font-mono text-tertiary">
             {r.github_stars > 0 && <span className="flex items-center gap-1"><Github className="w-2.5 h-2.5" />{r.github_stars > 1000 ? `${Math.round(r.github_stars / 1000)}k` : r.github_stars}</span>}
             <span className="uppercase tracking-wider">{r.subcategory}</span>
           </div>
@@ -264,15 +272,15 @@ function RecommendationsReview({ locale, items }) {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-white text-[16px] tracking-tight truncate">{tt(r.name, locale)}</h3>
+                  <h3 className="font-semibold text-primary text-[16px] tracking-tight truncate">{tt(r.name, locale)}</h3>
                   {r.rating > 0 && (
                     <span className="flex items-center gap-0.5 text-[11px] text-slate-300 shrink-0">
                       {[1,2,3,4,5].map(n => <Star key={n} className={`w-3 h-3 ${n <= Math.round(r.rating) ? 'fill-[#F5C518] text-[#F5C518]' : 'text-slate-700'}`} />)}
-                      <span className="ml-1 font-mono text-slate-500">{r.rating}</span>
+                      <span className="ml-1 font-mono text-tertiary">{r.rating}</span>
                     </span>
                   )}
                 </div>
-                <p className="text-[13px] text-slate-400 mt-0.5">{tt(r.slogan, locale)}</p>
+                <p className="text-[13px] text-secondary mt-0.5">{tt(r.slogan, locale)}</p>
               </div>
               {discountLabel && <span className="text-[10.5px] font-mono px-2 py-1 rounded-md bg-[#F5C518]/15 border border-[#F5C518]/40 text-[#F5C518] shrink-0">{discountLabel}</span>}
             </div>
@@ -284,7 +292,7 @@ function RecommendationsReview({ locale, items }) {
               </div>
             )}
 
-            <p className="mt-3 text-[13px] text-slate-400 leading-relaxed line-clamp-2">{tt(r.description, locale)}</p>
+            <p className="mt-3 text-[13px] text-secondary leading-relaxed line-clamp-2">{tt(r.description, locale)}</p>
 
             <div className="mt-4 flex items-center gap-2">
               <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black text-[12.5px] font-medium">
@@ -292,7 +300,7 @@ function RecommendationsReview({ locale, items }) {
               </a>
               <Link href={`/${locale}/resource/${r.slug}`} className="inline-flex items-center gap-1 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-slate-200 hover:bg-white/[0.08] text-[12.5px]">Full review</Link>
               <div className="flex-1" />
-              <span className="text-[10.5px] font-mono text-slate-500 uppercase tracking-wider">{r.subcategory}</span>
+              <span className="text-[10.5px] font-mono text-tertiary uppercase tracking-wider">{r.subcategory}</span>
             </div>
           </div>
         )

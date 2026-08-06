@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { Search, Menu, X, Globe, Check, Command } from 'lucide-react'
 import { locales, localeNames, localeFlags } from '@/lib/i18n/config'
 import { CommandPalette } from './CommandPalette'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Header({ locale }) {
   const t = useTranslations('nav')
@@ -40,38 +41,40 @@ export function Header({ locale }) {
 
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-40 border-b border-white/[0.06] bg-[#09090B]/85 backdrop-blur-xl">
+      <header className="fixed top-0 inset-x-0 z-40 border-b border-app glass">
         <div className="container mx-auto max-w-7xl h-14 flex items-center gap-6 px-4">
           <Link href={`/${locale}`} className="flex items-center gap-2 group shrink-0">
             <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#F5C518] to-orange-500 flex items-center justify-center font-black text-black text-sm">a</div>
-            <span className="font-semibold text-white text-[15px] tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent hidden sm:inline">alaolo</span>
+            <span className="font-semibold text-primary text-[15px] tracking-tight hidden sm:inline">alaolo</span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-0.5">
             {nav.map(n => (
-              <Link key={n.label} href={n.href} className="px-3 py-1.5 text-[13px] text-slate-400 hover:text-white rounded-md hover:bg-white/[0.04] transition-colors">{n.label}</Link>
+              <Link key={n.label} href={n.href} className="px-3 py-1.5 text-[13px] text-secondary hover:text-primary rounded-md hover:bg-surface-hover transition-colors">{n.label}</Link>
             ))}
           </nav>
 
           <div className="flex-1" />
 
-          <button onClick={() => setCmdOpen(true)} className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-slate-400 hover:text-white hover:border-white/10 text-[13px] group min-w-[280px]">
+          <button onClick={() => setCmdOpen(true)} className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md bg-surface border border-app hover:border-app-strong text-secondary hover:text-primary text-[13px] group min-w-[280px]">
             <Search className="w-3.5 h-3.5" />
             <span className="flex-1 text-left">{t('searchPlaceholder')}</span>
-            <kbd className="font-mono text-[10.5px] text-slate-500 bg-white/[0.04] border border-white/[0.06] rounded px-1 py-0.5">⌘K</kbd>
+            <kbd className="font-mono text-[10.5px] text-tertiary bg-surface-hover border border-app rounded px-1 py-0.5">⌘K</kbd>
           </button>
 
-          <Link href={`/${locale}/submit`} className="hidden lg:inline-flex text-[13px] text-slate-400 hover:text-white px-2 py-1.5">{t('submit')}</Link>
+          <Link href={`/${locale}/submit`} className="hidden lg:inline-flex text-[13px] text-secondary hover:text-primary px-2 py-1.5">{t('submit')}</Link>
+
+          <ThemeToggle />
 
           <div className="relative hidden md:block" ref={langRef}>
-            <button onClick={() => setLangOpen(v => !v)} className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-slate-400 hover:text-white hover:bg-white/[0.04] text-sm">
+            <button onClick={() => setLangOpen(v => !v)} className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-secondary hover:text-primary hover:bg-surface-hover text-sm">
               <Globe className="w-4 h-4" />
               <span className="text-[12.5px] hidden xl:inline">{localeNames[locale]}</span>
             </button>
             {langOpen && (
-              <div className="absolute right-0 top-full mt-1 w-44 rounded-lg border border-white/10 bg-[#121215] shadow-2xl py-1 z-50">
+              <div className="absolute right-0 top-full mt-1 w-44 rounded-lg border border-app-strong bg-surface shadow-2xl py-1 z-50">
                 {locales.map(l => (
-                  <button key={l} onClick={() => switchLocale(l)} className={`w-full flex items-center justify-between px-3 py-1.5 text-[13px] hover:bg-white/5 ${l === locale ? 'text-[#F5C518]' : 'text-slate-200'}`}>
+                  <button key={l} onClick={() => switchLocale(l)} className={`w-full flex items-center justify-between px-3 py-1.5 text-[13px] hover:bg-surface-hover ${l === locale ? 'text-[#F5C518]' : 'text-primary'}`}>
                     <span className="flex items-center gap-2"><span>{localeFlags[l]}</span>{localeNames[l]}</span>
                     {l === locale && <Check className="w-3.5 h-3.5" />}
                   </button>
@@ -80,7 +83,7 @@ export function Header({ locale }) {
             )}
           </div>
 
-          <button onClick={() => setOpen(v => !v)} className="md:hidden text-slate-300 p-1">
+          <button onClick={() => setOpen(v => !v)} className="md:hidden text-secondary p-1">
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>

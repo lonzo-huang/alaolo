@@ -4,60 +4,71 @@
 
 @layer base {
   :root {
-    --background: 240 6% 4%;
-    --foreground: 0 0% 95%;
-    --card: 240 6% 7%;
-    --card-foreground: 0 0% 95%;
-    --popover: 240 6% 7%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 46 92% 53%;
-    --primary-foreground: 0 0% 5%;
-    --secondary: 240 5% 12%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 240 5% 12%;
-    --muted-foreground: 240 5% 55%;
-    --accent: 240 5% 12%;
-    --accent-foreground: 0 0% 95%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 95%;
-    --border: 240 6% 15%;
-    --input: 240 6% 15%;
-    --ring: 46 92% 53%;
-    --radius: 0.75rem;
+    --bg: 0 0% 100%;
+    --surface: 240 5% 96%;
+    --text: 240 10% 4%;
+    --text-muted: 240 5% 30%;
+    --border-c: 240 5% 88%;
+    --primary: 46 92% 48%;
+    --ring: 46 92% 48%;
   }
-  * { @apply border-border; }
-  html, body { background: #09090B; color: rgb(226 232 240); font-feature-settings: "cv02", "cv03", "cv04", "cv11"; }
-  ::selection { background: rgba(245, 197, 24, 0.3); color: white; }
+  html.dark {
+    --bg: 240 8% 8%;
+    --surface: 240 8% 12%;
+    --text: 0 0% 100%;
+    --text-muted: 240 5% 70%;
+    --border-c: 240 5% 20%;
+    --primary: 46 92% 55%;
+  }
+  * { border-color: hsl(var(--border-c)); }
+  html, body { background: hsl(var(--bg)); color: hsl(var(--text)); font-feature-settings: "cv02", "cv03"; }
+  html.dark body { background: #101014; color: #ffffff; }
+  html:not(.dark) body { background: #fafafa; color: #09090b; }
 }
 
 html { scroll-behavior: smooth; }
-
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.2); border-radius: 4px; }
 
 .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-/* Grid dot pattern */
 .pattern-dots {
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 1px, transparent 0);
   background-size: 32px 32px;
 }
+html:not(.dark) .pattern-dots {
+  background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0);
+}
 
-/* Ambient glow behind cards */
-.card-glow { position: relative; }
-.card-glow::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(140deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02) 40%, transparent 70%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
+/* Theme-aware helpers */
+.bg-app { background: #101014; }
+html:not(.dark) .bg-app { background: #fafafa; }
+.bg-surface { background: #16161c; }
+html:not(.dark) .bg-surface { background: #ffffff; }
+.bg-surface-hover { background: #1c1c24; }
+html:not(.dark) .bg-surface-hover { background: #f4f4f5; }
+.text-primary { color: #ffffff; }
+html:not(.dark) .text-primary { color: #09090b; }
+.text-secondary { color: #a8a8b8; }
+html:not(.dark) .text-secondary { color: #52525b; }
+.text-tertiary { color: #6b6b7c; }
+html:not(.dark) .text-tertiary { color: #71717a; }
+.border-app { border-color: rgba(255,255,255,0.08); }
+html:not(.dark) .border-app { border-color: rgba(0,0,0,0.08); }
+.border-app-strong { border-color: rgba(255,255,255,0.15); }
+html:not(.dark) .border-app-strong { border-color: rgba(0,0,0,0.12); }
+
+/* Glass header (mirrorspeed style) */
+.glass {
+  background: rgba(16, 16, 20, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+html:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
