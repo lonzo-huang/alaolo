@@ -11,10 +11,15 @@ import '../globals.css'
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: {
-    default: 'alaolo · Resource Hub',
+    default: 'alaolo · all latest articles on leading objects',
     template: '%s · alaolo',
   },
   description: 'A curated hub of the best developer, AI, and productivity resources.',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 }
 
 export function generateStaticParams() {
