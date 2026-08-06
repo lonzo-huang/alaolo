@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react'
 
 const ThemeCtx = createContext({ theme: 'dark', setTheme: () => {}, source: 'auto' })
 export const useTheme = () => useContext(ThemeCtx)
@@ -48,6 +48,7 @@ function getSunTimes(lat, lng, date) {
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState('dark')
   const [source, setSource] = useState('auto')
+  const autoCancelled = useRef(false)
 
   const apply = useCallback((t) => {
     document.documentElement.classList.toggle('dark', t === 'dark')
@@ -62,11 +63,13 @@ export function ThemeProvider({ children }) {
       setThemeState(stored)
       apply(stored)
     } else {
-      detectByGeo().then(t => { setThemeState(t); apply(t) })
+      autoCancelled.current = false
+      detectByGeo().then(t => { if (!autoCancelled.current) { setThemeState(t); apply(t) } })
     }
   }, [apply])
 
   const setTheme = useCallback((t) => {
+    autoCancelled.current = true
     setThemeState(t)
     setSource('manual')
     localStorage.setItem('theme', t)
@@ -75,10 +78,11 @@ export function ThemeProvider({ children }) {
   }, [apply])
 
   const resetAuto = useCallback(() => {
+    autoCancelled.current = false
     setSource('auto')
     localStorage.setItem('theme-source', 'auto')
     localStorage.removeItem('theme')
-    detectByGeo().then(t => { setThemeState(t); apply(t) })
+    detectByGeo().then(t => { if (!autoCancelled.current) { setThemeState(t); apply(t) } })
   }, [apply])
 
   return <ThemeCtx.Provider value={{ theme, setTheme, source, resetAuto }}>{children}</ThemeCtx.Provider>
