@@ -37,11 +37,11 @@ export function Header({ locale }) {
   const nav = [
     { label: t('home'), href: `/${locale}` },
     { label: t('tools'), href: `/${locale}/tools` },
-    { label: t('trending'), href: `/${locale}/trending` },
-    { label: t('leaderboard'), href: `/${locale}/leaderboard` },
     { label: t('knowledge'), href: `/${locale}?cat=knowledge` },
     { label: t('resources'), href: `/${locale}?cat=resources` },
     { label: t('recommendations'), href: `/${locale}?cat=recommendations` },
+    { label: t('trending'), href: `/${locale}/trending` },
+    { label: t('leaderboard'), href: `/${locale}/leaderboard` },
   ]
 
   return (

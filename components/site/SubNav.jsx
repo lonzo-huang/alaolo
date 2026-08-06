@@ -18,8 +18,6 @@ export function SubNav({ locale }) {
   const flatLinks = [
     { key: 'home', label: t('home'), href: `/${locale}` },
     { key: 'tools', label: t('tools'), href: `/${locale}/tools` },
-    { key: 'trending', label: t('trending'), href: `/${locale}/trending` },
-    { key: 'leaderboard', label: t('leaderboard'), href: `/${locale}/leaderboard` },
   ]
 
   const groups = [
@@ -62,6 +60,8 @@ export function SubNav({ locale }) {
           )}
         </div>
       ))}
+      <Link href={`/${locale}/trending`} className="px-3 py-1.5 text-[13px] text-secondary hover:text-primary rounded-md hover:bg-surface-hover transition-colors">{t('trending')}</Link>
+      <Link href={`/${locale}/leaderboard`} className="px-3 py-1.5 text-[13px] text-secondary hover:text-primary rounded-md hover:bg-surface-hover transition-colors">{t('leaderboard')}</Link>
     </nav>
   )
 }
