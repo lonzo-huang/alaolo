@@ -4,253 +4,228 @@ import Link from 'next/link'
 import { t as tt } from '@/lib/i18n/config'
 import { getTranslations } from 'next-intl/server'
 import { ScreenshotCarousel } from '@/components/site/ScreenshotCarousel'
-import { ResourceCard } from '@/components/site/ResourceCard'
 import { ShareModal } from '@/components/site/ShareModal'
-import * as Icons from 'lucide-react'
-import { ArrowUpRight, Check, X as XIcon, ChevronRight, ChevronLeft } from 'lucide-react'
+import { Comments } from '@/components/site/Comments'
+import { ArrowUpRight, Check, X as XIcon, ChevronRight, ChevronLeft, Star, Calendar, Globe, Monitor, DollarSign, Zap, AlertTriangle, Home as HomeIcon, ExternalLink, PlayCircle } from 'lucide-react'
 
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params
   const resource = await getResourceBySlug(slug)
   if (!resource) return {}
   const name = tt(resource.name, locale)
-  const slogan = tt(resource.slogan, locale)
   return {
-    title: `${name} · ${slogan}`,
-    description: tt(resource.description, locale)?.slice(0, 200),
-    openGraph: {
-      title: name,
-      description: slogan,
-      images: resource.logo_url ? [resource.logo_url] : [],
-      url: `/${locale}/resource/${slug}`,
-    },
-    alternates: {
-      canonical: `/${locale}/resource/${slug}`,
-      languages: {
-        zh: `/zh/resource/${slug}`,
-        en: `/en/resource/${slug}`,
-        ja: `/ja/resource/${slug}`,
-        ko: `/ko/resource/${slug}`,
-      },
+    title: name, description: tt(resource.slogan, locale),
+    openGraph: { title: name, description: tt(resource.slogan, locale), images: resource.logo_url ? [resource.logo_url] : [] },
+    alternates: { canonical: `/${locale}/resource/${slug}` },
+    other: {
+      'application/ld+json': JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'SoftwareApplication',
+        name, description: tt(resource.description, locale), image: resource.logo_url, url: resource.website_url,
+        applicationCategory: resource.subcategory, operatingSystem: resource.platforms?.list?.join(', '),
+        aggregateRating: { '@type': 'AggregateRating', ratingValue: resource.rating, ratingCount: Math.max(1, resource.view_count / 100) },
+      }),
     },
   }
 }
 
-export default async function ResourceDetailPage({ params }) {
+export default async function DetailPage({ params }) {
   const { locale, slug } = await params
-  const resource = await getResourceBySlug(slug)
-  if (!resource) notFound()
-
+  const r = await getResourceBySlug(slug)
+  if (!r) notFound()
   const t = await getTranslations({ locale, namespace: 'detail' })
-  const cat = resource.categories
-  const catName = tt(cat?.name, locale)
-  const brandColor = resource.brand_color || '#F5C518'
-
   const [related, adj] = await Promise.all([
-    getRelated(cat?.id, slug, 3),
-    getAdjacentResources(slug, cat?.id),
+    getRelated(r.categories?.id, slug, 6),
+    getAdjacentResources(slug, r.categories?.id),
   ])
 
-  // Build horizontal meta bar from info_grid (first 4-5)
-  const metaItems = (resource.info_grid || []).slice(0, 5)
-
   return (
-    <div className="relative pb-24">
-      {/* Brand ambient glow */}
-      <div className="absolute top-0 inset-x-0 h-[500px] -z-10 opacity-25 pointer-events-none" style={{ background: `radial-gradient(ellipse at top right, ${brandColor}30 0%, transparent 60%)` }} />
+    <div className="pb-32 md:pb-16">
+      {/* Breadcrumb */}
+      <div className="container mx-auto max-w-5xl px-4 pt-6 text-[13px] text-tertiary flex items-center gap-1.5">
+        <Link href={`/${locale}`} className="hover:text-primary"><HomeIcon className="w-3.5 h-3.5 inline mr-1" />Home</Link>
+        <span>/</span>
+        <Link href={`/${locale}?cat=${r.super_category}`} className="hover:text-primary capitalize">{r.super_category}</Link>
+        <span>/</span>
+        <span className="text-primary">{tt(r.name, locale)}</span>
+      </div>
 
       <div className="container mx-auto max-w-5xl px-4">
-        {/* Breadcrumb */}
-        <nav className="pt-6 text-[13px] text-slate-500 flex items-center gap-1.5">
-          <Link href={`/${locale}`} className="hover:text-white">{t('breadcrumbHome')}</Link>
-          <span>/</span>
-          <Link href={`/${locale}?cat=${cat?.slug}`} className="hover:text-white">{t('breadcrumbList')}</Link>
-          <span>/</span>
-          <span className="text-slate-300">{tt(resource.name, locale)}</span>
-        </nav>
-
-        {/* Hero */}
-        <section className="pt-8">
-          <div className="flex items-start gap-5">
-            <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
-              {resource.logo_url ? (
-                <img src={resource.logo_url} alt="" className="w-11 h-11 object-contain" />
-              ) : (
-                <span className="text-3xl font-bold text-white">{tt(resource.name, locale)[0]}</span>
+        {/* 1. HERO */}
+        <section className="pt-8 pb-6">
+          <div className="flex flex-col md:flex-row items-start gap-5">
+            <div className="w-20 h-20 rounded-2xl bg-surface border border-app flex items-center justify-center overflow-hidden shrink-0">
+              {r.logo_url ? <img src={r.logo_url} alt="" className="w-12 h-12" /> : <span className="text-3xl text-primary">{tt(r.name, locale)[0]}</span>}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="text-[10.5px] font-mono uppercase tracking-widest text-[#F5C518]">{r.super_category}</span>
+                {r.subcategory && <span className="text-[10.5px] font-mono uppercase tracking-widest text-tertiary">· {r.subcategory}</span>}
+                {r.trending && <span className="px-2 py-0.5 rounded text-[10.5px] font-mono text-orange-500 bg-orange-500/10 border border-orange-500/40">🔥 Trending</span>}
+                {r.editors_pick && <span className="px-2 py-0.5 rounded text-[10.5px] font-mono text-[#F5C518] bg-[#F5C518]/10 border border-[#F5C518]/40">★ Editor's Pick</span>}
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">{tt(r.name, locale)}</h1>
+              <p className="mt-2 text-secondary text-[15px]">{tt(r.slogan, locale)}</p>
+              {r.rating > 0 && (
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="flex">{[1,2,3,4,5].map(n => <Star key={n} className={`w-4 h-4 ${n <= Math.round(r.rating) ? 'fill-[#F5C518] text-[#F5C518]' : 'text-tertiary'}`} />)}</div>
+                  <span className="text-sm text-secondary font-medium">{r.rating}</span>
+                  <span className="text-xs text-tertiary">· {r.view_count.toLocaleString()} views</span>
+                </div>
               )}
-            </div>
-            <div className="flex-1 min-w-0 pt-1">
-              <div className="text-[11px] font-semibold tracking-[0.15em] text-[#F5C518] mb-1">{t('labelResources')}</div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{tt(resource.name, locale)}</h1>
-              <p className="mt-2 text-slate-400 text-[15px]">{tt(resource.slogan, locale)}</p>
-            </div>
-          </div>
-
-          <div className="mt-6 flex flex-wrap items-center gap-2">
-            <a href={resource.website_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black font-medium text-sm shadow-[0_0_20px_rgba(245,197,24,0.25)]">
-              {t('openResource')}<ArrowUpRight className="w-4 h-4" />
-            </a>
-            <Link href={`/${locale}?cat=learning`} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/10 text-slate-200 hover:bg-white/[0.08] text-sm">
-              {t('learningPath')}
-            </Link>
-            <ShareModal url={`${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/resource/${resource.slug}`} title={`${tt(resource.name, locale)} · ${tt(resource.slogan, locale)}`} />
-          </div>
-        </section>
-
-        {/* Horizontal meta bar */}
-        {metaItems.length > 0 && (
-          <section className="mt-8">
-            <div className="rounded-xl border border-white/[0.07] bg-[#10141C] px-6 py-4">
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                {metaItems.map(g => (
-                  <div key={g.id}>
-                    <div className="text-[11px] text-slate-500 uppercase tracking-wider">{tt(g.label, locale)}</div>
-                    <div className="text-sm text-white mt-1 font-medium">{tt(g.value, locale)}</div>
-                  </div>
-                ))}
+              <div className="mt-4 flex flex-wrap gap-2">
+                <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black font-semibold text-sm"><ExternalLink className="w-3.5 h-3.5" />立即使用</a>
+                <Link href={`/${locale}?cat=knowledge&sub=Tutorial`} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface border border-app text-primary hover:bg-surface-hover text-sm"><PlayCircle className="w-3.5 h-3.5" />查看教程</Link>
+                <ShareModal url={`${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/resource/${r.slug}`} title={`${tt(r.name, locale)} · ${tt(r.slogan, locale)}`} />
               </div>
             </div>
-          </section>
-        )}
-
-        {/* Description */}
-        <section className="mt-10">
-          <div className="text-slate-300 text-[15px] leading-[1.85] space-y-4">
-            {tt(resource.description, locale).split('\n').map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
           </div>
         </section>
 
-        {/* Use cases */}
-        {resource.use_cases?.[locale]?.length > 0 && (
-          <section className="mt-10">
-            <h2 className="text-lg font-bold text-white mb-4">{t('useCases')}</h2>
-            <ul className="space-y-2.5">
-              {resource.use_cases[locale].map((u, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-[14.5px] text-slate-300">
-                  <span className="text-slate-500 mt-0.5">—</span>
-                  <span>{u}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {/* Screenshots */}
-        <section className="mt-12">
-          <h2 className="text-lg font-bold text-white mb-4">{t('screenshots')}</h2>
-          {resource.screenshots?.length > 0 ? (
-            <ScreenshotCarousel screenshots={resource.screenshots} locale={locale} />
-          ) : (
-            <div className="aspect-[16/7] rounded-xl border border-white/10 bg-[#0D1119] flex items-center justify-center text-slate-500 text-sm" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
-              {t('screenshotPlaceholder')}
-            </div>
-          )}
-          {resource.screenshots?.[0]?.caption && (
-            <p className="mt-3 text-xs text-slate-500">{tt(resource.screenshots[0].caption, locale)}</p>
-          )}
+        {/* 2. INFO BAR */}
+        <section className="mb-8 rounded-xl border border-app bg-surface px-6 py-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
+            <InfoCell icon={<Zap className="w-3.5 h-3.5" />} label="Category" value={r.super_category} />
+            <InfoCell icon={<Monitor className="w-3.5 h-3.5" />} label="Platform" value={r.platforms?.list?.join(' · ') || 'Web'} />
+            <InfoCell icon={<DollarSign className="w-3.5 h-3.5" />} label="Pricing" value={r.price_type || 'Free'} />
+            <InfoCell icon={<Globe className="w-3.5 h-3.5" />} label="Language" value="Multi" />
+            <InfoCell icon={<Calendar className="w-3.5 h-3.5" />} label="Updated" value={new Date(r.updated_at).toLocaleDateString()} />
+          </div>
         </section>
 
-        {/* Highlights */}
-        {resource.highlights?.[locale]?.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-lg font-bold text-white mb-4">{t('highlights')}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {resource.highlights[locale].map((h, i) => (
-                <div key={i} className="p-4 rounded-lg border border-white/[0.07] bg-white/[0.02] text-sm text-slate-300 flex items-start gap-2">
-                  <span className="w-1 h-1 rounded-full bg-[#F5C518] mt-2.5 shrink-0" />
-                  {h}
+        {/* 3. OVERVIEW */}
+        <Section title="概述 · Overview">
+          <p className="text-[15px] text-secondary leading-[1.8]">{tt(r.description, locale)}</p>
+        </Section>
+
+        {/* 4. FEATURES (highlights) */}
+        {r.highlights?.[locale]?.length > 0 && (
+          <Section title="功能 · Features">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {(r.highlights[locale] || r.highlights.en || []).map((h, i) => (
+                <div key={i} className="p-4 rounded-xl border border-app bg-surface flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#F5C518]/15 flex items-center justify-center shrink-0"><Check className="w-4 h-4 text-[#F5C518]" /></div>
+                  <div className="text-sm text-primary leading-relaxed">{h}</div>
                 </div>
               ))}
             </div>
-          </section>
+          </Section>
         )}
 
-        {/* Pros / Cons */}
-        {(resource.pros?.length > 0 || resource.cons?.length > 0) && (
-          <section className="mt-12">
-            <h2 className="text-lg font-bold text-white mb-4">{t('prosCons')}</h2>
+        {/* 5. USE CASES */}
+        {r.use_cases?.[locale]?.length > 0 && (
+          <Section title="使用场景 · Use Cases">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {(r.use_cases[locale] || r.use_cases.en || []).map((u, i) => (
+                <div key={i} className="p-3 rounded-lg border border-app bg-surface text-center text-sm text-secondary hover:bg-surface-hover">{u}</div>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* 6. SCREENSHOTS */}
+        {r.screenshots?.length > 0 && (
+          <Section title="截图 · Screenshots">
+            <ScreenshotCarousel screenshots={r.screenshots} locale={locale} />
+          </Section>
+        )}
+
+        {/* 8. PRICING */}
+        {r.pricing_plans?.length > 0 && (
+          <Section title="定价 · Pricing">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              {r.pricing_plans.map(p => (
+                <div key={p.id} className={`p-5 rounded-xl border ${p.highlighted ? 'border-[#F5C518]/40 bg-[#F5C518]/[0.05]' : 'border-app bg-surface'}`}>
+                  <div className="text-sm text-secondary">{tt(p.name, locale)}</div>
+                  <div className="text-2xl font-bold text-primary mt-1">{p.price}<span className="text-xs text-tertiary font-normal ml-1">{tt(p.price_period, locale)}</span></div>
+                  <ul className="mt-4 space-y-1.5">{(p.features || []).map((f, i) => <li key={i} className="flex items-start gap-1.5 text-[12.5px] text-secondary"><Check className="w-3 h-3 text-emerald-500 mt-0.5 shrink-0" />{tt(f, locale)}</li>)}</ul>
+                </div>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* 9. PROS / CONS */}
+        {(r.pros?.length > 0 || r.cons?.length > 0) && (
+          <Section title="优缺点 · Pros & Cons">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04]">
-                <h3 className="text-emerald-300 font-medium mb-3 flex items-center gap-2 text-sm"><Check className="w-4 h-4" />{t('pros')}</h3>
-                <ul className="space-y-2">
-                  {resource.pros.map(p => (
-                    <li key={p.id} className="flex items-start gap-2 text-[14px] text-slate-200"><Check className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />{tt(p.content, locale)}</li>
-                  ))}
-                </ul>
+                <h3 className="text-emerald-500 font-semibold mb-3 flex items-center gap-2 text-sm"><Check className="w-4 h-4" />优点</h3>
+                <ul className="space-y-2">{r.pros.map(p => <li key={p.id} className="flex items-start gap-2 text-[14px] text-primary"><Check className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />{tt(p.content, locale)}</li>)}</ul>
               </div>
               <div className="p-5 rounded-xl border border-rose-500/20 bg-rose-500/[0.04]">
-                <h3 className="text-rose-300 font-medium mb-3 flex items-center gap-2 text-sm"><XIcon className="w-4 h-4" />{t('cons')}</h3>
-                <ul className="space-y-2">
-                  {resource.cons.map(c => (
-                    <li key={c.id} className="flex items-start gap-2 text-[14px] text-slate-200"><XIcon className="w-4 h-4 text-rose-400 mt-0.5 shrink-0" />{tt(c.content, locale)}</li>
-                  ))}
-                </ul>
+                <h3 className="text-rose-500 font-semibold mb-3 flex items-center gap-2 text-sm"><XIcon className="w-4 h-4" />缺点</h3>
+                <ul className="space-y-2">{r.cons.map(c => <li key={c.id} className="flex items-start gap-2 text-[14px] text-primary"><XIcon className="w-4 h-4 text-rose-500 mt-0.5 shrink-0" />{tt(c.content, locale)}</li>)}</ul>
               </div>
             </div>
-          </section>
+          </Section>
         )}
 
-        {/* Pricing */}
-        {resource.pricing_plans?.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-lg font-bold text-white mb-4">{t('pricing')}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-              {resource.pricing_plans.map(p => (
-                <div key={p.id} className={`p-5 rounded-xl border ${p.highlighted ? 'border-[#F5C518]/40 bg-[#F5C518]/[0.04]' : 'border-white/[0.08] bg-white/[0.02]'}`}>
-                  <div className="text-sm text-slate-400 mb-1">{tt(p.name, locale)}</div>
-                  <div className="text-2xl font-bold text-white">{p.price}<span className="text-xs text-slate-500 font-normal ml-1">{tt(p.price_period, locale)}</span></div>
-                  <ul className="mt-4 space-y-1.5">
-                    {(p.features || []).map((f, i) => (
-                      <li key={i} className="flex items-start gap-1.5 text-[12.5px] text-slate-300"><Check className="w-3.5 h-3.5 text-emerald-400 mt-0.5 shrink-0" />{tt(f, locale)}</li>
-                    ))}
-                  </ul>
-                </div>
+        {/* 10. LIMITATIONS */}
+        {r.cons?.length > 0 && (
+          <Section title="限制 · Limitations">
+            <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] flex items-start gap-3">
+              <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+              <div className="text-sm text-secondary leading-relaxed">在使用前请注意：{r.cons.map(c => tt(c.content, locale)).join(' · ')}</div>
+            </div>
+          </Section>
+        )}
+
+        {/* 11. RELATED */}
+        {related?.length > 0 && (
+          <Section title="相关工具 · Related Tools">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {related.map(rr => (
+                <Link key={rr.id} href={`/${locale}/resource/${rr.slug}`} className="group flex items-center gap-3 p-4 rounded-xl border border-app bg-surface hover:bg-surface-hover">
+                  <div className="w-9 h-9 rounded-lg bg-app border border-app flex items-center justify-center overflow-hidden shrink-0">
+                    {rr.logo_url && <img src={rr.logo_url} alt="" className="w-5 h-5" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13.5px] font-medium text-primary truncate">{tt(rr.name, locale)}</div>
+                    <div className="text-[11.5px] text-tertiary truncate">{tt(rr.slogan, locale)}</div>
+                  </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-tertiary group-hover:text-primary" />
+                </Link>
               ))}
             </div>
-          </section>
+          </Section>
         )}
 
-        {/* Related */}
-        {related?.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-lg font-bold text-white mb-4">{t('related')}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {related.map(r => <ResourceCard key={r.id} resource={r} locale={locale} />)}
-            </div>
-          </section>
-        )}
+        {/* 12. COMMENTS */}
+        <Comments slug={r.slug} />
 
-        {/* Pager */}
-        <section className="mt-12 pt-8 flex items-center justify-between border-t border-white/[0.06]">
+        {/* PAGER */}
+        <section className="mt-12 pt-6 flex items-center justify-between border-t border-app">
           {adj.prev ? (
-            <Link href={`/${locale}/resource/${adj.prev.slug}`} className="flex items-center gap-2 text-sm text-slate-400 hover:text-white">
-              <ChevronLeft className="w-4 h-4" />
-              <div>
-                <div className="text-xs text-slate-500">{t('prev')}</div>
-                <div className="text-slate-200 font-medium">{tt(adj.prev.name, locale)}</div>
-              </div>
-            </Link>
+            <Link href={`/${locale}/resource/${adj.prev.slug}`} className="flex items-center gap-2 text-sm text-secondary hover:text-primary"><ChevronLeft className="w-4 h-4" /><span>{tt(adj.prev.name, locale)}</span></Link>
           ) : <div />}
           {adj.next ? (
-            <Link href={`/${locale}/resource/${adj.next.slug}`} className="flex items-center gap-2 text-sm text-slate-400 hover:text-white text-right">
-              <div>
-                <div className="text-xs text-slate-500">{t('next')}</div>
-                <div className="text-slate-200 font-medium">{tt(adj.next.name, locale)}</div>
-              </div>
-              <ChevronRight className="w-4 h-4" />
-            </Link>
+            <Link href={`/${locale}/resource/${adj.next.slug}`} className="flex items-center gap-2 text-sm text-secondary hover:text-primary"><span>{tt(adj.next.name, locale)}</span><ChevronRight className="w-4 h-4" /></Link>
           ) : <div />}
         </section>
       </div>
 
       {/* Mobile sticky CTA */}
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 p-3 bg-[#0A0D14]/95 backdrop-blur border-t border-white/10">
-        <a href={resource.website_url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black font-medium text-sm">
-          {t('openResource')}<ArrowUpRight className="w-4 h-4" />
-        </a>
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 p-3 glass border-t border-app">
+        <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#F5C518] text-black font-semibold text-sm">立即使用<ArrowUpRight className="w-4 h-4" /></a>
       </div>
     </div>
+  )
+}
+
+function InfoCell({ icon, label, value }) {
+  return (
+    <div>
+      <div className="text-[10.5px] font-mono uppercase tracking-widest text-tertiary flex items-center gap-1">{icon}{label}</div>
+      <div className="text-sm text-primary font-medium mt-1 truncate">{value}</div>
+    </div>
+  )
+}
+
+function Section({ title, children }) {
+  return (
+    <section className="mt-10">
+      <h2 className="text-lg font-bold text-primary mb-4">{title}</h2>
+      {children}
+    </section>
   )
 }

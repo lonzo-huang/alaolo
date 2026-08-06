@@ -7,6 +7,7 @@ import { Search, Menu, X, Globe, Check, Command } from 'lucide-react'
 import { locales, localeNames, localeFlags } from '@/lib/i18n/config'
 import { CommandPalette } from './CommandPalette'
 import { ThemeToggle } from './ThemeToggle'
+import { SubNav } from './SubNav'
 
 export function Header({ locale }) {
   const t = useTranslations('nav')
@@ -48,11 +49,7 @@ export function Header({ locale }) {
             <span className="font-semibold text-primary text-[15px] tracking-tight hidden sm:inline">alaolo</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-0.5">
-            {nav.map(n => (
-              <Link key={n.label} href={n.href} className="px-3 py-1.5 text-[13px] text-secondary hover:text-primary rounded-md hover:bg-surface-hover transition-colors">{n.label}</Link>
-            ))}
-          </nav>
+          <SubNav locale={locale} />
 
           <div className="flex-1" />
 
