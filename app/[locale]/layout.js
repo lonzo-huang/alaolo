@@ -5,7 +5,7 @@ import { locales } from '@/lib/i18n/config'
 import { Providers } from '../providers'
 import { Header } from '@/components/site/Header'
 import { Footer } from '@/components/site/Footer'
-import { Toaster } from '@/components/ui/sonner'
+import { ThemedToaster } from '@/components/site/ThemedToaster'
 import '../globals.css'
 
 export const metadata = {
@@ -35,7 +35,7 @@ export default async function LocaleLayout({ children, params }) {
             <Header locale={locale} />
             <main className="pt-16">{children}</main>
             <Footer locale={locale} />
-            <Toaster theme="dark" position="top-center" />
+            <ThemedToaster />
           </Providers>
         </NextIntlClientProvider>
       </body>

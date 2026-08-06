@@ -86,18 +86,18 @@ export function Header({ locale }) {
         </div>
 
         {open && (
-          <div className="md:hidden border-t border-white/[0.06] bg-[#09090B] px-4 py-4 space-y-3">
-            <button onClick={() => { setCmdOpen(true); setOpen(false) }} className="w-full flex items-center gap-2 px-3 py-2 rounded-md bg-white/[0.03] border border-white/10 text-slate-400 text-sm">
+          <div className="md:hidden border-t border-app bg-app px-4 py-4 space-y-3">
+            <button onClick={() => { setCmdOpen(true); setOpen(false) }} className="w-full flex items-center gap-2 px-3 py-2 rounded-md bg-surface border border-app text-secondary text-sm">
               <Search className="w-3.5 h-3.5" />{t('searchPlaceholder')}
             </button>
             <div className="flex flex-col gap-1">
               {nav.map(n => (
-                <Link key={n.label} href={n.href} onClick={() => setOpen(false)} className="px-2 py-2 text-sm text-slate-300 hover:text-white">{n.label}</Link>
+                <Link key={n.label} href={n.href} onClick={() => setOpen(false)} className="px-2 py-2 text-sm text-secondary hover:text-primary">{n.label}</Link>
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-1 pt-2 border-t border-white/10">
+            <div className="grid grid-cols-2 gap-1 pt-2 border-t border-app">
               {locales.map(l => (
-                <button key={l} onClick={() => { switchLocale(l); setOpen(false) }} className={`px-2 py-1.5 rounded text-[13px] text-left ${l === locale ? 'bg-[#F5C518] text-black font-medium' : 'text-slate-300 hover:bg-white/5'}`}>{localeFlags[l]} {localeNames[l]}</button>
+                <button key={l} onClick={() => { switchLocale(l); setOpen(false) }} className={`px-2 py-1.5 rounded text-[13px] text-left ${l === locale ? 'bg-[#F5C518] text-black font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{localeFlags[l]} {localeNames[l]}</button>
               ))}
             </div>
           </div>

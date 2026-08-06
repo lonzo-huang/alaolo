@@ -60,7 +60,7 @@ export function HomeClient({ locale, byCategory, all }) {
 
           <form onSubmit={submitSearch} className="mt-9 relative max-w-2xl mx-auto">
             <Search className="w-4 h-4 text-tertiary absolute left-4 top-1/2 -translate-y-1/2" />
-            <input value={q} onChange={e => setQ(e.target.value)} placeholder="搜索工具、量子教程、开源资源与产品推荐..." className="w-full pl-11 pr-32 py-3.5 rounded-xl bg-surface border border-app-strong text-primary placeholder-tertiary focus:border-[#F5C518]/40 focus:outline-none focus:ring-2 focus:ring-[#F5C518]/20 text-[14px]" />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder={t('heroSearchLong')} className="w-full pl-11 pr-32 py-3.5 rounded-xl bg-surface border border-app-strong text-primary placeholder-tertiary focus:border-[#F5C518]/40 focus:outline-none focus:ring-2 focus:ring-[#F5C518]/20 text-[14px]" />
             <kbd className="absolute right-24 top-1/2 -translate-y-1/2 font-mono text-[10.5px] text-tertiary bg-surface-hover border border-app rounded px-1.5 py-0.5">⌘K</kbd>
             <button type="submit" className="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black text-[12.5px] font-semibold">Search</button>
           </form>

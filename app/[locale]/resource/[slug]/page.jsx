@@ -69,12 +69,12 @@ export default async function DetailPage({ params }) {
                 <div className="mt-3 flex items-center gap-2">
                   <div className="flex">{[1,2,3,4,5].map(n => <Star key={n} className={`w-4 h-4 ${n <= Math.round(r.rating) ? 'fill-[#F5C518] text-[#F5C518]' : 'text-tertiary'}`} />)}</div>
                   <span className="text-sm text-secondary font-medium">{r.rating}</span>
-                  <span className="text-xs text-tertiary">· {r.view_count.toLocaleString()} views</span>
+                  <span className="text-xs text-tertiary">· {r.view_count.toLocaleString()} {t('views')}</span>
                 </div>
               )}
               <div className="mt-4 flex flex-wrap gap-2">
-                <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black font-semibold text-sm"><ExternalLink className="w-3.5 h-3.5" />立即使用</a>
-                <Link href={`/${locale}?cat=knowledge&sub=Tutorial`} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface border border-app text-primary hover:bg-surface-hover text-sm"><PlayCircle className="w-3.5 h-3.5" />查看教程</Link>
+                <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black font-semibold text-sm"><ExternalLink className="w-3.5 h-3.5" />{t('useNow')}</a>
+                <Link href={`/${locale}?cat=knowledge&sub=Tutorial`} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface border border-app text-primary hover:bg-surface-hover text-sm"><PlayCircle className="w-3.5 h-3.5" />{t('viewTutorial')}</Link>
                 <ShareModal url={`${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/resource/${r.slug}`} title={`${tt(r.name, locale)} · ${tt(r.slogan, locale)}`} />
               </div>
             </div>
@@ -84,22 +84,22 @@ export default async function DetailPage({ params }) {
         {/* 2. INFO BAR */}
         <section className="mb-8 rounded-xl border border-app bg-surface px-6 py-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-            <InfoCell icon={<Zap className="w-3.5 h-3.5" />} label="Category" value={r.super_category} />
-            <InfoCell icon={<Monitor className="w-3.5 h-3.5" />} label="Platform" value={r.platforms?.list?.join(' · ') || 'Web'} />
-            <InfoCell icon={<DollarSign className="w-3.5 h-3.5" />} label="Pricing" value={r.price_type || 'Free'} />
-            <InfoCell icon={<Globe className="w-3.5 h-3.5" />} label="Language" value="Multi" />
-            <InfoCell icon={<Calendar className="w-3.5 h-3.5" />} label="Updated" value={new Date(r.updated_at).toLocaleDateString()} />
+            <InfoCell icon={<Zap className="w-3.5 h-3.5" />} label={t('category')} value={r.super_category} />
+            <InfoCell icon={<Monitor className="w-3.5 h-3.5" />} label={t('platform')} value={r.platforms?.list?.join(' · ') || 'Web'} />
+            <InfoCell icon={<DollarSign className="w-3.5 h-3.5" />} label={t('pricingLabel')} value={r.price_type || 'Free'} />
+            <InfoCell icon={<Globe className="w-3.5 h-3.5" />} label={t('language')} value="Multi" />
+            <InfoCell icon={<Calendar className="w-3.5 h-3.5" />} label={t('updated')} value={new Date(r.updated_at).toLocaleDateString()} />
           </div>
         </section>
 
         {/* 3. OVERVIEW */}
-        <Section title="概述 · Overview">
+        <Section title={t('overview')}>
           <p className="text-[15px] text-secondary leading-[1.8]">{tt(r.description, locale)}</p>
         </Section>
 
         {/* 4. FEATURES (highlights) */}
         {r.highlights?.[locale]?.length > 0 && (
-          <Section title="功能 · Features">
+          <Section title={t('features')}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {(r.highlights[locale] || r.highlights.en || []).map((h, i) => (
                 <div key={i} className="p-4 rounded-xl border border-app bg-surface flex items-start gap-3">
@@ -113,7 +113,7 @@ export default async function DetailPage({ params }) {
 
         {/* 5. USE CASES */}
         {r.use_cases?.[locale]?.length > 0 && (
-          <Section title="使用场景 · Use Cases">
+          <Section title={t('useCases')}>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {(r.use_cases[locale] || r.use_cases.en || []).map((u, i) => (
                 <div key={i} className="p-3 rounded-lg border border-app bg-surface text-center text-sm text-secondary hover:bg-surface-hover">{u}</div>
@@ -124,14 +124,14 @@ export default async function DetailPage({ params }) {
 
         {/* 6. SCREENSHOTS */}
         {r.screenshots?.length > 0 && (
-          <Section title="截图 · Screenshots">
+          <Section title={t('screenshots')}>
             <ScreenshotCarousel screenshots={r.screenshots} locale={locale} />
           </Section>
         )}
 
         {/* 8. PRICING */}
         {r.pricing_plans?.length > 0 && (
-          <Section title="定价 · Pricing">
+          <Section title={t('pricing')}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {r.pricing_plans.map(p => (
                 <div key={p.id} className={`p-5 rounded-xl border ${p.highlighted ? 'border-[#F5C518]/40 bg-[#F5C518]/[0.05]' : 'border-app bg-surface'}`}>
@@ -146,14 +146,14 @@ export default async function DetailPage({ params }) {
 
         {/* 9. PROS / CONS */}
         {(r.pros?.length > 0 || r.cons?.length > 0) && (
-          <Section title="优缺点 · Pros & Cons">
+          <Section title={t('prosCons')}>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04]">
-                <h3 className="text-emerald-500 font-semibold mb-3 flex items-center gap-2 text-sm"><Check className="w-4 h-4" />优点</h3>
+                <h3 className="text-emerald-500 font-semibold mb-3 flex items-center gap-2 text-sm"><Check className="w-4 h-4" />{t('pros')}</h3>
                 <ul className="space-y-2">{r.pros.map(p => <li key={p.id} className="flex items-start gap-2 text-[14px] text-primary"><Check className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />{tt(p.content, locale)}</li>)}</ul>
               </div>
               <div className="p-5 rounded-xl border border-rose-500/20 bg-rose-500/[0.04]">
-                <h3 className="text-rose-500 font-semibold mb-3 flex items-center gap-2 text-sm"><XIcon className="w-4 h-4" />缺点</h3>
+                <h3 className="text-rose-500 font-semibold mb-3 flex items-center gap-2 text-sm"><XIcon className="w-4 h-4" />{t('cons')}</h3>
                 <ul className="space-y-2">{r.cons.map(c => <li key={c.id} className="flex items-start gap-2 text-[14px] text-primary"><XIcon className="w-4 h-4 text-rose-500 mt-0.5 shrink-0" />{tt(c.content, locale)}</li>)}</ul>
               </div>
             </div>
@@ -162,17 +162,17 @@ export default async function DetailPage({ params }) {
 
         {/* 10. LIMITATIONS */}
         {r.cons?.length > 0 && (
-          <Section title="限制 · Limitations">
+          <Section title={t('limitations')}>
             <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] flex items-start gap-3">
               <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-              <div className="text-sm text-secondary leading-relaxed">在使用前请注意：{r.cons.map(c => tt(c.content, locale)).join(' · ')}</div>
+              <div className="text-sm text-secondary leading-relaxed">{t('noticeBefore')}{r.cons.map(c => tt(c.content, locale)).join(' · ')}</div>
             </div>
           </Section>
         )}
 
         {/* 11. RELATED */}
         {related?.length > 0 && (
-          <Section title="相关工具 · Related Tools">
+          <Section title={t('relatedTools')}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {related.map(rr => (
                 <Link key={rr.id} href={`/${locale}/resource/${rr.slug}`} className="group flex items-center gap-3 p-4 rounded-xl border border-app bg-surface hover:bg-surface-hover">
@@ -206,7 +206,7 @@ export default async function DetailPage({ params }) {
 
       {/* Mobile sticky CTA */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-40 p-3 glass border-t border-app">
-        <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#F5C518] text-black font-semibold text-sm">立即使用<ArrowUpRight className="w-4 h-4" /></a>
+        <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#F5C518] text-black font-semibold text-sm">{t('useNow')}<ArrowUpRight className="w-4 h-4" /></a>
       </div>
     </div>
   )
