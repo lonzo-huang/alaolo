@@ -1,8 +1,13 @@
 'use client'
 import { Toaster } from '@/components/ui/sonner'
-import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 export function ThemedToaster() {
-  const { theme } = useTheme()
-  return <Toaster theme={theme === 'light' ? 'light' : 'dark'} position="top-center" />
+  const [isDark, setIsDark] = useState(true)
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'))
+  }, [])
+
+  return <Toaster theme={isDark ? 'dark' : 'light'} position="top-center" />
 }

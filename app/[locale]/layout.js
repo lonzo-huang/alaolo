@@ -34,7 +34,9 @@ export default async function LocaleLayout({ children, params }) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <head />
+      <head>
+        <script dangerouslySetInnerHTML={{__html: `(function(){try{var t=localStorage.getItem('theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.classList.add(t)}catch(e){document.documentElement.classList.add('dark')}})()`}} />
+      </head>
       <body className="min-h-screen bg-app text-primary antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>

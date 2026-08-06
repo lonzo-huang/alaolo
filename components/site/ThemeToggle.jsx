@@ -1,25 +1,28 @@
 'use client'
 import { Sun, Moon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
   const t = useTranslations('common')
-  const [mounted, setMounted] = useState(false)
+  const [isDark, setIsDark] = useState(true)
 
-  useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'))
+  }, [])
 
-  const isDark = theme === 'dark'
-
-  if (!mounted) {
-    return <div className="w-7 h-7" />
+  const toggle = () => {
+    const html = document.documentElement
+    const next = html.classList.contains('dark') ? 'light' : 'dark'
+    html.classList.remove('dark', 'light')
+    html.classList.add(next)
+    localStorage.setItem('theme', next)
+    setIsDark(next === 'dark')
   }
 
   return (
     <button
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      onClick={toggle}
       className="p-1.5 rounded-md text-secondary hover:text-primary hover:bg-surface-hover transition-colors"
       aria-label={isDark ? t('lightMode') : t('darkMode')}
       title={isDark ? t('lightMode') : t('darkMode')}
