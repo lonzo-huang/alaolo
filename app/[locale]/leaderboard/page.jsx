@@ -1,13 +1,19 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { t as tt } from '@/lib/i18n/config'
+import { getTranslations } from 'next-intl/server'
 import { Trophy, ArrowUpRight, Star } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
-export async function generateMetadata({ params }) { return { title: 'Leaderboard · alaolo' } }
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'leaderboard' })
+  return { title: `${t('title')} · alaolo` }
+}
 
 export default async function LeaderboardPage({ params }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'leaderboard' })
   const sb = await createSupabaseServer()
   const cats = ['tools', 'knowledge', 'resources', 'recommendations']
   const results = {}
@@ -19,16 +25,16 @@ export default async function LeaderboardPage({ params }) {
   return (
     <div className="container mx-auto max-w-6xl px-4 py-10">
       <div className="mb-10">
-        <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-2 flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5" />LEADERBOARD</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🏆 排行榜</h1>
-        <p className="mt-2 text-secondary">各大类目下评分与热度综合最高的 Top 10</p>
+        <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-2 flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5" />{t('label')}</div>
+        <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🏆 {t('title')}</h1>
+        <p className="mt-2 text-secondary">{t('subtitle')}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {cats.map(c => (
           <section key={c} className="rounded-xl border border-app bg-surface p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-primary uppercase font-mono tracking-wider">{c}</h2>
-              <Link href={`/${locale}?cat=${c}`} className="text-xs text-tertiary hover:text-primary">All →</Link>
+              <Link href={`/${locale}?cat=${c}`} className="text-xs text-tertiary hover:text-primary">{t('allLink')}</Link>
             </div>
             <div className="space-y-1.5">
               {results[c].map((r, i) => (

@@ -42,7 +42,7 @@ export default async function DetailPage({ params }) {
     <div className="pb-32 md:pb-16">
       {/* Breadcrumb */}
       <div className="container mx-auto max-w-5xl px-4 pt-6 text-[13px] text-tertiary flex items-center gap-1.5">
-        <Link href={`/${locale}`} className="hover:text-primary"><HomeIcon className="w-3.5 h-3.5 inline mr-1" />Home</Link>
+        <Link href={`/${locale}`} className="hover:text-primary"><HomeIcon className="w-3.5 h-3.5 inline mr-1" />{t('breadcrumbHome')}</Link>
         <span>/</span>
         <Link href={`/${locale}?cat=${r.super_category}`} className="hover:text-primary capitalize">{r.super_category}</Link>
         <span>/</span>
@@ -60,8 +60,8 @@ export default async function DetailPage({ params }) {
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="text-[10.5px] font-mono uppercase tracking-widest text-[#F5C518]">{r.super_category}</span>
                 {r.subcategory && <span className="text-[10.5px] font-mono uppercase tracking-widest text-tertiary">· {r.subcategory}</span>}
-                {r.trending && <span className="px-2 py-0.5 rounded text-[10.5px] font-mono text-orange-500 bg-orange-500/10 border border-orange-500/40">🔥 Trending</span>}
-                {r.editors_pick && <span className="px-2 py-0.5 rounded text-[10.5px] font-mono text-[#F5C518] bg-[#F5C518]/10 border border-[#F5C518]/40">★ Editor's Pick</span>}
+                {r.trending && <span className="px-2 py-0.5 rounded text-[10.5px] font-mono text-orange-500 bg-orange-500/10 border border-orange-500/40">🔥 {t('trending')}</span>}
+                {r.editors_pick && <span className="px-2 py-0.5 rounded text-[10.5px] font-mono text-[#F5C518] bg-[#F5C518]/10 border border-[#F5C518]/40">★ {t('editorsPick')}</span>}
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">{tt(r.name, locale)}</h1>
               <p className="mt-2 text-secondary text-[15px]">{tt(r.slogan, locale)}</p>

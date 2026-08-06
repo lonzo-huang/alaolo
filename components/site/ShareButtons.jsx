@@ -27,10 +27,10 @@ export function ShareButtons({ url }) {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <button onClick={share} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 text-sm"><Share2 className="w-4 h-4" />{t('share')}</button>
-      <button onClick={copy} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 text-sm">
+      <button onClick={share} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-hover border border-app text-primary hover:bg-surface text-sm"><Share2 className="w-4 h-4" />{t('share')}</button>
+      <button onClick={copy} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-hover border border-app text-primary hover:bg-surface text-sm">
         {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Link2 className="w-4 h-4" />}
-        {copied ? t('copied') : t('copy')}
+        {copied ? t('copied') : t('copyLink')}
       </button>
     </div>
   )

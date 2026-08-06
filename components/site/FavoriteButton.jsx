@@ -46,7 +46,7 @@ export function FavoriteButton({ resourceId, locale }) {
     <button
       onClick={toggle}
       disabled={loading}
-      className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border text-sm font-medium transition-all ${isFav ? 'bg-[#F5C518]/10 border-[#F5C518]/40 text-[#F5C518]' : 'bg-white/5 border-white/10 text-slate-200 hover:bg-white/10'}`}
+      className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border text-sm font-medium transition-all ${isFav ? 'bg-[#F5C518]/10 border-[#F5C518]/40 text-[#F5C518]' : 'bg-surface-hover border-app text-primary hover:bg-surface'}`}
     >
       <Star className={`w-4 h-4 ${isFav ? 'fill-[#F5C518]' : ''}`} />
       {isFav ? t('unfavorite') : t('favorite')}

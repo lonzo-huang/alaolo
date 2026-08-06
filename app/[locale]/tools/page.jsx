@@ -10,7 +10,8 @@ const SUBS = ['AI', 'Dev', 'Productivity', 'Design', 'Notes']
 
 export async function generateMetadata({ params }) {
   const { locale } = await params
-  return { title: 'Tools Hub · alaolo', description: 'The complete tools directory' }
+  const t = await getTranslations({ locale, namespace: 'tools' })
+  return { title: t('metaTitle'), description: t('metaDesc') }
 }
 
 export default async function ToolsHubPage({ params, searchParams }) {
@@ -18,6 +19,7 @@ export default async function ToolsHubPage({ params, searchParams }) {
   const sp = await searchParams
   const activeSub = sp?.sub || null
   const activePrice = sp?.price || null
+  const t = await getTranslations({ locale, namespace: 'tools' })
 
   const sb = await createSupabaseServer()
   let q = sb.from('resources').select('*').eq('super_category', 'tools').order('rating', { ascending: false })
@@ -37,16 +39,16 @@ export default async function ToolsHubPage({ params, searchParams }) {
       <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8">
         {/* Sticky sidebar */}
         <aside className="lg:sticky lg:top-20 h-fit">
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-3">CATEGORIES</div>
+          <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-3">{t('categories')}</div>
           <div className="flex flex-col gap-0.5">
-            <Link href={`/${locale}/tools`} className={`px-3 py-2 rounded-md text-[13px] ${!activeSub ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>🔥 全部</Link>
+            <Link href={`/${locale}/tools`} className={`px-3 py-2 rounded-md text-[13px] ${!activeSub ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>🔥 {t('all')}</Link>
             {SUBS.map(s => (
               <Link key={s} href={`/${locale}/tools?sub=${s}`} className={`px-3 py-2 rounded-md text-[13px] ${activeSub === s ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>
                 {s === 'AI' ? '🤖' : s === 'Dev' ? '💻' : s === 'Productivity' ? '⚡' : s === 'Design' ? '🎨' : '📝'} {s}
               </Link>
             ))}
           </div>
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mt-6 mb-3">FILTERS</div>
+          <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mt-6 mb-3">{t('filters')}</div>
           <div className="flex flex-col gap-0.5">
             {['Free', 'Freemium', 'Paid'].map(p => (
               <Link key={p} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}price=${p}`} className={`px-3 py-2 rounded-md text-[13px] ${activePrice === p ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{p}</Link>
@@ -56,14 +58,14 @@ export default async function ToolsHubPage({ params, searchParams }) {
 
         <div>
           <div className="mb-8">
-            <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-2">TOOLS HUB</div>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🛠️ {activeSub || '全部'} 工具</h1>
-            <p className="mt-2 text-secondary">{all?.length || 0} 个精选工具</p>
+            <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-2">{t('hubTitle')}</div>
+            <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🛠️ {activeSub || t('all')} {t('toolsSuffix')}</h1>
+            <p className="mt-2 text-secondary">{t('toolsCount', { count: all?.length || 0 })}</p>
           </div>
 
           {!activeSub && !activePrice && featured.length > 0 && (
             <section className="mb-10">
-              <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-3">FEATURED</div>
+              <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-3">{t('featured')}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {featured.slice(0, 2).map(r => <FeatCard key={r.id} r={r} locale={locale} big />)}
               </div>

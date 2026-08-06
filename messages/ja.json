@@ -6,6 +6,7 @@
     "learning": "学びとおすすめ",
     "submit": "リソースを提出",
     "searchBtn": "検索",
+    "home": "ホーム",
     "searchPlaceholder": "検索...",
     "tools": "ツール",
     "knowledge": "知識",
@@ -65,7 +66,16 @@
     "secKnowledge": "知識",
     "secRecommendations": "おすすめ",
     "whyRecommend": "推薦理由",
-    "readMore": "読む"
+    "readMore": "読む",
+    "secToolsLabel": "01 // ツール",
+    "secKnowledgeLabel": "02 // 知識",
+    "secResourcesLabel": "03 // リソース",
+    "secRecommendationsLabel": "04 // おすすめ",
+    "resultsCount": "{count} 件",
+    "featured": "注目",
+    "getDeal": "詳細を見る",
+    "fullReview": "完全レビュー",
+    "free": "無料"
   },
   "detail": {
     "breadcrumbHome": "ホーム",
@@ -101,9 +111,23 @@
     "pricingLabel": "価格",
     "language": "言語",
     "updated": "更新",
-    "views": "閲覧"
+    "views": "閲覧",
+    "trending": "人気",
+    "editorsPick": "エディター選",
+    "comments": "コメント",
+    "commentName": "ニックネーム",
+    "commentRating": "評価",
+    "commentPlaceholder": "使用体験を共有...",
+    "commentSubmit": "投稿",
+    "commentPosted": "コメント投稿完了",
+    "commentEmpty": "まだコメントがありません。最初の投稿者になろう",
+    "commentCount": "{count}",
+    "shareBack": "← 戻る",
+    "shareWechat": "WeChat",
+    "shareRednote": "RedNote"
   },
   "newsletter": {
+    "label": "NEWSLETTER",
     "title": "新しいリソースを購読",
     "subtitle": "週に 1 通、厳選された開発 / AI / 効率ツールのみ",
     "placeholder": "you@example.com",
@@ -127,12 +151,58 @@
     "notAuthorized": "権限なし",
     "loginError": "ログイン失敗"
   },
+  "leaderboard": {
+    "label": "LEADERBOARD",
+    "title": "ランキング",
+    "subtitle": "全カテゴリの評価と人気を総合したトップ 10",
+    "allLink": "すべて →"
+  },
+  "trending": {
+    "label": "TODAY'S HOT",
+    "title": "今日のホット",
+    "subtitle": "閲覧数と編集者のおすすめに基づくリアルタイムランキング",
+    "views": "閲覧"
+  },
   "footer": {
     "tagline": "一つで見つかる開発 / AI / 効率ツールハブ",
-    "copyright": "© 2025 alaolo.com"
+    "copyright": " 2025 alaolo.com",
+    "sections": "セクション",
+    "info": "情報"
+  },
+  "auth": {
+    "welcome": "ようこそ",
+    "loginPrompt": "アカウントにサインイン",
+    "email": "メール",
+    "password": "パスワード",
+    "login": "ログイン",
+    "signup": "登録",
+    "magicLink": "マジックリンク",
+    "magicSent": "メールのログインリンクを確認してください",
+    "error": "エラーが発生しました",
+    "oauthError": "{provider} ログインが有効ではありません。Supabase Dashboard で {provider} プロバイダーを有効にしてください。",
+    "myFavorites": "お気に入り",
+    "noFavorites": "まだお気に入りがありません。リソースを探索してスターしましょう！",
+    "loginToFavorite": "お気に入り登録にはサインインが必要です",
+    "favorite": "お気に入り",
+    "unfavorite": "お気に入り解除"
   },
   "common": {
     "loading": "読み込み中",
-    "empty": "まだコンテンツがありません"
+    "empty": "まだコンテンツがありません",
+    "noResults": "結果なし",
+    "searchPrompt": "ツール、知識、リソースを検索...",
+    "lightMode": "ライトモード",
+    "darkMode": "ダークモード"
+  },
+  "tools": {
+    "categories": "カテゴリ",
+    "filters": "フィルター",
+    "all": "すべて",
+    "hubTitle": "ツールハブ",
+    "toolsSuffix": "ツール",
+    "toolsCount": "{count} 個の厳選ツール",
+    "featured": "注目",
+    "metaTitle": "ツールハブ · alaolo",
+    "metaDesc": "完全なツールディレクトリ"
   }
 }

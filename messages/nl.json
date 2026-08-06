@@ -6,6 +6,7 @@
     "learning": "Leren & Tips",
     "submit": "Bron indienen",
     "searchBtn": "Zoeken",
+    "home": "Home",
     "searchPlaceholder": "Zoeken...",
     "tools": "Tools",
     "knowledge": "Kennis",
@@ -65,7 +66,16 @@
     "secKnowledge": "Kennis",
     "secRecommendations": "Aanbevelingen",
     "whyRecommend": "Waarom",
-    "readMore": "Lezen"
+    "readMore": "Lezen",
+    "secToolsLabel": "01 // TOOLS",
+    "secKnowledgeLabel": "02 // KENNIS",
+    "secResourcesLabel": "03 // BRONNEN",
+    "secRecommendationsLabel": "04 // AANBEVELINGEN",
+    "resultsCount": "{count} resultaten",
+    "featured": "Uitgelicht",
+    "getDeal": "Aanbieding halen",
+    "fullReview": "Volledige review",
+    "free": "Gratis"
   },
   "detail": {
     "breadcrumbHome": "Home",
@@ -101,9 +111,23 @@
     "pricingLabel": "Prijs",
     "language": "Taal",
     "updated": "Bijgewerkt",
-    "views": "weergaven"
+    "views": "weergaven",
+    "trending": "Trending",
+    "editorsPick": "Editor's Pick",
+    "comments": "Reacties",
+    "commentName": "Je naam",
+    "commentRating": "Beoordeling",
+    "commentPlaceholder": "Deel je ervaring...",
+    "commentSubmit": "Verstuur",
+    "commentPosted": "Reactie geplaatst!",
+    "commentEmpty": "Nog geen reacties. Wees de eerste!",
+    "commentCount": "{count}",
+    "shareBack": "← Terug",
+    "shareWechat": "WeChat",
+    "shareRednote": "RedNote"
   },
   "newsletter": {
+    "label": "NEWSLETTER",
     "title": "Abonneer op nieuwe bronnen",
     "subtitle": "Eén gecureerde e-mail per week. Dev / AI / productiviteit. Geen spam.",
     "placeholder": "jij@example.com",
@@ -127,12 +151,58 @@
     "notAuthorized": "Niet gemachtigd",
     "loginError": "Aanmelden mislukt"
   },
+  "leaderboard": {
+    "label": "LEADERBOARD",
+    "title": "Ranglijst",
+    "subtitle": "Top 10 op score en populariteit in alle categorieën",
+    "allLink": "Alle →"
+  },
+  "trending": {
+    "label": "TODAY'S HOT",
+    "title": "Trending vandaag",
+    "subtitle": "Realtime ranking op basis van weergaven en editor picks",
+    "views": "weergaven"
+  },
   "footer": {
     "tagline": "Eén plek om de beste dev / AI / productiviteitsbronnen te ontdekken",
-    "copyright": "© 2025 alaolo.com"
+    "copyright": " 2025 alaolo.com",
+    "sections": "Secties",
+    "info": "Info"
+  },
+  "auth": {
+    "welcome": "Welkom",
+    "loginPrompt": "Log in op je account",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "login": "Aanmelden",
+    "signup": "Registreren",
+    "magicLink": "Magische link",
+    "magicSent": "Controleer je e-mail voor de inloglink",
+    "error": "Er ging iets mis",
+    "oauthError": "{provider} login niet ingeschakeld. Schakel de {provider} provider in via Supabase Dashboard.",
+    "myFavorites": "Mijn favorieten",
+    "noFavorites": "Nog geen favorieten. Ontdek en markeer bronnen!",
+    "loginToFavorite": "Log in om bronnen te favoriseren",
+    "favorite": "Favoriet",
+    "unfavorite": "Ontfavoriet"
   },
   "common": {
     "loading": "Laden",
-    "empty": "Niets hier"
+    "empty": "Niets hier",
+    "noResults": "Geen resultaten",
+    "searchPrompt": "Zoek tools, kennis, bronnen...",
+    "lightMode": "Lichte modus",
+    "darkMode": "Donkere modus"
+  },
+  "tools": {
+    "categories": "CATEGORIEËN",
+    "filters": "FILTERS",
+    "all": "Alle",
+    "hubTitle": "Tools Hub",
+    "toolsSuffix": "Tools",
+    "toolsCount": "{count} gecureerde tools",
+    "featured": "UITGELICHT",
+    "metaTitle": "Tools Hub · alaolo",
+    "metaDesc": "De complete tool-directory"
   }
 }

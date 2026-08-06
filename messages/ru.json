@@ -6,6 +6,7 @@
     "learning": "Обучение",
     "submit": "Добавить ресурс",
     "searchBtn": "Поиск",
+    "home": "Главная",
     "searchPlaceholder": "Поиск...",
     "tools": "Инструменты",
     "knowledge": "Знания",
@@ -65,7 +66,16 @@
     "secKnowledge": "Знания",
     "secRecommendations": "Рекомендации",
     "whyRecommend": "Почему",
-    "readMore": "Читать"
+    "readMore": "Читать",
+    "secToolsLabel": "01 // ИНСТРУМЕНТЫ",
+    "secKnowledgeLabel": "02 // ЗНАНИЯ",
+    "secResourcesLabel": "03 // РЕСУРСЫ",
+    "secRecommendationsLabel": "04 // РЕКОМЕНДАЦИИ",
+    "resultsCount": "{count} результатов",
+    "featured": "Избранное",
+    "getDeal": "Получить скидку",
+    "fullReview": "Полный обзор",
+    "free": "Бесплатно"
   },
   "detail": {
     "breadcrumbHome": "Главная",
@@ -101,9 +111,23 @@
     "pricingLabel": "Цена",
     "language": "Язык",
     "updated": "Обновлено",
-    "views": "просмотры"
+    "views": "просмотры",
+    "trending": "В тренде",
+    "editorsPick": "Выбор редакции",
+    "comments": "Комментарии",
+    "commentName": "Ваше имя",
+    "commentRating": "Оценка",
+    "commentPlaceholder": "Поделитесь опытом...",
+    "commentSubmit": "Отправить",
+    "commentPosted": "Комментарий опубликован!",
+    "commentEmpty": "Пока нет комментариев. Будьте первым!",
+    "commentCount": "{count}",
+    "shareBack": "← Назад",
+    "shareWechat": "WeChat",
+    "shareRednote": "RedNote"
   },
   "newsletter": {
+    "label": "NEWSLETTER",
     "title": "Подписаться на новые ресурсы",
     "subtitle": "Одно письмо в неделю. Dev / ИИ / продуктивность. Без спама.",
     "placeholder": "you@example.com",
@@ -127,12 +151,58 @@
     "notAuthorized": "Нет доступа",
     "loginError": "Ошибка входа"
   },
+  "tools": {
+    "categories": "КАТЕГОРИИ",
+    "filters": "ФИЛЬТРЫ",
+    "all": "Все",
+    "hubTitle": "Tools Hub",
+    "toolsSuffix": "Инструменты",
+    "toolsCount": "{count} отобранных инструментов",
+    "featured": "ИЗБРАННОЕ",
+    "metaTitle": "Tools Hub · alaolo",
+    "metaDesc": "Полный каталог инструментов"
+  },
+  "leaderboard": {
+    "label": "LEADERBOARD",
+    "title": "Рейтинг",
+    "subtitle": "Топ 10 по оценкам и популярности во всех категориях",
+    "allLink": "Все →"
+  },
+  "trending": {
+    "label": "TODAY'S HOT",
+    "title": "Тренды дня",
+    "subtitle": "Рейтинг в реальном времени по просмотрам и выбору редакции",
+    "views": "просмотры"
+  },
   "footer": {
     "tagline": "Одно место для лучших ресурсов Dev / ИИ / продуктивность",
-    "copyright": "© 2025 alaolo.com"
+    "copyright": " 2025 alaolo.com",
+    "sections": "Разделы",
+    "info": "Инфо"
+  },
+  "auth": {
+    "welcome": "Добро пожаловать",
+    "loginPrompt": "Войдите в свой аккаунт",
+    "email": "Email",
+    "password": "Пароль",
+    "login": "Войти",
+    "signup": "Регистрация",
+    "magicLink": "Магическая ссылка",
+    "magicSent": "Проверьте email для ссылки входа",
+    "error": "Произошла ошибка",
+    "oauthError": "{provider} вход не включён. Включите провайдер {provider} в Supabase Dashboard.",
+    "myFavorites": "Избранное",
+    "noFavorites": "Пока нет избранного. Исследуйте и отмечайте ресурсы!",
+    "loginToFavorite": "Войдите, чтобы добавлять ресурсы в избранное",
+    "favorite": "В избранное",
+    "unfavorite": "Убрать из избранного"
   },
   "common": {
     "loading": "Загрузка",
-    "empty": "Пусто"
+    "empty": "Пусто",
+    "noResults": "Нет результатов",
+    "searchPrompt": "Поиск инструментов, знаний, ресурсов...",
+    "lightMode": "Светлая тема",
+    "darkMode": "Тёмная тема"
   }
 }

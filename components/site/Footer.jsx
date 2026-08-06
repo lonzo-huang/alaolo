@@ -8,7 +8,7 @@ export async function Footer({ locale }) {
   const tNav = await getTranslations({ locale, namespace: 'nav' })
 
   return (
-    <footer className="border-t border-white/[0.06] mt-16">
+    <footer className="border-t border-app mt-16">
       <div className="container mx-auto max-w-7xl px-4 py-12">
         <Newsletter />
 
@@ -16,39 +16,39 @@ export async function Footer({ locale }) {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-6 h-6 rounded bg-[#F5C518] flex items-center justify-center font-black text-black text-xs">a</div>
-              <span className="font-semibold text-white">alaolo.com</span>
+              <span className="font-semibold text-primary">alaolo.com</span>
             </div>
-            <p className="text-slate-500 text-[13px] leading-relaxed">{t('tagline')}</p>
+            <p className="text-tertiary text-[13px] leading-relaxed">{t('tagline')}</p>
           </div>
           <div>
-            <div className="text-white font-medium mb-3">{tNav('discover')}</div>
-            <ul className="space-y-1.5 text-slate-400">
-              <li><Link href={`/${locale}?cat=ai`} className="hover:text-white">AI</Link></li>
-              <li><Link href={`/${locale}?cat=dev`} className="hover:text-white">Dev</Link></li>
-              <li><Link href={`/${locale}?cat=network`} className="hover:text-white">Network</Link></li>
-              <li><Link href={`/${locale}?cat=learning`} className="hover:text-white">{tNav('learning')}</Link></li>
+            <div className="text-primary font-medium mb-3">{tNav('discover')}</div>
+            <ul className="space-y-1.5 text-secondary">
+              <li><Link href={`/${locale}?cat=ai`} className="hover:text-primary">AI</Link></li>
+              <li><Link href={`/${locale}?cat=dev`} className="hover:text-primary">Dev</Link></li>
+              <li><Link href={`/${locale}?cat=network`} className="hover:text-primary">Network</Link></li>
+              <li><Link href={`/${locale}?cat=learning`} className="hover:text-primary">{tNav('learning')}</Link></li>
             </ul>
           </div>
           <div>
-            <div className="text-white font-medium mb-3">Sections</div>
-            <ul className="space-y-1.5 text-slate-400">
-              <li><Link href={`/${locale}`} className="hover:text-white">{tHome('secTrending')}</Link></li>
-              <li><Link href={`/${locale}`} className="hover:text-white">{tHome('secFeatured')}</Link></li>
-              <li><Link href={`/${locale}`} className="hover:text-white">{tHome('secHotAI')}</Link></li>
-              <li><Link href={`/${locale}#newsletter`} className="hover:text-white">Newsletter</Link></li>
+            <div className="text-primary font-medium mb-3">{t('sections')}</div>
+            <ul className="space-y-1.5 text-secondary">
+              <li><Link href={`/${locale}`} className="hover:text-primary">{tHome('secTrending')}</Link></li>
+              <li><Link href={`/${locale}`} className="hover:text-primary">{tHome('secFeatured')}</Link></li>
+              <li><Link href={`/${locale}`} className="hover:text-primary">{tHome('secHotAI')}</Link></li>
+              <li><Link href={`/${locale}#newsletter`} className="hover:text-primary">Newsletter</Link></li>
             </ul>
           </div>
           <div>
-            <div className="text-white font-medium mb-3">Info</div>
-            <ul className="space-y-1.5 text-slate-400">
-              <li><Link href={`/${locale}/submit`} className="hover:text-white">{tNav('submit')}</Link></li>
-              <li><a href="https://github.com/lonzo-huang/alaolo" target="_blank" rel="noopener noreferrer" className="hover:text-white">GitHub</a></li>
-              <li><Link href={`/${locale}/admin`} className="hover:text-white">Admin</Link></li>
+            <div className="text-primary font-medium mb-3">{t('info')}</div>
+            <ul className="space-y-1.5 text-secondary">
+              <li><Link href={`/${locale}/submit`} className="hover:text-primary">{tNav('submit')}</Link></li>
+              <li><a href="https://github.com/lonzo-huang/alaolo" target="_blank" rel="noopener noreferrer" className="hover:text-primary">GitHub</a></li>
+              <li><Link href={`/${locale}/admin`} className="hover:text-primary">Admin</Link></li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/[0.06] text-xs text-slate-500 text-center">
+        <div className="mt-10 pt-6 border-t border-app text-xs text-tertiary text-center">
           {t('copyright')}
         </div>
       </div>

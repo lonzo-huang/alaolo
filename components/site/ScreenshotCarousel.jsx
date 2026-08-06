@@ -8,7 +8,7 @@ export function ScreenshotCarousel({ screenshots, locale }) {
   if (!screenshots?.length) return null
   const cur = screenshots[idx]
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black">
+    <div className="relative rounded-2xl overflow-hidden border border-app bg-black">
       <div className="aspect-[16/9] relative">
         <img src={cur.url} alt={tt(cur.caption, locale)} className="w-full h-full object-cover" />
       </div>

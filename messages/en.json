@@ -6,6 +6,7 @@
     "learning": "Learn & Picks",
     "submit": "Submit resource",
     "searchBtn": "Search",
+    "home": "Home",
     "searchPlaceholder": "Search...",
     "tools": "Tools",
     "knowledge": "Knowledge",
@@ -65,7 +66,16 @@
     "secKnowledge": "Knowledge",
     "secRecommendations": "Picks",
     "whyRecommend": "Why we recommend",
-    "readMore": "Read"
+    "readMore": "Read",
+    "secToolsLabel": "01 // TOOLS",
+    "secKnowledgeLabel": "02 // KNOWLEDGE",
+    "secResourcesLabel": "03 // RESOURCES",
+    "secRecommendationsLabel": "04 // PICKS",
+    "resultsCount": "{count} results",
+    "featured": "Featured",
+    "getDeal": "Get deal",
+    "fullReview": "Full review",
+    "free": "Free"
   },
   "detail": {
     "breadcrumbHome": "Home",
@@ -101,9 +111,34 @@
     "pricingLabel": "Pricing",
     "language": "Language",
     "updated": "Updated",
-    "views": "views"
+    "views": "views",
+    "trending": "Trending",
+    "editorsPick": "Editor's Pick",
+    "comments": "Comments",
+    "commentName": "Your name",
+    "commentRating": "Rating",
+    "commentPlaceholder": "Share your experience...",
+    "commentSubmit": "Post",
+    "commentPosted": "Comment posted!",
+    "commentEmpty": "No comments yet. Be the first to share!",
+    "commentCount": "{count}",
+    "shareBack": "← Back",
+    "shareWechat": "WeChat",
+    "shareRednote": "RedNote"
+  },
+  "tools": {
+    "categories": "CATEGORIES",
+    "filters": "FILTERS",
+    "all": "All",
+    "hubTitle": "Tools Hub",
+    "toolsSuffix": "Tools",
+    "toolsCount": "{count} curated tools",
+    "featured": "FEATURED",
+    "metaTitle": "Tools Hub · alaolo",
+    "metaDesc": "The complete tools directory"
   },
   "newsletter": {
+    "label": "NEWSLETTER",
     "title": "Subscribe to new resources",
     "subtitle": "One curated email per week. Dev / AI / productivity picks. No spam.",
     "placeholder": "you@example.com",
@@ -127,12 +162,47 @@
     "notAuthorized": "Not authorized",
     "loginError": "Login failed"
   },
+  "leaderboard": {
+    "label": "LEADERBOARD",
+    "title": "Leaderboard",
+    "subtitle": "Top 10 by rating and popularity across all categories",
+    "allLink": "All →"
+  },
+  "trending": {
+    "label": "TODAY'S HOT",
+    "title": "Today's Hot",
+    "subtitle": "Real-time ranking based on views and editor picks",
+    "views": "views"
+  },
   "footer": {
     "tagline": "One place to discover the best dev / AI / productivity resources",
-    "copyright": "© 2025 alaolo.com"
+    "copyright": " 2025 alaolo.com",
+    "sections": "Sections",
+    "info": "Info"
+  },
+  "auth": {
+    "welcome": "Welcome",
+    "loginPrompt": "Sign in to your account",
+    "email": "Email",
+    "password": "Password",
+    "login": "Sign in",
+    "signup": "Sign up",
+    "magicLink": "Magic link",
+    "magicSent": "Check your email for the login link",
+    "error": "Something went wrong",
+    "oauthError": "{provider} login not enabled. Please enable {provider} provider in Supabase Dashboard first.",
+    "myFavorites": "My Favorites",
+    "noFavorites": "No favorites yet. Start exploring and star resources!",
+    "loginToFavorite": "Please sign in to favorite resources",
+    "favorite": "Favorite",
+    "unfavorite": "Unfavorite"
   },
   "common": {
     "loading": "Loading",
-    "empty": "Nothing here"
+    "empty": "Nothing here",
+    "noResults": "No results",
+    "searchPrompt": "Search tools, knowledge, resources...",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode"
   }
 }

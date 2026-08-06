@@ -7,7 +7,8 @@
     "submit": "提交资源",
     "searchBtn": "搜索",
     "searchPlaceholder": "搜索...",
-    "tools": "工具",
+    "home": "首页",
+    "tools": "AI工具",
     "knowledge": "知识",
     "resources": "资源",
     "recommendations": "推荐",
@@ -65,7 +66,16 @@
     "secKnowledge": "知识",
     "secRecommendations": "推荐",
     "whyRecommend": "为什么推荐",
-    "readMore": "阅读"
+    "readMore": "阅读",
+    "secToolsLabel": "01 // 工具",
+    "secKnowledgeLabel": "02 // 知识",
+    "secResourcesLabel": "03 // 资源",
+    "secRecommendationsLabel": "04 // 推荐",
+    "resultsCount": "{count} 条结果",
+    "featured": "精选",
+    "getDeal": "获取优惠",
+    "fullReview": "完整评测",
+    "free": "免费"
   },
   "detail": {
     "breadcrumbHome": "首页",
@@ -101,9 +111,34 @@
     "pricingLabel": "定价",
     "language": "语言",
     "updated": "更新",
-    "views": "浏览"
+    "views": "浏览",
+    "trending": "热门",
+    "editorsPick": "编辑精选",
+    "comments": "评论",
+    "commentName": "你的昵称",
+    "commentRating": "评分",
+    "commentPlaceholder": "分享你的使用体验...",
+    "commentSubmit": "发布",
+    "commentPosted": "评论已发布",
+    "commentEmpty": "还没有评论，做第一个分享者吧",
+    "commentCount": "{count}",
+    "shareBack": "← 返回",
+    "shareWechat": "微信",
+    "shareRednote": "小红书"
+  },
+  "tools": {
+    "categories": "分类",
+    "filters": "筛选",
+    "all": "全部",
+    "hubTitle": "工具中心",
+    "toolsSuffix": "工具",
+    "toolsCount": "{count} 个精选工具",
+    "featured": "精选",
+    "metaTitle": "工具中心 · alaolo",
+    "metaDesc": "完整的工具目录"
   },
   "newsletter": {
+    "label": "NEWSLETTER",
     "title": "订阅新资源推送",
     "subtitle": "每周一封邮件，精选开发 / AI / 效率工具，不垃圾",
     "placeholder": "you@example.com",
@@ -127,12 +162,47 @@
     "notAuthorized": "无权限",
     "loginError": "登录失败"
   },
+  "leaderboard": {
+    "label": "LEADERBOARD",
+    "title": "排行榜",
+    "subtitle": "各大类目下评分与热度综合最高的 Top 10",
+    "allLink": "全部 →"
+  },
+  "trending": {
+    "label": "TODAY'S HOT",
+    "title": "今日热榜",
+    "subtitle": "基于访问量与编辑推荐的实时排行",
+    "views": "浏览"
+  },
   "footer": {
     "tagline": "一个站点，发现最好用的开发 / AI / 效率资源",
-    "copyright": "© 2025 alaolo.com"
+    "copyright": " 2025 alaolo.com",
+    "sections": "栏目",
+    "info": "信息"
+  },
+  "auth": {
+    "welcome": "欢迎",
+    "loginPrompt": "登录你的账户",
+    "email": "邮箱",
+    "password": "密码",
+    "login": "登录",
+    "signup": "注册",
+    "magicLink": "魔法链接",
+    "magicSent": "请查收邮件中的登录链接",
+    "error": "出错了",
+    "oauthError": "{provider} 登录未启用，请先在 Supabase Dashboard 启用 {provider} provider",
+    "myFavorites": "我的收藏",
+    "noFavorites": "还没有收藏，去探索并收藏资源吧！",
+    "loginToFavorite": "请先登录再收藏",
+    "favorite": "收藏",
+    "unfavorite": "取消收藏"
   },
   "common": {
     "loading": "加载中",
-    "empty": "暂无内容"
+    "empty": "暂无内容",
+    "noResults": "无结果",
+    "searchPrompt": "搜索工具、知识、资源...",
+    "lightMode": "浅色模式",
+    "darkMode": "深色模式"
   }
 }

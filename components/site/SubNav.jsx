@@ -15,13 +15,12 @@ export function SubNav({ locale }) {
     return () => document.removeEventListener('mousedown', h)
   }, [])
 
+  const flatLinks = [
+    { key: 'home', label: t('home'), href: `/${locale}` },
+    { key: 'tools', label: t('tools'), href: `/${locale}/tools` },
+  ]
+
   const groups = [
-    { key: 'tools', label: t('tools'), allLabel: t('subToolsAll'), href: `/${locale}/tools`, sub: [
-      { label: t('subToolsAI'), href: `/${locale}/tools?sub=AI`, icon: <Brain className="w-3.5 h-3.5" /> },
-      { label: t('subToolsDev'), href: `/${locale}/tools?sub=Dev`, icon: <Code2 className="w-3.5 h-3.5" /> },
-      { label: t('subToolsProductivity'), href: `/${locale}/tools?sub=Productivity`, icon: <Zap className="w-3.5 h-3.5" /> },
-      { label: t('subToolsDesign'), href: `/${locale}/tools?sub=Design`, icon: <StarIcon className="w-3.5 h-3.5" /> },
-    ]},
     { key: 'knowledge', label: t('knowledge'), allLabel: t('subKnowledgeAll'), href: `/${locale}?cat=knowledge`, sub: [
       { label: t('subKnowledgeTutorials'), href: `/${locale}?cat=knowledge&sub=Tutorial`, icon: <GraduationCap className="w-3.5 h-3.5" /> },
       { label: t('subKnowledgeArticles'), href: `/${locale}?cat=knowledge&sub=Article`, icon: <FileText className="w-3.5 h-3.5" /> },
@@ -41,6 +40,11 @@ export function SubNav({ locale }) {
 
   return (
     <nav className="hidden lg:flex items-center gap-0.5" ref={ref}>
+      {flatLinks.map(l => (
+        <Link key={l.key} href={l.href} className="px-3 py-1.5 text-[13px] text-secondary hover:text-primary rounded-md hover:bg-surface-hover transition-colors">
+          {l.label}
+        </Link>
+      ))}
       {groups.map(g => (
         <div key={g.key} className="relative">
           <button onClick={() => setOpenKey(openKey === g.key ? null : g.key)} className="flex items-center gap-1 px-3 py-1.5 text-[13px] text-secondary hover:text-primary rounded-md hover:bg-surface-hover transition-colors">

@@ -6,6 +6,7 @@
     "learning": "학습·추천",
     "submit": "리소스 제출",
     "searchBtn": "검색",
+    "home": "홈",
     "searchPlaceholder": "검색...",
     "tools": "도구",
     "knowledge": "지식",
@@ -65,7 +66,16 @@
     "secKnowledge": "지식",
     "secRecommendations": "추천",
     "whyRecommend": "추천 이유",
-    "readMore": "읽기"
+    "readMore": "읽기",
+    "secToolsLabel": "01 // 도구",
+    "secKnowledgeLabel": "02 // 지식",
+    "secResourcesLabel": "03 // 리소스",
+    "secRecommendationsLabel": "04 // 추천",
+    "resultsCount": "{count}개 결과",
+    "featured": "추천",
+    "getDeal": "혜택 받기",
+    "fullReview": "전체 리뷰",
+    "free": "무료"
   },
   "detail": {
     "breadcrumbHome": "홈",
@@ -101,9 +111,23 @@
     "pricingLabel": "가격",
     "language": "언어",
     "updated": "업데이트",
-    "views": "조회"
+    "views": "조회",
+    "trending": "인기",
+    "editorsPick": "에디터 추천",
+    "comments": "댓글",
+    "commentName": "닉네임",
+    "commentRating": "평점",
+    "commentPlaceholder": "사용 경험 공유...",
+    "commentSubmit": "등록",
+    "commentPosted": "댓글 등록됨",
+    "commentEmpty": "아직 댓글이 없습니다. 첫 작성자가 되어보세요",
+    "commentCount": "{count}",
+    "shareBack": "← 뒤로",
+    "shareWechat": "WeChat",
+    "shareRednote": "RedNote"
   },
   "newsletter": {
+    "label": "NEWSLETTER",
     "title": "새 리소스 구독",
     "subtitle": "주 1회 엄선된 개발 / AI / 생산성 도구만",
     "placeholder": "you@example.com",
@@ -127,12 +151,58 @@
     "notAuthorized": "권한 없음",
     "loginError": "로그인 실패"
   },
+  "leaderboard": {
+    "label": "LEADERBOARD",
+    "title": "리더보드",
+    "subtitle": "모든 카테고리에서 평점과 인기도 기준 상위 10",
+    "allLink": "전체 →"
+  },
+  "trending": {
+    "label": "TODAY'S HOT",
+    "title": "오늘의 핫",
+    "subtitle": "조회수와 에디터 추천 기반 실시간 순위",
+    "views": "조회"
+  },
   "footer": {
     "tagline": "한 곳에서 최고의 개발 / AI / 생산성 리소스를 발견",
-    "copyright": "© 2025 alaolo.com"
+    "copyright": " 2025 alaolo.com",
+    "sections": "섹션",
+    "info": "정보"
+  },
+  "auth": {
+    "welcome": "환영합니다",
+    "loginPrompt": "계정에 로그인",
+    "email": "이메일",
+    "password": "비밀번호",
+    "login": "로그인",
+    "signup": "가입",
+    "magicLink": "매직 링크",
+    "magicSent": "이메일의 로그인 링크를 확인하세요",
+    "error": "오류가 발생했습니다",
+    "oauthError": "{provider} 로그인이 활성화되지 않았습니다. Supabase Dashboard에서 {provider} 프로바이더를 활성화하세요.",
+    "myFavorites": "즐겨찾기",
+    "noFavorites": "아직 즐겨찾기가 없습니다. 리소스를 탐색하고 별표하세요!",
+    "loginToFavorite": "즐겨찾기하려면 로그인하세요",
+    "favorite": "즐겨찾기",
+    "unfavorite": "즐겨찾기 해제"
   },
   "common": {
     "loading": "로딩",
-    "empty": "내용 없음"
+    "empty": "내용 없음",
+    "noResults": "결과 없음",
+    "searchPrompt": "도구, 지식, 리소스 검색...",
+    "lightMode": "라이트 모드",
+    "darkMode": "다크 모드"
+  },
+  "tools": {
+    "categories": "카테고리",
+    "filters": "필터",
+    "all": "전체",
+    "hubTitle": "도구 허브",
+    "toolsSuffix": "도구",
+    "toolsCount": "{count}개 엄선 도구",
+    "featured": "추천",
+    "metaTitle": "도구 허브 · alaolo",
+    "metaDesc": "완전한 도구 디렉토리"
   }
 }

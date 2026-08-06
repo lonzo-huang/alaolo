@@ -20,9 +20,9 @@ export default async function AdminPage({ params }) {
   if (!adminRow) {
     return (
       <div className="container mx-auto max-w-2xl px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-white">Not authorized</h1>
-        <p className="mt-2 text-slate-400">Signed in as {user.email} — but you are not an admin.</p>
-        <AdminSignOut label="Sign out" locale={locale} className="mt-4 inline-block px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 text-sm" />
+        <h1 className="text-2xl font-bold text-primary">Not authorized</h1>
+        <p className="mt-2 text-secondary">Signed in as {user.email} — but you are not an admin.</p>
+        <AdminSignOut label="Sign out" locale={locale} className="mt-4 inline-block px-4 py-2 rounded-lg bg-surface-hover border border-app text-primary text-sm" />
       </div>
     )
   }
@@ -38,10 +38,10 @@ export default async function AdminPage({ params }) {
     <div className="container mx-auto max-w-6xl px-4 py-10">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white">{t('title')}</h1>
-          <p className="text-sm text-slate-400 mt-1">Signed in as {user.email}</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-primary">{t('title')}</h1>
+          <p className="text-sm text-secondary mt-1">Signed in as {user.email}</p>
         </div>
-        <AdminSignOut label={t('signOut')} locale={locale} className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 text-sm hover:bg-white/10" />
+        <AdminSignOut label={t('signOut')} locale={locale} className="px-3 py-2 rounded-lg bg-surface-hover border border-app text-primary text-sm hover:bg-surface" />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
@@ -50,14 +50,14 @@ export default async function AdminPage({ params }) {
         <StatCard label="Languages" value={10} />
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-[#10141C] overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/10 flex items-center justify-between">
-          <h2 className="text-white font-semibold">{t('resources')}</h2>
-          <span className="text-xs text-slate-500">Full CRUD coming next — currently view-only</span>
+      <div className="rounded-xl border border-app bg-surface overflow-hidden">
+        <div className="px-5 py-3 border-b border-app flex items-center justify-between">
+          <h2 className="text-primary font-semibold">{t('resources')}</h2>
+          <span className="text-xs text-tertiary">Full CRUD coming next — currently view-only</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-white/[0.02] text-left text-xs text-slate-400">
+            <thead className="bg-surface-hover text-left text-xs text-secondary">
               <tr>
                 <th className="px-5 py-2">Slug</th>
                 <th className="px-3 py-2">Name</th>
@@ -68,20 +68,20 @@ export default async function AdminPage({ params }) {
                 <th className="px-3 py-2">Updated</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.04]">
+            <tbody className="divide-y divide-app">
               {(resources || []).map(r => (
-                <tr key={r.id} className="hover:bg-white/[0.02]">
+                <tr key={r.id} className="hover:bg-surface-hover">
                   <td className="px-5 py-2.5"><Link href={`/${locale}/resource/${r.slug}`} className="text-[#F5C518] hover:underline text-xs">{r.slug}</Link></td>
-                  <td className="px-3 py-2.5 text-slate-200">{tt(r.name, 'en')}</td>
-                  <td className="px-3 py-2.5 text-slate-400 text-xs">{tt(r.categories?.name, 'en')}</td>
-                  <td className="px-3 py-2.5 text-slate-300">{r.view_count}</td>
-                  <td className="px-3 py-2.5 text-slate-300">{r.rating}</td>
+                  <td className="px-3 py-2.5 text-primary">{tt(r.name, 'en')}</td>
+                  <td className="px-3 py-2.5 text-secondary text-xs">{tt(r.categories?.name, 'en')}</td>
+                  <td className="px-3 py-2.5 text-secondary">{r.view_count}</td>
+                  <td className="px-3 py-2.5 text-secondary">{r.rating}</td>
                   <td className="px-3 py-2.5 text-xs">
                     {r.featured && <span className="text-[#F5C518] mr-1">F</span>}
                     {r.editors_pick && <span className="text-purple-400 mr-1">E</span>}
                     {r.trending && <span className="text-orange-400">T</span>}
                   </td>
-                  <td className="px-3 py-2.5 text-slate-500 text-xs">{new Date(r.updated_at).toLocaleDateString()}</td>
+                  <td className="px-3 py-2.5 text-tertiary text-xs">{new Date(r.updated_at).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -94,9 +94,9 @@ export default async function AdminPage({ params }) {
 
 function StatCard({ label, value }) {
   return (
-    <div className="p-4 rounded-xl border border-white/10 bg-[#10141C]">
-      <div className="text-xs text-slate-500 uppercase tracking-wider">{label}</div>
-      <div className="mt-1 text-2xl font-bold text-white">{value}</div>
+    <div className="p-4 rounded-xl border border-app bg-surface">
+      <div className="text-xs text-tertiary uppercase tracking-wider">{label}</div>
+      <div className="mt-1 text-2xl font-bold text-primary">{value}</div>
     </div>
   )
 }

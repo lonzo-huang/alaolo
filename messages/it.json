@@ -6,6 +6,7 @@
     "learning": "Impara",
     "submit": "Invia risorsa",
     "searchBtn": "Cerca",
+    "home": "Home",
     "searchPlaceholder": "Cerca...",
     "tools": "Strumenti",
     "knowledge": "Conoscenza",
@@ -65,7 +66,16 @@
     "secKnowledge": "Conoscenza",
     "secRecommendations": "Consigliati",
     "whyRecommend": "Perché",
-    "readMore": "Leggi"
+    "readMore": "Leggi",
+    "secToolsLabel": "01 // STRUMENTI",
+    "secKnowledgeLabel": "02 // CONOSCENZA",
+    "secResourcesLabel": "03 // RISORSE",
+    "secRecommendationsLabel": "04 // CONSIGLIATI",
+    "resultsCount": "{count} risultati",
+    "featured": "In evidenza",
+    "getDeal": "Ottieni offerta",
+    "fullReview": "Recensione completa",
+    "free": "Gratis"
   },
   "detail": {
     "breadcrumbHome": "Home",
@@ -101,9 +111,23 @@
     "pricingLabel": "Prezzi",
     "language": "Lingua",
     "updated": "Aggiornato",
-    "views": "visite"
+    "views": "visite",
+    "trending": "Tendenze",
+    "editorsPick": "Scelta dell'editor",
+    "comments": "Commenti",
+    "commentName": "Il tuo nome",
+    "commentRating": "Valutazione",
+    "commentPlaceholder": "Condividi la tua esperienza...",
+    "commentSubmit": "Invia",
+    "commentPosted": "Commento pubblicato!",
+    "commentEmpty": "Ancora nessun commento. Sii il primo!",
+    "commentCount": "{count}",
+    "shareBack": "← Indietro",
+    "shareWechat": "WeChat",
+    "shareRednote": "RedNote"
   },
   "newsletter": {
+    "label": "NEWSLETTER",
     "title": "Abbonati alle nuove risorse",
     "subtitle": "Un'email curata a settimana. Dev / IA / produttività. Niente spam.",
     "placeholder": "tu@example.com",
@@ -127,12 +151,58 @@
     "notAuthorized": "Non autorizzato",
     "loginError": "Accesso fallito"
   },
+  "leaderboard": {
+    "label": "LEADERBOARD",
+    "title": "Classifica",
+    "subtitle": "Top 10 per punteggio e popolarità in tutte le categorie",
+    "allLink": "Tutti →"
+  },
+  "trending": {
+    "label": "TODAY'S HOT",
+    "title": "Trend di oggi",
+    "subtitle": "Classifica in tempo reale basata su visite e scelte editoriali",
+    "views": "visite"
+  },
   "footer": {
     "tagline": "Un posto per scoprire le migliori risorse Dev / IA / produttività",
-    "copyright": "© 2025 alaolo.com"
+    "copyright": " 2025 alaolo.com",
+    "sections": "Sezioni",
+    "info": "Info"
+  },
+  "auth": {
+    "welcome": "Benvenuto",
+    "loginPrompt": "Accedi al tuo account",
+    "email": "Email",
+    "password": "Password",
+    "login": "Accedi",
+    "signup": "Registrati",
+    "magicLink": "Link magico",
+    "magicSent": "Controlla la tua email per il link di accesso",
+    "error": "Si è verificato un errore",
+    "oauthError": "{provider} login non abilitato. Abilita il provider {provider} nel Supabase Dashboard.",
+    "myFavorites": "I miei preferiti",
+    "noFavorites": "Ancora nessun preferito. Esplora e marca le risorse!",
+    "loginToFavorite": "Accedi per preferire le risorse",
+    "favorite": "Preferito",
+    "unfavorite": "Rimuovi dai preferiti"
   },
   "common": {
     "loading": "Caricamento",
-    "empty": "Niente qui"
+    "empty": "Niente qui",
+    "noResults": "Nessun risultato",
+    "searchPrompt": "Cerca strumenti, conoscenza, risorse...",
+    "lightMode": "Modalità chiara",
+    "darkMode": "Modalità scura"
+  },
+  "tools": {
+    "categories": "CATEGORIE",
+    "filters": "FILTRI",
+    "all": "Tutti",
+    "hubTitle": "Tools Hub",
+    "toolsSuffix": "Strumenti",
+    "toolsCount": "{count} strumenti curati",
+    "featured": "IN EVIDENZA",
+    "metaTitle": "Tools Hub · alaolo",
+    "metaDesc": "Il directory completo di strumenti"
   }
 }

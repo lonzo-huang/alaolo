@@ -1,22 +1,28 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { t as tt } from '@/lib/i18n/config'
+import { getTranslations } from 'next-intl/server'
 import { TrendingUp, ArrowUpRight, Flame } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
-export async function generateMetadata({ params }) { return { title: 'Today\'s Hot · alaolo' } }
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'trending' })
+  return { title: `${t('title')} · alaolo` }
+}
 
 export default async function TrendingPage({ params }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'trending' })
   const sb = await createSupabaseServer()
   const { data } = await sb.from('resources').select('*').order('trending', { ascending: false }).order('view_count', { ascending: false }).limit(30)
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-10">
       <div className="mb-8">
-        <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-2 flex items-center gap-1.5"><Flame className="w-3.5 h-3.5" />TODAY'S HOT</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🔥 今日热榜</h1>
-        <p className="mt-2 text-secondary">基于访问量与编辑推荐的实时排行</p>
+        <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-2 flex items-center gap-1.5"><Flame className="w-3.5 h-3.5" />{t('label')}</div>
+        <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🔥 {t('title')}</h1>
+        <p className="mt-2 text-secondary">{t('subtitle')}</p>
       </div>
       <div className="space-y-2">
         {(data || []).map((r, i) => (
@@ -30,7 +36,7 @@ export default async function TrendingPage({ params }) {
               <div className="text-[12.5px] text-secondary truncate">{tt(r.slogan, locale)}</div>
             </div>
             <div className="flex flex-col items-end text-[11px] text-tertiary shrink-0">
-              <span className="font-mono">{r.view_count.toLocaleString()} views</span>
+              <span className="font-mono">{r.view_count.toLocaleString()} {t('views')}</span>
               <span className="font-mono uppercase tracking-wider">{r.super_category}</span>
             </div>
             <ArrowUpRight className="w-4 h-4 text-tertiary group-hover:text-primary" />

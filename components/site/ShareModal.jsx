@@ -21,9 +21,9 @@ const PLATFORMS = [
 
 // no direct web share for these; use QR (WeChat) or copy (TikTok, RedNote)
 const NO_URL = [
-  { key: 'wechat', label: '微信', color: '#07C160', qr: true, icon: (
+  { key: 'wechat', labelKey: 'shareWechat', color: '#07C160', qr: true, icon: (
     <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M8.691 2C4.008 2 .2 5.16.2 9.06c0 2.16 1.176 4.076 3.062 5.418l-.708 2.16 2.489-1.257c.87.198 1.708.354 2.647.354.28 0 .55-.01.83-.03-.169-.6-.269-1.235-.269-1.869C8.251 10.253 12.079 7.36 16.752 7.36c.24 0 .479.01.719.03C16.643 3.807 12.998 2 8.691 2zm-3.03 3.51c.63 0 1.14.51 1.14 1.14s-.51 1.14-1.14 1.14a1.144 1.144 0 01-1.14-1.14c0-.63.51-1.14 1.14-1.14zm5.879 0c.63 0 1.14.51 1.14 1.14s-.51 1.14-1.14 1.14a1.144 1.144 0 01-1.14-1.14c0-.63.51-1.14 1.14-1.14zM16.75 8.72c-4.443 0-8.05 3.036-8.05 6.79 0 3.755 3.607 6.79 8.05 6.79.94 0 1.836-.14 2.65-.395l2.24 1.234-.635-2.033c1.72-1.256 2.795-3.076 2.795-5.116 0-3.754-3.607-6.79-8.05-6.79zm-2.83 3.045c.514 0 .93.418.93.933 0 .516-.416.934-.93.934a.934.934 0 010-1.867zm5.16 0c.515 0 .933.418.933.933 0 .516-.418.934-.933.934a.933.933 0 110-1.867z"/></svg>) },
-  { key: 'rednote', label: '小红书', color: '#FF2442', copy: true, icon: (
+  { key: 'rednote', labelKey: 'shareRednote', color: '#FF2442', copy: true, icon: (
     <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M9 3v12l-3 3V6l3-3zm6 0v18l3-3V6l-3-3zm-2 6h-2v6h2V9z"/></svg>) },
   { key: 'tiktok', label: 'TikTok', color: '#000', copy: true, icon: (
     <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005.8 20.1a6.34 6.34 0 0010.86-4.43V8.87a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.84-.3z"/></svg>) },
@@ -58,16 +58,16 @@ export function ShareModal({ url, title }) {
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white/[0.05] border border-white/10 text-slate-200 hover:bg-white/[0.08] text-sm">
+      <button onClick={() => setOpen(true)} className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-hover border border-app text-primary hover:bg-surface text-sm">
         <Share2 className="w-4 h-4" />{t('share')}
       </button>
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => { setOpen(false); setShowQR(null) }}>
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#121722] p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
+          <div className="w-full max-w-md rounded-2xl border border-app-strong bg-surface p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-lg font-bold text-white">{t('share')}</h3>
-              <button onClick={() => { setOpen(false); setShowQR(null) }} className="text-slate-400 hover:text-white p-1"><XIcon className="w-4 h-4" /></button>
+              <h3 className="text-lg font-bold text-primary">{t('share')}</h3>
+              <button onClick={() => { setOpen(false); setShowQR(null) }} className="text-tertiary hover:text-primary p-1"><XIcon className="w-4 h-4" /></button>
             </div>
 
             {showQR ? (
@@ -75,21 +75,21 @@ export function ShareModal({ url, title }) {
                 <div className="inline-block p-3 rounded-xl bg-white">
                   <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(shareUrl)}`} alt="QR" className="w-48 h-48" />
                 </div>
-                <p className="mt-4 text-sm text-slate-300">{t('scanQR')} · {showQR.label}</p>
-                <button onClick={() => setShowQR(null)} className="mt-4 text-xs text-slate-400 hover:text-white">← back</button>
+                <p className="mt-4 text-sm text-secondary">{t('scanQR')} · {t(showQR.labelKey)}</p>
+                <button onClick={() => setShowQR(null)} className="mt-4 text-xs text-tertiary hover:text-primary">{t('shareBack')}</button>
               </div>
             ) : (
               <>
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   {[...PLATFORMS, ...NO_URL].map(p => (
-                    <button key={p.key} onClick={() => handleClick(p)} className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition-colors">
+                    <button key={p.key} onClick={() => handleClick(p)} className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-app bg-surface-hover hover:bg-surface transition-colors">
                       <span className="w-9 h-9 rounded-lg flex items-center justify-center text-white" style={{ background: p.color }}>{p.icon}</span>
-                      <span className="text-[11px] text-slate-300">{p.label}</span>
+                      <span className="text-[11px] text-secondary">{p.labelKey ? t(p.labelKey) : p.label}</span>
                     </button>
                   ))}
                 </div>
-                <div className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.03] border border-white/10">
-                  <div className="flex-1 text-[12px] text-slate-400 truncate px-2">{shareUrl}</div>
+                <div className="flex items-center gap-2 p-2 rounded-lg bg-surface-hover border border-app">
+                  <div className="flex-1 text-[12px] text-tertiary truncate px-2">{shareUrl}</div>
                   <button onClick={copyLink} className="px-3 py-1.5 rounded-md bg-[#F5C518] hover:bg-[#e6b800] text-black text-xs font-medium inline-flex items-center gap-1">
                     {copied ? <><Check className="w-3 h-3" />{t('copied')}</> : <><Link2 className="w-3 h-3" />{t('copyLink')}</>}
                   </button>

@@ -18,9 +18,9 @@ export default async function FavoritesPage({ params }) {
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12">
-      <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">{t('myFavorites')}</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6">{t('myFavorites')}</h1>
       {resources.length === 0 ? (
-        <div className="text-center py-16 text-slate-500 border border-dashed border-white/10 rounded-xl">{t('noFavorites')}</div>
+        <div className="text-center py-16 text-tertiary border border-dashed border-app rounded-xl">{t('noFavorites')}</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {resources.map(r => <ResourceCard key={r.id} resource={r} locale={locale} />)}

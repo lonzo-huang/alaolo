@@ -31,19 +31,19 @@ export default function AdminLoginPage() {
 
   return (
     <div className="container mx-auto max-w-md px-4 py-16">
-      <div className="p-8 rounded-2xl border border-white/10 bg-[#10141C]">
+      <div className="p-8 rounded-2xl border border-app bg-surface">
         <div className="text-center mb-6">
           <div className="w-12 h-12 rounded-lg bg-[#F5C518] flex items-center justify-center font-black text-black text-xl mx-auto">a</div>
-          <h1 className="mt-4 text-xl font-bold text-white">{t('title')} · {t('login')}</h1>
+          <h1 className="mt-4 text-xl font-bold text-primary">{t('title')} · {t('login')}</h1>
         </div>
         <form onSubmit={submit} className="space-y-3">
           <div>
-            <label className="text-xs text-slate-400">{t('email')}</label>
-            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-white focus:border-[#F5C518]/40 focus:outline-none focus:ring-1 focus:ring-[#F5C518]/30 text-sm" placeholder="admin@alaolo.com" />
+            <label className="text-xs text-secondary">{t('email')}</label>
+            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full px-3 py-2.5 rounded-lg bg-app border border-app text-primary placeholder-tertiary focus:border-[#F5C518]/40 focus:outline-none focus:ring-1 focus:ring-[#F5C518]/30 text-sm" placeholder="admin@alaolo.com" />
           </div>
           <div>
-            <label className="text-xs text-slate-400">{t('password')}</label>
-            <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-white focus:border-[#F5C518]/40 focus:outline-none focus:ring-1 focus:ring-[#F5C518]/30 text-sm" placeholder="••••••••" />
+            <label className="text-xs text-secondary">{t('password')}</label>
+            <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full px-3 py-2.5 rounded-lg bg-app border border-app text-primary placeholder-tertiary focus:border-[#F5C518]/40 focus:outline-none focus:ring-1 focus:ring-[#F5C518]/30 text-sm" placeholder="••••••••" />
           </div>
           <button disabled={loading} className="w-full py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black font-medium text-sm disabled:opacity-50">{t('submit')}</button>
         </form>
