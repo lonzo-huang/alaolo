@@ -1,6 +1,15 @@
 'use client'
-import { ThemeProvider } from '@/components/site/ThemeProvider'
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
 export function Providers({ children }) {
-  return <ThemeProvider>{children}</ThemeProvider>
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="dark"
+      enableSystem
+      disableTransitionOnChange
+    >
+      {children}
+    </NextThemesProvider>
+  )
 }

@@ -1,6 +1,6 @@
 'use client'
 import { Toaster } from '@/components/ui/sonner'
-import { useTheme } from './ThemeProvider'
+import { useTheme } from 'next-themes'
 
 export function ThemedToaster() {
   const { theme } = useTheme()
