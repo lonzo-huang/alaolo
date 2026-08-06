@@ -16,9 +16,9 @@ export const metadata = {
   },
   description: 'A curated hub of the best developer, AI, and productivity resources.',
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
   },
 }
 

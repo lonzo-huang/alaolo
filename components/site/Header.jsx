@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState, useRef, useEffect, useCallback } from 'react'
@@ -48,8 +47,8 @@ export function Header({ locale }) {
     <>
       <header className="fixed top-0 inset-x-0 z-40 border-b border-app glass">
         <div className="container mx-auto max-w-7xl h-14 flex items-center gap-6 px-4">
-          <Link href={`/${locale}`} className="flex items-center gap-2.5 group shrink-0">
-            <Image src="/logo.png" alt="alaolo" width={96} height={28} className="w-auto h-6 sm:h-7 dark:brightness-110" priority />
+          <Link href={`/${locale}`} className="flex items-center gap-2.5 group shrink-0 text-primary">
+            <img src="/logo.svg" alt="alaolo" className="w-auto h-8 sm:h-9" />
           </Link>
 
           <SubNav locale={locale} />
