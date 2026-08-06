@@ -6,7 +6,31 @@ import { ArrowUpRight, Star, Search, Filter } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
-const SUBS = ['AI', 'Dev', 'Productivity', 'Design', 'Notes']
+const AI_CATEGORIES = [
+  { key: 'chat', icon: '💬' },
+  { key: 'coding', icon: '💻' },
+  { key: 'image', icon: '🎨' },
+  { key: 'video', icon: '🎬' },
+  { key: 'audio', icon: '🎵' },
+  { key: 'knowledge', icon: '📚' },
+  { key: 'search', icon: '🔍' },
+  { key: 'agent', icon: '🤖' },
+  { key: 'data', icon: '📊' },
+  { key: '3d', icon: '🔬' },
+  { key: 'office', icon: '📄' },
+  { key: 'legal', icon: '⚖️' },
+  { key: 'medical', icon: '💊' },
+  { key: 'quant', icon: '📈' },
+  { key: 'devops', icon: '🛠️' },
+  { key: 'career', icon: '💼' },
+]
+
+const FILTERS = {
+  deployment: ['saas', 'api', 'selfhost', 'private'],
+  pricing: ['free', 'freemium', 'token', 'subscription', 'lifetime'],
+  platform: ['web', 'app', 'desktop', 'vscode', 'api', 'sdk'],
+  os: ['windows', 'android', 'ios', 'linux', 'arm'],
+}
 
 export async function generateMetadata({ params }) {
   const { locale } = await params
@@ -42,24 +66,53 @@ export default async function ToolsHubPage({ params, searchParams }) {
           <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-3">{t('categories')}</div>
           <div className="flex flex-col gap-0.5">
             <Link href={`/${locale}/tools`} className={`px-3 py-2 rounded-md text-[13px] ${!activeSub ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>🔥 {t('all')}</Link>
-            {SUBS.map(s => (
-              <Link key={s} href={`/${locale}/tools?sub=${s}`} className={`px-3 py-2 rounded-md text-[13px] ${activeSub === s ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>
-                {s === 'AI' ? '🤖' : s === 'Dev' ? '💻' : s === 'Productivity' ? '⚡' : s === 'Design' ? '🎨' : '📝'} {s}
+            {AI_CATEGORIES.map(c => (
+              <Link key={c.key} href={`/${locale}/tools?sub=${c.key}`} className={`px-3 py-2 rounded-md text-[13px] ${activeSub === c.key ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>
+                {c.icon} {t(`cat_${c.key}`)}
               </Link>
             ))}
           </div>
           <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mt-6 mb-3">{t('filters')}</div>
-          <div className="flex flex-col gap-0.5">
-            {['Free', 'Freemium', 'Paid'].map(p => (
-              <Link key={p} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}price=${p}`} className={`px-3 py-2 rounded-md text-[13px] ${activePrice === p ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{p}</Link>
-            ))}
+          <div className="flex flex-col gap-3">
+            <div>
+              <div className="text-[11px] text-tertiary mb-1">{t('filterDeployment')}</div>
+              <div className="flex flex-col gap-0.5">
+                {FILTERS.deployment.map(f => (
+                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}deploy=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${sp?.deploy === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`deploy_${f}`)}</Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="text-[11px] text-tertiary mb-1">{t('filterPricing')}</div>
+              <div className="flex flex-col gap-0.5">
+                {FILTERS.pricing.map(f => (
+                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}price=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${activePrice === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`price_${f}`)}</Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="text-[11px] text-tertiary mb-1">{t('filterPlatform')}</div>
+              <div className="flex flex-col gap-0.5">
+                {FILTERS.platform.map(f => (
+                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}platform=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${sp?.platform === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`platform_${f}`)}</Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="text-[11px] text-tertiary mb-1">{t('filterOS')}</div>
+              <div className="flex flex-col gap-0.5">
+                {FILTERS.os.map(f => (
+                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}os=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${sp?.os === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`os_${f}`)}</Link>
+                ))}
+              </div>
+            </div>
           </div>
         </aside>
 
         <div>
           <div className="mb-8">
             <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-2">{t('hubTitle')}</div>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🛠️ {activeSub || t('all')} {t('toolsSuffix')}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">🤖 {activeSub ? t(`cat_${activeSub}`) : t('all')} {t('toolsSuffix')}</h1>
             <p className="mt-2 text-secondary">{t('toolsCount', { count: all?.length || 0 })}</p>
           </div>
 
@@ -67,7 +120,7 @@ export default async function ToolsHubPage({ params, searchParams }) {
             <section className="mb-10">
               <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-3">{t('featured')}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {featured.slice(0, 2).map(r => <FeatCard key={r.id} r={r} locale={locale} big />)}
+                {featured.slice(0, 2).map(r => <FeatCard key={r.id} r={r} locale={locale} big t={t} />)}
               </div>
             </section>
           )}
@@ -75,11 +128,11 @@ export default async function ToolsHubPage({ params, searchParams }) {
           {Object.entries(bySub).filter(([s]) => !activeSub || s === activeSub).map(([sub, items]) => (
             <section key={sub} className="mb-10">
               <div className="flex items-end justify-between mb-4">
-                <h2 className="text-lg font-bold text-primary">{sub === 'AI' ? '🤖' : sub === 'Dev' ? '💻' : sub === 'Productivity' ? '⚡' : sub === 'Design' ? '🎨' : '📝'} {sub}</h2>
+                <h2 className="text-lg font-bold text-primary">{AI_CATEGORIES.find(c => c.key === sub)?.icon || '📝'} {t(`cat_${sub}`) || sub}</h2>
                 <span className="text-xs text-tertiary">{items.length}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {items.map(r => <FeatCard key={r.id} r={r} locale={locale} />)}
+                {items.map(r => <FeatCard key={r.id} r={r} locale={locale} t={t} />)}
               </div>
             </section>
           ))}
@@ -89,7 +142,7 @@ export default async function ToolsHubPage({ params, searchParams }) {
   )
 }
 
-function FeatCard({ r, locale, big }) {
+function FeatCard({ r, locale, big, t }) {
   return (
     <Link href={`/${locale}/resource/${r.slug}`} className={`group rounded-xl border border-app hover:border-app-strong bg-surface hover:bg-surface-hover p-5 flex flex-col gap-3 transition-all ${big ? 'md:col-span-1' : ''}`}>
       <div className="flex items-start gap-3">
@@ -101,7 +154,7 @@ function FeatCard({ r, locale, big }) {
             <div className="font-semibold text-primary text-[14.5px] truncate">{tt(r.name, locale)}</div>
             <ArrowUpRight className="w-3.5 h-3.5 text-tertiary group-hover:text-primary shrink-0" />
           </div>
-          <div className="text-[10.5px] font-mono uppercase tracking-wider text-tertiary mt-0.5">{r.subcategory}</div>
+          <div className="text-[10.5px] font-mono uppercase tracking-wider text-tertiary mt-0.5">{t(`cat_${r.subcategory}`) || r.subcategory}</div>
         </div>
         {r.price_type && <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 ${r.price_type === 'Free' ? 'text-emerald-500 border-emerald-500/40 bg-emerald-500/10' : r.price_type === 'Paid' ? 'text-orange-500 border-orange-500/40 bg-orange-500/10' : 'text-blue-500 border-blue-500/40 bg-blue-500/10'}`}>{r.price_type}</span>}
       </div>

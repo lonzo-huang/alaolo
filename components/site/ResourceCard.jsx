@@ -11,6 +11,22 @@ const CAT_CHIP = {
   network: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/30',
   learning: 'bg-orange-500/15 text-orange-600 dark:text-orange-300 border-orange-500/30',
   productivity: 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 border-cyan-500/30',
+  chat: 'bg-violet-500/15 text-violet-600 dark:text-violet-300 border-violet-500/30',
+  coding: 'bg-blue-500/15 text-blue-600 dark:text-blue-300 border-blue-500/30',
+  image: 'bg-pink-500/15 text-pink-600 dark:text-pink-300 border-pink-500/30',
+  video: 'bg-red-500/15 text-red-600 dark:text-red-300 border-red-500/30',
+  audio: 'bg-amber-500/15 text-amber-600 dark:text-amber-300 border-amber-500/30',
+  knowledge: 'bg-teal-500/15 text-teal-600 dark:text-teal-300 border-teal-500/30',
+  search: 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 border-cyan-500/30',
+  agent: 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border-indigo-500/30',
+  data: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/30',
+  '3d': 'bg-fuchsia-500/15 text-fuchsia-600 dark:text-fuchsia-300 border-fuchsia-500/30',
+  office: 'bg-slate-500/15 text-slate-600 dark:text-slate-300 border-slate-500/30',
+  legal: 'bg-stone-500/15 text-stone-600 dark:text-stone-300 border-stone-500/30',
+  medical: 'bg-rose-500/15 text-rose-600 dark:text-rose-300 border-rose-500/30',
+  quant: 'bg-green-500/15 text-green-600 dark:text-green-300 border-green-500/30',
+  devops: 'bg-orange-500/15 text-orange-600 dark:text-orange-300 border-orange-500/30',
+  career: 'bg-yellow-500/15 text-yellow-600 dark:text-yellow-300 border-yellow-500/30',
 }
 
 export function ResourceCard({ resource, locale, compact = false }) {

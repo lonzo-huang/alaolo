@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Search, ArrowRight, ArrowUpRight, Star, Zap, BookOpen, FolderOpen, Sparkles, Github, Clock, Tag, Check } from 'lucide-react'
 import { t as tt } from '@/lib/i18n/config'
 
-const SUB_ACCENT = { AI: 'from-purple-500', Dev: 'from-blue-500', Productivity: 'from-cyan-500', Design: 'from-pink-500', Notes: 'from-violet-500', Quantum: 'from-emerald-500', Web: 'from-orange-500', DevOps: 'from-indigo-500', API: 'from-teal-500', SelfHosted: 'from-lime-500', Learning: 'from-amber-500', Community: 'from-rose-500', VPN: 'from-yellow-500', Cloud: 'from-red-500', Analytics: 'from-fuchsia-500', macOS: 'from-slate-500', Hosting: 'from-black', Network: 'from-orange-500' }
+const SUB_ACCENT = { AI: 'from-purple-500', Dev: 'from-blue-500', Productivity: 'from-cyan-500', Design: 'from-pink-500', Notes: 'from-violet-500', Quantum: 'from-emerald-500', Web: 'from-orange-500', DevOps: 'from-indigo-500', API: 'from-teal-500', SelfHosted: 'from-lime-500', Learning: 'from-amber-500', Community: 'from-rose-500', VPN: 'from-yellow-500', Cloud: 'from-red-500', Analytics: 'from-fuchsia-500', macOS: 'from-slate-500', Hosting: 'from-black', Network: 'from-orange-500', chat: 'from-violet-500', coding: 'from-blue-500', image: 'from-pink-500', video: 'from-red-500', audio: 'from-amber-500', knowledge: 'from-teal-500', search: 'from-cyan-500', agent: 'from-indigo-500', data: 'from-emerald-500', '3d': 'from-fuchsia-500', office: 'from-slate-500', legal: 'from-stone-500', medical: 'from-rose-500', quant: 'from-green-500', devops: 'from-orange-500', career: 'from-yellow-500' }
 
 export function HomeClient({ locale, byCategory, all }) {
   const t = useTranslations('home')
