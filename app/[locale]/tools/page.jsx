@@ -2,7 +2,8 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { t as tt } from '@/lib/i18n/config'
-import { ArrowUpRight, Star, Search, Filter } from 'lucide-react'
+import { ArrowUpRight, Star } from 'lucide-react'
+import ToolsFilters from '@/components/site/ToolsFilters'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,13 +25,6 @@ const AI_CATEGORIES = [
   { key: 'devops', icon: '🛠️' },
   { key: 'career', icon: '💼' },
 ]
-
-const FILTERS = {
-  deployment: ['saas', 'api', 'selfhost', 'private'],
-  pricing: ['free', 'freemium', 'token', 'subscription', 'lifetime'],
-  platform: ['web', 'app', 'desktop', 'vscode', 'api', 'sdk'],
-  os: ['windows', 'android', 'ios', 'linux', 'arm'],
-}
 
 export async function generateMetadata({ params }) {
   const { locale } = await params
@@ -73,40 +67,7 @@ export default async function ToolsHubPage({ params, searchParams }) {
             ))}
           </div>
           <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mt-6 mb-3">{t('filters')}</div>
-          <div className="flex flex-col gap-3">
-            <div>
-              <div className="text-[11px] text-tertiary mb-1">{t('filterDeployment')}</div>
-              <div className="flex flex-col gap-0.5">
-                {FILTERS.deployment.map(f => (
-                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}deploy=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${sp?.deploy === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`deploy_${f}`)}</Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <div className="text-[11px] text-tertiary mb-1">{t('filterPricing')}</div>
-              <div className="flex flex-col gap-0.5">
-                {FILTERS.pricing.map(f => (
-                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}price=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${activePrice === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`price_${f}`)}</Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <div className="text-[11px] text-tertiary mb-1">{t('filterPlatform')}</div>
-              <div className="flex flex-col gap-0.5">
-                {FILTERS.platform.map(f => (
-                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}platform=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${sp?.platform === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`platform_${f}`)}</Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <div className="text-[11px] text-tertiary mb-1">{t('filterOS')}</div>
-              <div className="flex flex-col gap-0.5">
-                {FILTERS.os.map(f => (
-                  <Link key={f} href={`/${locale}/tools?${activeSub ? `sub=${activeSub}&` : ''}os=${f}`} className={`px-3 py-1.5 rounded-md text-[12.5px] ${sp?.os === f ? 'bg-surface-hover text-primary font-medium' : 'text-secondary hover:bg-surface-hover'}`}>{t(`os_${f}`)}</Link>
-                ))}
-              </div>
-            </div>
-          </div>
+          <ToolsFilters locale={locale} />
         </aside>
 
         <div>
