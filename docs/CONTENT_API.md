@@ -21,6 +21,21 @@ CONTENT_API_KEY=your-random-secret-key
 OPENAI_API_KEY=sk-...
 # 可选，默认 gpt-4o-mini
 OPENAI_TRANSLATE_MODEL=gpt-4o-mini
+
+# 新增：图片上传 -> 提交到本仓库 public/images/，通过 jsDelivr CDN 加速
+# GITHUB_TOKEN 需要对该仓库有 "Contents: Read and write" 权限（fine-grained PAT 或 classic PAT with repo scope）
+GITHUB_TOKEN=ghp_xxx
+GITHUB_OWNER=lonzo-huang
+GITHUB_REPO=alaolo
+GITHUB_BRANCH=main
+
+# 新增：PDF/大文件上传 -> Cloudflare R2
+R2_ACCOUNT_ID=...
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
+R2_BUCKET=alaolo-files
+# R2 桶的公开访问域名（R2.dev 公共 URL 或绑定的自定义域名）
+R2_PUBLIC_URL=https://pub-xxxxxxxx.r2.dev
 ```
 
 ## 鉴权
@@ -32,6 +47,56 @@ x-api-key: <CONTENT_API_KEY>
 ```
 
 GET 为只读，暂不需要鉴权。
+
+---
+
+## `POST /api/upload` — 上传图片 / 文件（多媒体资产）
+
+`multipart/form-data`，字段：
+
+| 字段 | 必填 | 说明 |
+|---|---|---|
+| `file` | ✅ | 要上传的文件 |
+| `type` | 否 | `image`（默认，走 GitHub+jsDelivr）或 `file`（走 Cloudflare R2） |
+| `folder` | 否 | 子目录，默认 `images` 或 `files` |
+
+**图片（`type=image`，默认）**：
+- 通过 GitHub Contents API 真正提交一个 commit 到本仓库 `public/images/` 目录
+- 返回的 `url` 是锁定该次 commit SHA 的 jsDelivr 链接，**立即生效、不会被 CDN 缓存拖慢**
+- 限制：单文件 ≤ 1.5MB（GitHub Contents API 对大文件不稳定），超出会返回 `400` 并提示改用 `type=file`
+
+**文件（`type=file`，PDF / 大文件）**：
+- 直接上传到 Cloudflare R2，返回 R2 公开域名的 URL
+- 无大小限制顾虑（R2 支持到 5TB/对象）
+
+**响应示例（图片）**：
+```json
+{
+  "ok": true,
+  "url": "https://cdn.jsdelivr.net/gh/lonzo-huang/alaolo@a1b2c3d/public/images/tools/1699999999-chatgpt-logo.png",
+  "path": "public/images/tools/1699999999-chatgpt-logo.png",
+  "commitSha": "a1b2c3d...",
+  "jsdelivrLatestUrl": "https://cdn.jsdelivr.net/gh/lonzo-huang/alaolo@main/public/images/tools/1699999999-chatgpt-logo.png",
+  "githubRawUrl": "https://raw.githubusercontent.com/lonzo-huang/alaolo/main/public/images/tools/1699999999-chatgpt-logo.png"
+}
+```
+
+**curl 示例**：
+```bash
+curl -X POST https://your-domain.com/api/upload \
+  -H "x-api-key: your-random-secret-key" \
+  -F "file=@./chatgpt-logo.png" \
+  -F "type=image" \
+  -F "folder=images/tools"
+
+curl -X POST https://your-domain.com/api/upload \
+  -H "x-api-key: your-random-secret-key" \
+  -F "file=@./whitepaper.pdf" \
+  -F "type=file" \
+  -F "folder=files/docs"
+```
+
+上传得到的 `url` 直接填入 `/api/resources` 的 `logo_url` / `cover_url` 字段，或文章正文里引用即可。
 
 ---
 
@@ -112,6 +177,12 @@ GET /api/resources?category=ai-chatbots&limit=20
 - `info_grid`（信息卡片）、`pricing_plans`（价格方案）、`screenshots`（截图）暂不支持通过此 API 创建，如需要请直接在 Supabase 后台按已有 schema（见 `supabase/migrations/001_init.sql`）写入，字段结构与 `resources` 一致（JSONB 多语言对象 `{zh, en, ja, ...}`）。
 - 翻译使用 OpenAI JSON mode，每次发布/更新会产生 9 次 API 调用（每语言 1 次，一次性翻译该次涉及的所有字段），未配置 `OPENAI_API_KEY` 时会直接回退为中文文本。
 - 建议先在测试环境验证翻译质量后再用于生产内容发布。
+
+### GitHub + jsDelivr 图片方案的已知取舍
+
+- 每张图片都会变成仓库的一个真实 commit，仓库会随图片数量持续增长（历史 commit 不会自动清理）。相比放 R2，好处是免费、集成简单、jsDelivr 全球 CDN 加速；代价是长期图片量很大（比如上万张）之后仓库体积会明显变大，clone/CI 构建会变慢。
+- 如果图片量级预期会做到"大量文章配图"的规模，建议图片也走 R2（用 `type=file`），只把 GitHub+jsDelivr 用于少量固定资源（logo、图标等）。当前 API 两种方式都支持，按需选择即可。
+- jsDelivr 对 `@分支名` 形式的链接有缓存（最长约 7 天），本 API 返回的 `url` 是锁定 commit SHA 的链接，不受此缓存影响，可放心直接使用。
 
 ## 示例（curl）
 
