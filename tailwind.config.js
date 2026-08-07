@@ -17,6 +17,14 @@ module.exports = {
         }
       },
       extend: {
+        fontFamily: {
+          sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          serif: ['var(--font-playfair)', 'Georgia', 'serif'],
+          mono: ['var(--font-jetbrains)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        },
+        transitionTimingFunction: {
+          spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+        },
         colors: {
           border: 'hsl(var(--border))',
           input: 'hsl(var(--input))',
@@ -70,9 +78,12 @@ module.exports = {
           }
         },
         borderRadius: {
-          lg: 'var(--radius)',
-          md: 'calc(var(--radius) - 2px)',
-          sm: 'calc(var(--radius) - 4px)'
+          sm: '6px',
+          md: '6px',
+          lg: '8px',
+          xl: '8px',
+          '2xl': '8px',
+          '3xl': '8px',
         },
         keyframes: {
           'accordion-down': {

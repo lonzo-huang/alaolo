@@ -64,7 +64,7 @@ export function ShareModal({ url, title }) {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => { setOpen(false); setShowQR(null) }}>
-          <div className="w-full max-w-md rounded-2xl border border-app-strong bg-surface p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
+          <div className="w-full max-w-md rounded-2xl border border-app-strong bg-surface p-6 shadow-2xl modal-pop" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-lg font-bold text-primary">{t('share')}</h3>
               <button onClick={() => { setOpen(false); setShowQR(null) }} className="text-tertiary hover:text-primary p-1"><XIcon className="w-4 h-4" /></button>

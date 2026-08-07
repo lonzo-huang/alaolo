@@ -48,7 +48,7 @@ export function CommandPalette({ open, onClose, locale }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-2xl rounded-xl border border-app-strong bg-surface shadow-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
+      <div className="w-full max-w-2xl rounded-xl border border-app-strong bg-surface shadow-2xl overflow-hidden modal-pop" onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-2 px-4 border-b border-app">
           <Search className="w-4 h-4 text-tertiary shrink-0" />
           <input autoFocus value={q} onChange={e => { setQ(e.target.value); setSelectedIdx(0) }} placeholder={t('searchPrompt')} className="flex-1 py-3.5 bg-transparent text-primary placeholder-tertiary text-sm focus:outline-none" />
