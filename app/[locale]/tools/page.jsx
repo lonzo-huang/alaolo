@@ -81,7 +81,7 @@ export default async function ToolsHubPage({ params, searchParams }) {
             <section className="mb-10">
               <div className="text-[11px] font-mono uppercase tracking-widest text-[#F5C518] mb-3">{t('featured')}</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {featured.slice(0, 2).map(r => <FeatCard key={r.id} r={r} locale={locale} big t={t} />)}
+                {featured.slice(0, 2).map(r => <FeatCard key={r.id} r={r} locale={locale} big />)}
               </div>
             </section>
           )}
@@ -93,7 +93,7 @@ export default async function ToolsHubPage({ params, searchParams }) {
                 <span className="text-xs text-tertiary">{items.length}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {items.map(r => <FeatCard key={r.id} r={r} locale={locale} t={t} />)}
+                {items.map(r => <FeatCard key={r.id} r={r} locale={locale} />)}
               </div>
             </section>
           ))}

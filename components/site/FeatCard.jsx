@@ -1,10 +1,12 @@
 'use client'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { Star, ArrowUpRight } from 'lucide-react'
 import { t as tt } from '@/lib/i18n/config'
 import { useSpotlight, SPOTLIGHT_CLASS } from '@/lib/hooks/useSpotlight'
 
-export function FeatCard({ r, locale, big, t }) {
+export function FeatCard({ r, locale, big }) {
+  const t = useTranslations('tools')
   const spotlight = useSpotlight()
   return (
     <Link ref={spotlight.ref} onMouseMove={spotlight.onMouseMove} onMouseLeave={spotlight.onMouseLeave} href={`/${locale}/resource/${r.slug}`} className={`group relative overflow-hidden rounded-xl border border-app hover:border-app-strong bg-surface hover:bg-surface-hover p-5 flex flex-col gap-3 transition-all ${SPOTLIGHT_CLASS} ${big ? 'md:col-span-1' : ''}`}>
