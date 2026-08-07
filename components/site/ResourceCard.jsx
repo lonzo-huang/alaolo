@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { t as tt } from '@/lib/i18n/config'
 import { Star } from 'lucide-react'
+import { useSpotlight, SPOTLIGHT_CLASS } from '@/lib/hooks/useSpotlight'
 
 // category slug -> pill classes (colored primary chip)
 const CAT_CHIP = {
@@ -37,10 +38,11 @@ export function ResourceCard({ resource, locale, compact = false }) {
   const highlights = resource.highlights?.[locale] || resource.highlights?.en || []
   const catName = tt(cat?.name, locale)
   const price = resource.pricing_summary || (resource.rating >= 4.7 ? 'Freemium' : t('free'))
+  const spotlight = useSpotlight()
 
   return (
-    <div className="group rounded-xl border border-app bg-surface hover:border-app-strong transition-all p-5 flex flex-col gap-3">
-      <div className="flex items-start gap-3">
+    <div ref={spotlight.ref} onMouseMove={spotlight.onMouseMove} onMouseLeave={spotlight.onMouseLeave} className={`group rounded-xl border border-app bg-surface hover:border-app-strong transition-all p-5 flex flex-col gap-3 overflow-hidden ${SPOTLIGHT_CLASS}`}>
+      <div className="flex items-start gap-3 relative z-[2]">
         <div className="w-10 h-10 rounded-lg bg-surface-hover border border-app flex items-center justify-center overflow-hidden shrink-0">
           {resource.logo_url ? (
             <img src={resource.logo_url} alt="" className="w-7 h-7 object-contain" onError={(e) => { e.target.style.display = 'none' }} />

@@ -43,6 +43,30 @@ html:not(.dark) .pattern-dots {
   background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0);
 }
 
+/* Cursor-following spotlight + subtle 3D tilt for cards */
+.card-tilt {
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+.card-spotlight { position: relative; }
+.card-spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 220px at var(--spot-x, 50%) var(--spot-y, 50%), rgba(245,197,24,0.14), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.card-spotlight:hover::before { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .card-tilt { transform: none !important; transition: none !important; }
+  section[style] { --px: 0px !important; --py: 0px !important; }
+}
+
 /* Theme-aware helpers */
 .bg-app { background: #101014; }
 html:not(.dark) .bg-app { background: #fafafa; }

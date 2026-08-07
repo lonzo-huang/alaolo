@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Search, ArrowRight, ArrowUpRight, Star, Zap, BookOpen, FolderOpen, Sparkles, Github, Clock, Tag, Check } from 'lucide-react'
 import { t as tt } from '@/lib/i18n/config'
+import { useSpotlight, SPOTLIGHT_CLASS } from '@/lib/hooks/useSpotlight'
 
 const SUB_ACCENT = { AI: 'from-purple-500', Dev: 'from-blue-500', Productivity: 'from-cyan-500', Design: 'from-pink-500', Notes: 'from-violet-500', Quantum: 'from-emerald-500', Web: 'from-orange-500', DevOps: 'from-indigo-500', API: 'from-teal-500', SelfHosted: 'from-lime-500', Learning: 'from-amber-500', Community: 'from-rose-500', VPN: 'from-yellow-500', Cloud: 'from-red-500', Analytics: 'from-fuchsia-500', macOS: 'from-slate-500', Hosting: 'from-black', Network: 'from-orange-500', chat: 'from-violet-500', coding: 'from-blue-500', image: 'from-pink-500', video: 'from-red-500', audio: 'from-amber-500', knowledge: 'from-teal-500', search: 'from-cyan-500', agent: 'from-indigo-500', data: 'from-emerald-500', '3d': 'from-fuchsia-500', office: 'from-slate-500', legal: 'from-stone-500', medical: 'from-rose-500', quant: 'from-green-500', devops: 'from-orange-500', career: 'from-yellow-500' }
 
@@ -40,13 +41,26 @@ export function HomeClient({ locale, byCategory, all }) {
     { key: 'quantum', label: t('chipQuantum') },
   ]
 
+  const heroParallax = (e) => {
+    const el = e.currentTarget
+    const rect = el.getBoundingClientRect()
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    el.style.setProperty('--px', `${px * 40}px`)
+    el.style.setProperty('--py', `${py * 40}px`)
+  }
+  const resetHeroParallax = (e) => {
+    e.currentTarget.style.setProperty('--px', '0px')
+    e.currentTarget.style.setProperty('--py', '0px')
+  }
+
   return (
     <div className="pb-24">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-app">
+      <section onMouseMove={heroParallax} onMouseLeave={resetHeroParallax} className="relative overflow-hidden border-b border-app">
         <div className="absolute inset-0 pattern-dots opacity-50 pointer-events-none" style={{ maskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 80%)', WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 80%)' }} />
-        <div className="absolute top-0 left-1/3 w-[600px] h-[400px] bg-[#F5C518]/8 blur-[140px] rounded-full -z-0 pointer-events-none" />
-        <div className="absolute top-20 right-1/4 w-[500px] h-[300px] bg-purple-500/8 blur-[130px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 left-1/3 w-[600px] h-[400px] bg-[#F5C518]/8 blur-[140px] rounded-full -z-0 pointer-events-none transition-transform duration-300 ease-out" style={{ transform: 'translate(calc(var(--px, 0px) * 1), calc(var(--py, 0px) * 1))' }} />
+        <div className="absolute top-20 right-1/4 w-[500px] h-[300px] bg-purple-500/8 blur-[130px] rounded-full pointer-events-none transition-transform duration-300 ease-out" style={{ transform: 'translate(calc(var(--px, 0px) * -1.4), calc(var(--py, 0px) * -1.4))' }} />
 
         <div className="container mx-auto max-w-5xl px-4 pt-20 pb-14 relative text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-app text-[11.5px] text-secondary mb-8 font-mono uppercase tracking-wider">
@@ -149,11 +163,12 @@ function ToolsBento({ locale, items }) {
 function BentoCard({ r, locale, className = '', featured, small }) {
   const t = useTranslations('home')
   const accent = SUB_ACCENT[r.subcategory] || 'from-slate-500'
+  const spotlight = useSpotlight()
   return (
-    <Link href={`/${locale}/resource/${r.slug}`} className={`group relative rounded-xl border border-app bg-surface hover:border-app-strong hover:bg-surface-hover transition-all overflow-hidden flex flex-col p-5 card-glow ${className} ${small ? 'min-h-[160px]' : ''}`}>
+    <Link ref={spotlight.ref} onMouseMove={spotlight.onMouseMove} onMouseLeave={spotlight.onMouseLeave} href={`/${locale}/resource/${r.slug}`} className={`group relative rounded-xl border border-app bg-surface hover:border-app-strong hover:bg-surface-hover transition-all overflow-hidden flex flex-col p-5 ${SPOTLIGHT_CLASS} ${className} ${small ? 'min-h-[160px]' : ''}`}>
       <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-3xl opacity-[0.18] bg-gradient-radial ${accent} to-transparent pointer-events-none`} style={{ background: `radial-gradient(circle, ${r.brand_color || '#F5C518'}55, transparent 70%)` }} />
 
-      <div className="flex items-start justify-between gap-2 relative">
+      <div className="flex items-start justify-between gap-2 relative z-[2]">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="w-8 h-8 rounded-lg bg-surface-hover border border-app flex items-center justify-center overflow-hidden shrink-0">
             {r.logo_url && <img src={r.logo_url} alt="" className="w-5 h-5 object-contain" />}
@@ -183,13 +198,14 @@ function BentoCard({ r, locale, className = '', featured, small }) {
 // ============= 2. KNOWLEDGE · MAGAZINE =============
 function KnowledgeMagazine({ locale, items }) {
   const t = useTranslations('home')
+  const spotlight = useSpotlight()
   if (!items?.length) return <Empty />
   const [feat, ...rest] = items
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
       {feat && (
-        <Link href={`/${locale}/resource/${feat.slug}`} className="lg:col-span-3 group relative rounded-2xl border border-app bg-surface overflow-hidden hover:border-app-strong transition-all card-glow">
-          <div className="aspect-[16/10] relative overflow-hidden">
+        <Link ref={spotlight.ref} onMouseMove={spotlight.onMouseMove} onMouseLeave={spotlight.onMouseLeave} href={`/${locale}/resource/${feat.slug}`} className={`lg:col-span-3 group relative rounded-2xl border border-app bg-surface overflow-hidden hover:border-app-strong transition-all ${SPOTLIGHT_CLASS}`}>
+          <div className="aspect-[16/10] relative overflow-hidden z-[2]">
             {feat.cover_image ? (
               <img src={feat.cover_image} alt="" className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity" />
             ) : (
@@ -262,11 +278,19 @@ function RecommendationsReview({ locale, items }) {
         let discount = null
         try { discount = r.discount ? JSON.parse(r.discount) : null } catch {}
         const discountLabel = discount ? tt(discount, locale) : null
-        return (
-          <div key={r.id} className="group relative rounded-2xl border border-app bg-surface p-6 hover:border-app-strong transition-all overflow-hidden card-glow">
+        return <RecommendationCard key={r.id} r={r} locale={locale} t={t} discountLabel={discountLabel} />
+      })}
+    </div>
+  )
+}
+
+function RecommendationCard({ r, locale, t, discountLabel }) {
+  const spotlight = useSpotlight()
+  return (
+    <div ref={spotlight.ref} onMouseMove={spotlight.onMouseMove} onMouseLeave={spotlight.onMouseLeave} className={`group relative rounded-2xl border border-app bg-surface p-6 hover:border-app-strong transition-all overflow-hidden ${SPOTLIGHT_CLASS}`}>
             <div className="absolute -top-24 -right-24 w-56 h-56 blur-3xl opacity-[0.15] pointer-events-none" style={{ background: `radial-gradient(circle, ${r.brand_color || '#F5C518'}, transparent 70%)` }} />
 
-            <div className="flex items-start gap-3 relative">
+            <div className="flex items-start gap-3 relative z-[2]">
               <div className="w-11 h-11 rounded-xl bg-surface-hover border border-app flex items-center justify-center overflow-hidden shrink-0">
                 {r.logo_url && <img src={r.logo_url} alt="" className="w-7 h-7 object-contain" />}
               </div>
@@ -286,15 +310,15 @@ function RecommendationsReview({ locale, items }) {
             </div>
 
             {r.recommendation_reason && (
-              <div className="mt-4 p-3.5 rounded-lg border-l-2 border-[#F5C518] bg-surface-hover">
+              <div className="mt-4 p-3.5 rounded-lg border-l-2 border-[#F5C518] bg-surface-hover relative z-[2]">
                 <div className="text-[10.5px] font-mono uppercase tracking-widest text-[#F5C518] mb-1.5">{t('whyRecommend')}</div>
                 <div className="text-[13.5px] text-primary leading-relaxed">{tt(r.recommendation_reason, locale)}</div>
               </div>
             )}
 
-            <p className="mt-3 text-[13px] text-secondary leading-relaxed line-clamp-2">{tt(r.description, locale)}</p>
+            <p className="mt-3 text-[13px] text-secondary leading-relaxed line-clamp-2 relative z-[2]">{tt(r.description, locale)}</p>
 
-            <div className="mt-4 flex items-center gap-2">
+            <div className="mt-4 flex items-center gap-2 relative z-[2]">
               <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#F5C518] hover:bg-[#e6b800] text-black text-[12.5px] font-medium">
                 {t('getDeal')}<ArrowUpRight className="w-3.5 h-3.5" />
               </a>
@@ -302,9 +326,6 @@ function RecommendationsReview({ locale, items }) {
               <div className="flex-1" />
               <span className="text-[10.5px] font-mono text-tertiary uppercase tracking-wider">{r.subcategory}</span>
             </div>
-          </div>
-        )
-      })}
     </div>
   )
 }
