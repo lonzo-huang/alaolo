@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Search, ArrowRight, ArrowUpRight, Star, Zap, BookOpen, FolderOpen, Sparkles, Github, Clock, Tag, Check } from 'lucide-react'
+import { Search, ArrowRight, ArrowUpRight, Star, Zap, BookOpen, Sparkles, Clock, Tag, Check } from 'lucide-react'
 import { t as tt } from '@/lib/i18n/config'
 import { useSpotlight, SPOTLIGHT_CLASS } from '@/lib/hooks/useSpotlight'
 
@@ -36,7 +36,6 @@ export function HomeClient({ locale, byCategory, all }) {
     { key: 'all', label: t('chipAll') },
     { key: 'tools', label: '#' + tNav('tools') },
     { key: 'knowledge', label: '#' + tNav('knowledge') },
-    { key: 'resources', label: '#' + tNav('resources') },
     { key: 'recommendations', label: '#' + tNav('recommendations') },
     { key: 'quantum', label: t('chipQuantum') },
   ]
@@ -104,10 +103,6 @@ export function HomeClient({ locale, byCategory, all }) {
             {/* SECTION 2: KNOWLEDGE (Magazine) */}
             <SectionHeader icon={<BookOpen className="w-3.5 h-3.5" />} label={t('secKnowledgeLabel')} title={tNav('knowledge')} href={`/${locale}?cat=knowledge`} />
             <KnowledgeMagazine locale={locale} items={byCategory.knowledge || []} />
-
-            {/* SECTION 3: RESOURCES (Compact) */}
-            <SectionHeader icon={<FolderOpen className="w-3.5 h-3.5" />} label={t('secResourcesLabel')} title={tNav('resources')} href={`/${locale}?cat=resources`} />
-            <ResourcesCompact locale={locale} items={byCategory.resources || []} />
 
             {/* SECTION 4: RECOMMENDATIONS (Review cards) */}
             <SectionHeader icon={<Sparkles className="w-3.5 h-3.5" />} label={t('secRecommendationsLabel')} title={tNav('recommendations')} href={`/${locale}?cat=recommendations`} />
@@ -241,32 +236,6 @@ function KnowledgeMagazine({ locale, items }) {
   )
 }
 
-// ============= 3. RESOURCES · COMPACT =============
-function ResourcesCompact({ locale, items }) {
-  if (!items?.length) return <Empty />
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      {items.map(r => (
-        <Link key={r.id} href={`/${locale}/resource/${r.slug}`} className="group flex items-center gap-3 rounded-xl border border-app bg-surface hover:border-app-strong hover:bg-surface-hover p-4 transition-all">
-          <div className="w-10 h-10 rounded-lg bg-surface-hover border border-app flex items-center justify-center overflow-hidden shrink-0">
-            {r.logo_url && <img src={r.logo_url} alt="" className="w-6 h-6" />}
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <div className="text-[14px] font-semibold text-primary tracking-tight truncate">{tt(r.name, locale)}</div>
-              <ArrowUpRight className="w-3 h-3 text-tertiary group-hover:text-primary shrink-0" />
-            </div>
-            <div className="text-[12px] text-tertiary truncate">{tt(r.slogan, locale)}</div>
-          </div>
-          <div className="flex flex-col items-end gap-1 shrink-0 text-[10px] font-mono text-tertiary">
-            {r.github_stars > 0 && <span className="flex items-center gap-1"><Github className="w-2.5 h-2.5" />{r.github_stars > 1000 ? `${Math.round(r.github_stars / 1000)}k` : r.github_stars}</span>}
-            <span className="uppercase tracking-wider">{r.subcategory}</span>
-          </div>
-        </Link>
-      ))}
-    </div>
-  )
-}
 
 // ============= 4. RECOMMENDATIONS · REVIEW CARDS =============
 function RecommendationsReview({ locale, items }) {

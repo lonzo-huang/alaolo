@@ -15,7 +15,7 @@ export default async function LeaderboardPage({ params }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'leaderboard' })
   const sb = await createSupabaseServer()
-  const cats = ['tools', 'knowledge', 'resources', 'recommendations']
+  const cats = ['tools', 'knowledge', 'recommendations']
   const results = {}
   for (const c of cats) {
     const { data } = await sb.from('resources').select('*').eq('super_category', c).order('rating', { ascending: false }).order('view_count', { ascending: false }).limit(10)

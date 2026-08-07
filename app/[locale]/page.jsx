@@ -17,7 +17,7 @@ export default async function HomePage({ params }) {
   const sb = await createSupabaseServer()
   const { data: all } = await sb.from('resources').select('*').order('featured', { ascending: false }).order('editors_pick', { ascending: false }).order('rating', { ascending: false })
 
-  const byCategory = { tools: [], knowledge: [], resources: [], recommendations: [] }
+  const byCategory = { tools: [], knowledge: [], recommendations: [] }
   for (const r of (all || [])) {
     if (r.super_category && byCategory[r.super_category]) byCategory[r.super_category].push(r)
   }
