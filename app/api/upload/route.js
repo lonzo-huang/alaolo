@@ -18,9 +18,9 @@ function sanitizeFilename(name) {
 // POST /api/upload  (multipart/form-data)
 // Fields:
 //   file    - the file to upload (required)
-//   type    - "image" (default) -> committed to GitHub public/images/, served via jsDelivr
+//   type    - "image" (default) -> committed to the dedicated media repo, served via jsDelivr
 //             "file"             -> uploaded to Cloudflare R2 (for PDFs / large files)
-//   folder  - optional subfolder, default "images" or "files"
+//   folder  - optional subfolder within the media repo, default "images" or "files"
 //
 // Requires header: x-api-key: <CONTENT_API_KEY>
 export async function POST(request) {

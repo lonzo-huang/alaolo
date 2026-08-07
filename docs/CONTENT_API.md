@@ -22,12 +22,15 @@ OPENAI_API_KEY=sk-...
 # 可选，默认 gpt-4o-mini
 OPENAI_TRANSLATE_MODEL=gpt-4o-mini
 
-# 新增：图片上传 -> 提交到本仓库 public/images/，通过 jsDelivr CDN 加速
-# GITHUB_TOKEN 需要对该仓库有 "Contents: Read and write" 权限（fine-grained PAT 或 classic PAT with repo scope）
-GITHUB_TOKEN=ghp_xxx
-GITHUB_OWNER=lonzo-huang
-GITHUB_REPO=alaolo
-GITHUB_BRANCH=main
+# 新增：图片上传 -> 提交到「专门的媒体仓库」（与代码仓库完全分离），通过 jsDelivr CDN 加速
+# 步骤：
+#   1. 新建一个空的 PUBLIC 仓库，例如 alaolo-media（必须公开，jsDelivr 才能读取）
+#   2. 生成一个 fine-grained PAT，Repository access 只勾选这个新仓库，权限选 Contents: Read and write
+#   3. 填入下面几个变量（指向新仓库，不是代码仓库！）
+GITHUB_MEDIA_TOKEN=github_pat_xxx
+GITHUB_MEDIA_OWNER=lonzo-huang
+GITHUB_MEDIA_REPO=alaolo-media
+GITHUB_MEDIA_BRANCH=main
 
 # 新增：PDF/大文件上传 -> Cloudflare R2
 R2_ACCOUNT_ID=...
@@ -73,11 +76,11 @@ GET 为只读，暂不需要鉴权。
 ```json
 {
   "ok": true,
-  "url": "https://cdn.jsdelivr.net/gh/lonzo-huang/alaolo@a1b2c3d/public/images/tools/1699999999-chatgpt-logo.png",
-  "path": "public/images/tools/1699999999-chatgpt-logo.png",
+  "url": "https://cdn.jsdelivr.net/gh/lonzo-huang/alaolo-media@a1b2c3d/images/tools/1699999999-chatgpt-logo.png",
+  "path": "images/tools/1699999999-chatgpt-logo.png",
   "commitSha": "a1b2c3d...",
-  "jsdelivrLatestUrl": "https://cdn.jsdelivr.net/gh/lonzo-huang/alaolo@main/public/images/tools/1699999999-chatgpt-logo.png",
-  "githubRawUrl": "https://raw.githubusercontent.com/lonzo-huang/alaolo/main/public/images/tools/1699999999-chatgpt-logo.png"
+  "jsdelivrLatestUrl": "https://cdn.jsdelivr.net/gh/lonzo-huang/alaolo-media@main/images/tools/1699999999-chatgpt-logo.png",
+  "githubRawUrl": "https://raw.githubusercontent.com/lonzo-huang/alaolo-media/main/images/tools/1699999999-chatgpt-logo.png"
 }
 ```
 
@@ -180,9 +183,11 @@ GET /api/resources?category=ai-chatbots&limit=20
 
 ### GitHub + jsDelivr 图片方案的已知取舍
 
-- 每张图片都会变成仓库的一个真实 commit，仓库会随图片数量持续增长（历史 commit 不会自动清理）。相比放 R2，好处是免费、集成简单、jsDelivr 全球 CDN 加速；代价是长期图片量很大（比如上万张）之后仓库体积会明显变大，clone/CI 构建会变慢。
-- 如果图片量级预期会做到"大量文章配图"的规模，建议图片也走 R2（用 `type=file`），只把 GitHub+jsDelivr 用于少量固定资源（logo、图标等）。当前 API 两种方式都支持，按需选择即可。
+- 图片提交到**专门的媒体仓库**（`GITHUB_MEDIA_REPO`），与代码仓库（本仓库）完全分离 —— 代码仓库的体积、clone 速度、CI 构建时间都不受影响。
+- 媒体仓库本身依然会随图片数量持续增长（历史 commit 不会自动清理），这是 Git 的天然特性，与放哪个仓库无关。免费、集成简单、jsDelivr 全球 CDN 加速是优点；代价是长期图片量很大（比如上万张）之后这个媒体仓库体积会变大，如果将来要迁移/清理会麻烦一些。
+- 如果图片量级预期会做到"海量文章配图"的规模，建议图片也走 R2（用 `type=file`），只把 GitHub+jsDelivr 用于中小规模或者固定资源（logo、图标等）。当前 API 两种方式都支持，按需选择即可。
 - jsDelivr 对 `@分支名` 形式的链接有缓存（最长约 7 天），本 API 返回的 `url` 是锁定 commit SHA 的链接，不受此缓存影响，可放心直接使用。
+- PDF 依然建议走 R2，不建议塞进媒体仓库：GitHub 单文件硬限制 100MB，Contents API 对超过 ~1-1.5MB 的文件也不稳定，新建仓库不会改变这个限制。
 
 ## 示例（curl）
 
