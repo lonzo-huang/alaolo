@@ -44,7 +44,7 @@ export function Header({ locale }) {
 
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-40 border-b border-app glass">
+      <header className="fixed top-0 inset-x-0 z-40 border-b border-app bg-app">
         <div className="container mx-auto max-w-7xl h-14 flex items-center gap-6 px-4">
           <Link href={`/${locale}`} className="flex items-center gap-2.5 group shrink-0 text-primary">
             <img src="/logo.svg" alt="alaolo" className="w-auto h-8 sm:h-9" />

@@ -118,18 +118,6 @@ html:not(.dark) .border-app-strong { border-color: rgba(0,0,0,0.08); }
   .modal-pop { animation: none; }
 }
 
-/* Glass header — warm paper-tinted backdrop blur */
-.glass {
-  background: rgba(20, 20, 15, 0.6);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-}
-html:not(.dark) .glass {
-  background: rgba(250, 250, 250, 0.72);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-}
-
 /* ==== Light-mode overrides for hardcoded dark colors ==== */
 /* Solid dark backgrounds → white/surface */
 html:not(.dark) [class*="bg-[#0a0a0d]"],
