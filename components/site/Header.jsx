@@ -36,7 +36,8 @@ export function Header({ locale }) {
   const nav = [
     { label: t('home'), href: `/${locale}` },
     { label: t('tools'), href: `/${locale}/tools` },
-    { label: t('knowledge'), href: `/${locale}?cat=knowledge` },
+    { label: t('subKnowledgeTutorials'), href: `/${locale}?cat=knowledge&sub=Tutorial` },
+    { label: t('subKnowledgeArticles'), href: `/${locale}?cat=knowledge&sub=Article` },
     { label: t('trending'), href: `/${locale}/trending` },
     { label: t('leaderboard'), href: `/${locale}/leaderboard` },
   ]

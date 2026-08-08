@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { ChevronDown, Zap, BookOpen, FolderOpen, Sparkles, TrendingUp, Trophy, FileText, GraduationCap, Star as StarIcon } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 export function SubNav({ locale }) {
   const t = useTranslations('nav')
@@ -18,14 +18,11 @@ export function SubNav({ locale }) {
   const flatLinks = [
     { key: 'home', label: t('home'), href: `/${locale}` },
     { key: 'tools', label: t('tools'), href: `/${locale}/tools` },
+    { key: 'tutorials', label: t('subKnowledgeTutorials'), href: `/${locale}?cat=knowledge&sub=Tutorial` },
+    { key: 'articles', label: t('subKnowledgeArticles'), href: `/${locale}?cat=knowledge&sub=Article` },
   ]
 
-  const groups = [
-    { key: 'knowledge', label: t('knowledge'), href: `/${locale}?cat=knowledge`, sub: [
-      { label: t('subKnowledgeTutorials'), href: `/${locale}?cat=knowledge&sub=Tutorial`, icon: <GraduationCap className="w-3.5 h-3.5" /> },
-      { label: t('subKnowledgeArticles'), href: `/${locale}?cat=knowledge&sub=Article`, icon: <FileText className="w-3.5 h-3.5" /> },
-    ]},
-  ]
+  const groups = []
 
   return (
     <nav className="hidden lg:flex items-center gap-0.5" ref={ref}>
