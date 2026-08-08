@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { ChevronDown, Zap, BookOpen, FolderOpen, Sparkles, TrendingUp, Trophy, FileText, GraduationCap, Brain, Download, Star as StarIcon } from 'lucide-react'
+import { ChevronDown, Zap, BookOpen, FolderOpen, Sparkles, TrendingUp, Trophy, FileText, GraduationCap, Star as StarIcon } from 'lucide-react'
 
 export function SubNav({ locale }) {
   const t = useTranslations('nav')
@@ -24,10 +24,6 @@ export function SubNav({ locale }) {
     { key: 'knowledge', label: t('knowledge'), href: `/${locale}?cat=knowledge`, sub: [
       { label: t('subKnowledgeTutorials'), href: `/${locale}?cat=knowledge&sub=Tutorial`, icon: <GraduationCap className="w-3.5 h-3.5" /> },
       { label: t('subKnowledgeArticles'), href: `/${locale}?cat=knowledge&sub=Article`, icon: <FileText className="w-3.5 h-3.5" /> },
-    ]},
-    { key: 'recommendations', label: t('recommendations'), href: `/${locale}?cat=recommendations`, sub: [
-      { label: t('subRecommendationsSoftware'), href: `/${locale}?cat=recommendations&sub=macOS`, icon: <Download className="w-3.5 h-3.5" /> },
-      { label: t('subRecommendationsAI'), href: `/${locale}?cat=recommendations&sub=AI`, icon: <Brain className="w-3.5 h-3.5" /> },
     ]},
   ]
 

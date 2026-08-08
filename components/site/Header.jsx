@@ -37,7 +37,6 @@ export function Header({ locale }) {
     { label: t('home'), href: `/${locale}` },
     { label: t('tools'), href: `/${locale}/tools` },
     { label: t('knowledge'), href: `/${locale}?cat=knowledge` },
-    { label: t('recommendations'), href: `/${locale}?cat=recommendations` },
     { label: t('trending'), href: `/${locale}/trending` },
     { label: t('leaderboard'), href: `/${locale}/leaderboard` },
   ]
